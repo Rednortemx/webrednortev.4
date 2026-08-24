@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { formatMxPhone, advisorInitials } from '@/lib/format';
 import CitaSection from './CitaSection';
 
@@ -11,7 +11,9 @@ import CitaSection from './CitaSection';
 export default function PropertySidebar({ property, advisor }) {
   const [citaOpen, setCitaOpen] = useState(false);
   const [shareLabel, setShareLabel] = useState('↗ Compartir propiedad');
-  const [waLogged, setWaLogged] = useState(false);
+  // Ref y no estado: hay que marcarlo de forma síncrona para que un doble
+  // clic rápido no alcance a mandar dos registros antes de que React re-renderice.
+  const waLogged = useRef(false);
   const advisorNumber = String(advisor?.phone || '528117783953').replace(/\D/g, '');
 
   // El botón de WhatsApp manda a la persona directo al chat del asesor, así
@@ -20,8 +22,8 @@ export default function PropertySidebar({ property, advisor }) {
   // medir cuáles generan contactos. No se pide ni se envía ningún dato del
   // visitante, y no bloquea la apertura de WhatsApp.
   const logWhatsAppInterest = () => {
-    if (waLogged) return;
-    setWaLogged(true);
+    if (waLogged.current) return;
+    waLogged.current = true;
     fetch('/api/leads', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
