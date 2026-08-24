@@ -239,6 +239,7 @@ section { padding: 5rem 0; }
  background: white; border-radius: 14px;
  border: 1px solid var(--gris-claro);
  overflow: hidden; transition: all 0.25s; cursor: pointer;
+ text-decoration: none; color: inherit;
 }
 .prop-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px var(--sombra-md); }
 .prop-img {
@@ -684,6 +685,7 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
  border: 1.5px solid var(--terracota); border-radius: 8px;
  padding: 0.55rem 1.1rem; font-size: 13px; font-weight: 700;
  cursor: pointer; font-family: 'Poppins', sans-serif; transition: all 0.2s;
+ text-decoration: none;
 }
 .btn-contactar:hover { background: var(--terracota); color: white; }
 
