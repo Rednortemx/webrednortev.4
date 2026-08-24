@@ -6,6 +6,11 @@
 
 import { NextResponse } from 'next/server';
 
+// Eventos que registran interés sin que la persona haya dejado sus datos
+// (p. ej. abrir WhatsApp desde una ficha): sirven para medir qué propiedades
+// generan contactos, aunque el teléfono solo le llegue al asesor.
+const TIPOS_SIN_CONTACTO = new Set(['Interés por WhatsApp']);
+
 export async function POST(req) {
   const webhookUrl = process.env.LEADS_WEBHOOK_URL;
   if (!webhookUrl) {
@@ -22,8 +27,12 @@ export async function POST(req) {
     return NextResponse.json({ success: false, message: 'Cuerpo inválido' }, { status: 400 });
   }
 
-  if (!payload.tipo || !payload.telefono) {
-    return NextResponse.json({ success: false, message: 'Faltan datos requeridos (tipo, telefono)' }, { status: 400 });
+  if (!payload.tipo) {
+    return NextResponse.json({ success: false, message: 'Falta el tipo de evento' }, { status: 400 });
+  }
+
+  if (!payload.telefono && !TIPOS_SIN_CONTACTO.has(payload.tipo)) {
+    return NextResponse.json({ success: false, message: 'Faltan datos requeridos (telefono)' }, { status: 400 });
   }
 
   try {
@@ -33,7 +42,7 @@ export async function POST(req) {
       body: JSON.stringify({
         tipo: payload.tipo,
         nombre: payload.nombre || '',
-        telefono: payload.telefono,
+        telefono: payload.telefono || '',
         email: payload.email || '',
         detalle: payload.detalle || '',
         notas: payload.notas || '',
