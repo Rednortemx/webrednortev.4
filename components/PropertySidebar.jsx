@@ -93,7 +93,6 @@ export default function PropertySidebar({ property, advisor }) {
         <div style={{ borderTop: '1px solid var(--gris-claro)', marginTop: '1.25rem', paddingTop: '1.25rem' }}>
           <p style={{ fontSize: '11px', fontWeight: 700, color: 'var(--gris-medio)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.5rem' }}>Referencia</p>
           <p style={{ fontSize: '13px', color: 'var(--cafe)' }}>Código: <strong>{property.id}</strong></p>
-          <p style={{ fontSize: '11px', color: 'var(--gris-medio)', marginTop: '4px' }}>Fuente: <span className="crm-tag" style={{ float: 'none', display: 'inline-flex', fontSize: '9px', padding: '2px 6px' }}><span className="crm-dot"></span> CRM oficial</span></p>
         </div>
       </div>
       {citaOpen && (

@@ -87,7 +87,7 @@ export default async function PropiedadPage({ params }) {
             <div className="prop-info" style={{ marginTop: '2rem' }}>
               <div className="prop-detail-badge"> {property.type} en {property.op}</div>
               <h1 className="prop-detail-title">{property.title}</h1>
-              <p className="prop-detail-code"> Referencia CRM: <strong>{property.id}</strong> &nbsp;·&nbsp; <span className="crm-tag" style={{ float: 'none', display: 'inline-flex' }}><span className="crm-dot"></span> Activo en CRM</span></p>
+              <p className="prop-detail-code"> Referencia: <strong>{property.id}</strong></p>
               <div className="prop-detail-price">{property.price}</div>
               <p className="prop-detail-price-sub">{isRenta ? 'Precio mensual' : 'Precio de venta'} · {property.type}</p>
               <div className="prop-features-grid">
