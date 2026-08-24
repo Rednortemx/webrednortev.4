@@ -57,10 +57,8 @@ export default async function HomePage() {
         <div className="container">
           <div className="section-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1rem' }}>
             <div>
-              <p className="section-label">Inventario del CRM</p>
               <h2 className="section-title">Propiedades destacadas</h2>
             </div>
-            <span className="crm-tag"><span className="crm-dot"></span> Datos en tiempo real del CRM</span>
             <Link style={{ fontSize: '14px', fontWeight: 600, color: 'var(--terracota)', textDecoration: 'none' }} href="/propiedades">Ver todo el inventario →</Link>
           </div>
           <FeaturedCarousel properties={featured} />
@@ -79,19 +77,19 @@ export default async function HomePage() {
               <div className="cat-icon"></div>
               <div className="cat-title">Residencial</div>
               <div className="cat-desc">Casas y departamentos en las mejores zonas de Nuevo León</div>
-              <div className="cat-count">+320 propiedades</div>
+              <div className="cat-count">Ver propiedades</div>
             </Link>
             <Link className="cat-card" href={propsFilterHref('', '', 'Comercial')}>
               <div className="cat-icon"></div>
               <div className="cat-title">Comercial</div>
               <div className="cat-desc">Locales, oficinas y espacios comerciales estratégicos</div>
-              <div className="cat-count">+95 propiedades</div>
+              <div className="cat-count">Ver propiedades</div>
             </Link>
             <Link className="cat-card" href={propsFilterHref('', '', 'Industrial')}>
               <div className="cat-icon"></div>
               <div className="cat-title">Industrial</div>
               <div className="cat-desc">Bodegas, naves y parques industriales en Nuevo León</div>
-              <div className="cat-count">+85 propiedades</div>
+              <div className="cat-count">Ver propiedades</div>
             </Link>
           </div>
         </div>
