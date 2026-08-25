@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import HeroSearch from '@/components/HeroSearch';
 import FeaturedCarousel from '@/components/FeaturedCarousel';
+import GoogleReviews from '@/components/GoogleReviews';
 import { fetchAllProperties } from '@/lib/properties';
 
 export const metadata = {
@@ -156,7 +157,7 @@ export default async function HomePage() {
             </div>
             <div className="nosotros-text">
               <p className="section-label">Quiénes somos</p>
-              <h2 className="section-title">Más de 8 años conectando personas con propiedades</h2>
+              <h2 className="section-title">Desde el 2018 conectando personas con propiedades</h2>
               <p style={{ fontSize: '14.5px', color: 'var(--cafe)', lineHeight: 1.7, marginBottom: '1rem' }}>En Rednorte Inmobiliaria somos un equipo de asesores profesionales con profundo conocimiento del mercado de Nuevo León. Trabajamos con integridad, transparencia y resultados.</p>
               <ul className="nosotros-list">
                 <li>Especialistas en residencial, comercial e industrial</li>
@@ -171,17 +172,7 @@ export default async function HomePage() {
       </section>
 
       {/* RESENAS GOOGLE */}
-      <section style={{ background: 'var(--crema-dark)', padding: '4rem 0' }}>
-        <div className="container">
-          <div className="section-header center">
-            <p className="section-label">Lo que dicen de nosotros</p>
-            <h2 className="section-title">Reseñas en Google</h2>
-            <p className="section-sub">Con más de 130 opiniones de clientes que confiaron en Rednorte.</p>
-          </div>
-          <script defer async src="https://cdn.trustindex.io/loader.js?db141467684f733ab946e322bd8"></script>
-          <div className="trustindex-widget" data-widget-id="db141467684f733ab946e322bd8"></div>
-        </div>
-      </section>
+      <GoogleReviews />
 
       {/* ENLACES RAPIDOS */}
       <section className="quick-links-section">
