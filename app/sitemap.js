@@ -1,7 +1,7 @@
 // app/sitemap.js
 // Generates /sitemap.xml. Only lists indexable routes — the noindex
-// sections (equipo, insights, preguntas-frecuentes, trabaja-con-nosotros)
-// and their [slug] children are intentionally excluded, since they carry
+// sections (equipo, insights, trabaja-con-nosotros) and their [slug]
+// children are intentionally excluded, since they carry
 // robots: { index: false } in their own metadata.
 import { fetchAllProperties } from '@/lib/properties';
 import { buildPropertySlug } from '@/lib/slug';
@@ -21,6 +21,7 @@ const STATIC_ROUTES = [
   '/herramientas/reporte-de-vendibilidad',
   '/nosotros',
   '/contacto',
+  '/preguntas-frecuentes',
   '/aviso-de-privacidad',
   '/politica-de-cookies',
   '/terminos-y-condiciones',

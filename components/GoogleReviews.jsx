@@ -40,7 +40,10 @@ export default function GoogleReviews() {
         <div className="section-header center">
           <p className="section-label">Lo que dicen de nosotros</p>
           <h2 className="section-title">Reseñas en Google</h2>
-          <p className="section-sub">Opiniones de clientes que confiaron en Rednorte.</p>
+          {/* Trustindex reporta 139 reseñas con 5.0 de calificación y sincroniza
+              las nuevas de Google solo, así que "más de 130" se mantiene cierto
+              conforme entren más. */}
+          <p className="section-sub">Con más de 130 opiniones de clientes que confiaron en Rednorte.</p>
         </div>
         <div ref={contenedorRef} />
       </div>

@@ -3,6 +3,8 @@ import Image from 'next/image';
 import HeroSearch from '@/components/HeroSearch';
 import FeaturedCarousel from '@/components/FeaturedCarousel';
 import GoogleReviews from '@/components/GoogleReviews';
+import FaqHome from '@/components/FaqHome';
+import { faqSchema } from '@/lib/schema';
 import { fetchAllProperties } from '@/lib/properties';
 
 export const metadata = {
@@ -174,30 +176,12 @@ export default async function HomePage() {
       {/* RESENAS GOOGLE */}
       <GoogleReviews />
 
-      {/* ENLACES RAPIDOS */}
-      <section className="quick-links-section">
-        <div className="container">
-          <div className="section-header center">
-            <p className="section-label">Informacion util</p>
-            <h2 className="section-title">Tambien puede interesarte</h2>
-            <p className="section-sub">Resuelve dudas frecuentes o conoce las oportunidades para unirte al equipo Rednorte.</p>
-          </div>
-          <div className="quick-links-grid">
-            <Link className="quick-link-card" href="/preguntas-frecuentes">
-              <span className="quick-link-label">FAQ</span>
-              <h3>Preguntas frecuentes</h3>
-              <p>Encuentra respuestas rapidas sobre compra, venta, renta, valuaciones y el proceso de asesoria.</p>
-              <span className="quick-link-action">Ver FAQ -&gt;</span>
-            </Link>
-            <Link className="quick-link-card" href="/trabaja-con-nosotros">
-              <span className="quick-link-label">Bolsa de trabajo</span>
-              <h3>Unete a Rednorte</h3>
-              <p>Consulta vacantes y envia tu candidatura para formar parte del equipo inmobiliario.</p>
-              <span className="quick-link-action">Ver bolsa de trabajo -&gt;</span>
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* PREGUNTAS FRECUENTES */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema()) }}
+      />
+      <FaqHome />
     </div>
   );
 }
