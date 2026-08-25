@@ -42,7 +42,6 @@ export const config = {
     '/agents',
     '/agentes',
     '/nuestro-equipo',
-    '/favorites',
     '/assets/img/favicon.ico',
   ],
 };
