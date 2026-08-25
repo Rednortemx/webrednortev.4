@@ -30,6 +30,11 @@ export default async function LegacyPropiedadRedirect({ params }) {
     if (property) {
       permanentRedirect(`/propiedades/${buildPropertySlug(property)}`);
     }
+    // La URL era una ficha, pero esa propiedad ya se retiró. Aquí se corta:
+    // mandarla al listado filtrado seria una redireccion enganosa (el
+    // visitante pidio UNA propiedad concreta que ya no existe) y le diria a
+    // Google que la pagina se mudo, cuando en realidad desaparecio.
+    notFound();
   }
 
   const listado = legacyCategoryTarget(ruta);
