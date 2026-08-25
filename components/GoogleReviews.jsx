@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Script from 'next/script';
 
-const WIDGET_ID = 'db141467684f733ab946e322bd8';
+const WIDGET_ID = '2febd0b79c3a9262701634a905e';
 
 // Las reseñas las sirve Trustindex desde su CDN, no nosotros. Si esa cuenta
 // se desconecta de Google, su loader responde con un widget vacío y la
