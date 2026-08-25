@@ -524,7 +524,8 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
  font-size: 13px; color: var(--gris-medio);
 }
 .breadcrumb-inner a { color: var(--terracota); text-decoration: none; cursor: pointer; font-weight: 500; }
-.breadcrumb-inner span { color: var(--gris-claro); }
+.breadcrumb-sep { color: var(--gris-claro); }
+.breadcrumb-current { color: var(--cafe); font-weight: 500; }
 
 /* Propiedades page */
 .propiedades-layout {
