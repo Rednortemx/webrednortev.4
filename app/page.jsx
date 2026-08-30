@@ -101,51 +101,48 @@ export default async function HomePage() {
       {/* SERVICIOS */}
       <section className="services-mini">
         <div className="container">
-          <div className="section-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1rem' }}>
-            <div>
-              <p className="section-label" style={{ color: '#e07a4a' }}>Lo que hacemos</p>
-              <h2 className="section-title">Nuestros servicios</h2>
-              <p className="section-sub">Asesoría integral en bienes raíces residenciales, comerciales e industriales en todo Nuevo León.</p>
-            </div>
-            <Link style={{ fontSize: '14px', fontWeight: 600, color: 'var(--terracota)', textDecoration: 'none' }} href="/servicios">Ver todos →</Link>
+          <div className="section-header center">
+            <p className="section-label" style={{ color: '#e07a4a' }}>Servicios inmobiliarios</p>
+            <h2 className="section-title">¿Cómo podemos ayudarte?</h2>
+            <p className="section-sub" style={{ margin: '0 auto' }}>Soluciones para comprar, vender, rentar e invertir en bienes raíces en Monterrey y Nuevo León.</p>
           </div>
+          {/* Seis tarjetas. Comprar, comercial e industrial todavía no tienen
+              página propia: mientras llegan apuntan a una página real y
+              relacionada, para no dejar el enlace en 404. */}
           <div className="services-grid">
             <div className="service-block">
-              <div className="service-icon"></div>
-              <div className="service-name">Venta de propiedades</div>
-              <div className="service-desc">Comercializamos tu propiedad con estrategia de marketing digital, valuación profesional y red de compradores activos.</div>
-              <Link className="service-link" href="/servicios/vender-propiedad">Más información →</Link>
+              <div className="service-name">Vender una propiedad</div>
+              <div className="service-desc">Analizamos el valor, la competencia y las condiciones del inmueble para definir una estrategia de posicionamiento, promoción y negociación hasta el cierre.</div>
+              <Link className="service-link" href="/servicios/vender-propiedad">Quiero vender mi propiedad →</Link>
             </div>
             <div className="service-block">
-              <div className="service-icon"></div>
-              <div className="service-name">Renta de propiedades</div>
-              <div className="service-desc">Encontramos el arrendatario ideal y gestionamos contratos, garantías y administración del arrendamiento.</div>
-              <Link className="service-link" href="/servicios/rentar-propiedad">Más información →</Link>
+              <div className="service-name">Rentar una propiedad</div>
+              <div className="service-desc">Estimamos la renta, promovemos el inmueble, perfilamos e investigamos prospectos y coordinamos contrato, negociación y entrega.</div>
+              <Link className="service-link" href="/servicios/rentar-propiedad">Quiero rentar mi propiedad →</Link>
             </div>
             <div className="service-block">
-              <div className="service-icon"></div>
-              <div className="service-name">Asesoría para inversionistas</div>
-              <div className="service-desc">Análisis de mercado, identificación de oportunidades y estrategias de portafolio inmobiliario.</div>
-              <Link className="service-link" href="/servicios/inversion-inmobiliaria">Más información →</Link>
+              <div className="service-name">Comprar una propiedad</div>
+              <div className="service-desc">Buscamos en nuestro inventario y en la red inmobiliaria para comparar opciones, negociar condiciones y acompañarte hasta la entrega.</div>
+              <Link className="service-link" href="/contacto">Quiero comprar una propiedad →</Link>
             </div>
             <div className="service-block">
-              <div className="service-icon"></div>
-              <div className="service-name">Propiedades industriales</div>
-              <div className="service-desc">Naves industriales, bodegas y parques logísticos en los principales corredores de Nuevo León.</div>
-              <Link className="service-link" href="/servicios/comercial-industrial">Más información →</Link>
+              <div className="service-name">Inversión inmobiliaria y preventas</div>
+              <div className="service-desc">Primero entendemos qué quieres lograr con tu inversión y después analizamos alternativas según flujo, plusvalía, patrimonio, preventa u otras estrategias.</div>
+              <Link className="service-link" href="/servicios/inversion-inmobiliaria">Quiero analizar una inversión →</Link>
             </div>
             <div className="service-block">
-              <div className="service-icon"></div>
-              <div className="service-name">Propiedades comerciales</div>
-              <div className="service-desc">Locales en planta baja, pisos de oficinas y espacios mixtos en ubicaciones estratégicas.</div>
-              <Link className="service-link" href="/servicios/comercial-industrial">Más información →</Link>
+              <div className="service-name">Inmobiliaria comercial</div>
+              <div className="service-desc">Asesoría para comprar, vender o rentar locales, oficinas, consultorios, edificios y otros espacios comerciales en Nuevo León.</div>
+              <Link className="service-link" href="/servicios/comercial-industrial">Ver servicio comercial →</Link>
             </div>
             <div className="service-block">
-              <div className="service-icon"></div>
-              <div className="service-name">Valuación gratuita</div>
-              <div className="service-desc">Conoce el valor real de mercado de tu inmueble con nuestro análisis profesional sin costo.</div>
-              <Link className="service-link" href="/herramientas/estimacion-de-valor">Solicitar valuación →</Link>
+              <div className="service-name">Inmobiliaria industrial</div>
+              <div className="service-desc">Búsqueda y comercialización de naves, bodegas, terrenos, patios, parques industriales y proyectos build-to-suit.</div>
+              <Link className="service-link" href="/servicios/comercial-industrial">Ver servicio industrial →</Link>
             </div>
+          </div>
+          <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+            <Link className="btn-ver-servicios" href="/servicios">Ver todos los servicios →</Link>
           </div>
         </div>
       </section>
