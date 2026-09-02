@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
 import BuyPropertyForm from '@/components/BuyPropertyForm';
+import TrustindexWidget from '@/components/TrustindexWidget';
 
 export const metadata = {
   title: 'Comprar una propiedad en Monterrey y Nuevo León',
@@ -546,10 +547,6 @@ export default function ComprarPropiedadPage() {
           <div className="buy-section-heading buy-section-heading-centered">
             <p className="section-label">EXPERIENCIAS DE CLIENTES</p>
             <h2 className="buy-section-title">Lo que dicen quienes han trabajado con Rednorte</h2>
-            <p>
-              Aquí Beto debe insertar el widget real de reseñas de Google/Trustindex que ya utiliza
-              el sitio.
-            </p>
           </div>
 
           <div
@@ -557,8 +554,7 @@ export default function ComprarPropiedadPage() {
             className="buy-reviews-slot"
             data-component="google-reviews"
           >
-            <strong>Widget de reseñas reales</strong>
-            <span>Sustituir este bloque por la integración actual.</span>
+            <TrustindexWidget />
           </div>
         </div>
       </section>

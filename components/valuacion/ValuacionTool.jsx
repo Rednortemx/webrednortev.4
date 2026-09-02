@@ -1,33 +1,42 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { valuacionShellHtml } from './valuacionShell';
-import { valuacionScriptSrc } from './valuacionScript';
+import { estimadorShellHtml } from './estimadorShell';
+import { estimadorStyles } from './estimadorStyles';
+import { estimadorScriptSrc } from './estimadorScript';
 
-// Client Component wrapper for the legacy "Estimación de Valor de Mercado"
-// calculator. Renders the ported HTML shell via dangerouslySetInnerHTML and
-// then injects the ported script as a real classic <script> so its
-// document.getElementById()-driven logic runs exactly like it did in the
-// old index.html. See valuacionShell.js / valuacionScript.js for details on
-// what changed (h1->h2 downgrade, IIFE wrap) and why.
+// Monta el Estimador de Valor.
+//
+// La herramienta se escribio como una pagina HTML independiente, con su
+// propio CSS y su propio JS que trabaja con document.getElementById(). En vez
+// de reescribirla en React, se inyecta tal cual: el HTML por
+// dangerouslySetInnerHTML (asi queda en el HTML del servidor) y el script
+// como <script> clasico, para que su logica corra igual que en el original.
+//
+// El CSS va en un <style> propio en lugar de en globals.css para que solo
+// pese en esta ruta. Va scopeado bajo .ov-val (ver estimadorStyles.js).
 export default function ValuacionTool() {
-  const containerRef = useRef(null);
+  const styleRef = useRef(null);
   const scriptRef = useRef(null);
 
   useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = estimadorStyles;
+    document.head.appendChild(style);
+    styleRef.current = style;
+
+    // El script debe correr DESPUES de que el HTML ya esta en el DOM, porque
+    // busca sus elementos por id apenas arranca.
     const script = document.createElement('script');
-    script.textContent = valuacionScriptSrc;
+    script.textContent = estimadorScriptSrc;
     document.body.appendChild(script);
     scriptRef.current = script;
 
-    // The legacy script waits for 'DOMContentLoaded' to run its init
-    // (populate today's date, add the first 4 comparable rows, etc). That
-    // real browser event already fired long before this component mounted,
-    // so we dispatch a synthetic one — addEventListener doesn't care
-    // whether the event was "real", only its type.
-    document.dispatchEvent(new Event('DOMContentLoaded'));
-
     return () => {
+      if (styleRef.current) {
+        styleRef.current.remove();
+        styleRef.current = null;
+      }
       if (scriptRef.current) {
         scriptRef.current.remove();
         scriptRef.current = null;
@@ -35,5 +44,5 @@ export default function ValuacionTool() {
     };
   }, []);
 
-  return <div ref={containerRef} dangerouslySetInnerHTML={{ __html: valuacionShellHtml }} />;
+  return <div dangerouslySetInnerHTML={{ __html: estimadorShellHtml }} />;
 }

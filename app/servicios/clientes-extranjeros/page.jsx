@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
 import ForeignClientsForm from '@/components/ForeignClientsForm';
+import TrustindexWidget from '@/components/TrustindexWidget';
 
 export const metadata = {
   title: 'Bienes raíces en Monterrey para extranjeros',
@@ -588,17 +589,13 @@ export default function ClientesExtranjerosPage() {
             <div className="foreign-section-heading foreign-section-heading-centered">
               <p className="section-label">EXPERIENCIAS DE CLIENTES</p>
               <h2 className="foreign-section-title">Opiniones de clientes internacionales</h2>
-              <p>
-                Integrar aquí reseñas reales de Google relacionadas con clientes extranjeros,
-                empresas internacionales o atención en otros idiomas.
-              </p>
             </div>
             <div
               id="foreign-clients-reviews-slot"
               className="foreign-reviews-slot"
               data-component="google-reviews"
             >
-              <p>Insertar aquí el widget real de Google/Trustindex.</p>
+              <TrustindexWidget />
             </div>
           </div>
         </section>

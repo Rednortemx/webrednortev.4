@@ -3,6 +3,7 @@ import Breadcrumb from '@/components/Breadcrumb';
 import PropertyGallery from '@/components/PropertyGallery';
 import PropertySidebar from '@/components/PropertySidebar';
 import PropertyCard from '@/components/PropertyCard';
+import PropertyMap from '@/components/PropertyMap';
 import { fetchAllProperties, findPropertyById } from '@/lib/properties';
 import { getAdvisorForProperty, defaultAdvisor } from '@/lib/advisor';
 import { buildPropertySlug, extractCodeFromSlug } from '@/lib/slug';
@@ -87,7 +88,7 @@ export default async function PropiedadPage({ params }) {
             <div className="prop-info" style={{ marginTop: '2rem' }}>
               <div className="prop-detail-badge"> {property.type} en {property.op}</div>
               <h1 className="prop-detail-title">{property.title}</h1>
-              <p className="prop-detail-code"> Referencia CRM: <strong>{property.id}</strong> &nbsp;·&nbsp; <span className="crm-tag" style={{ float: 'none', display: 'inline-flex' }}><span className="crm-dot"></span> Activo en CRM</span></p>
+              <p className="prop-detail-code"> Referencia: <strong>{property.id}</strong></p>
               <div className="prop-detail-price">{property.price}</div>
               <p className="prop-detail-price-sub">{isRenta ? 'Precio mensual' : 'Precio de venta'} · {property.type}</p>
               <div className="prop-features-grid">
@@ -108,12 +109,7 @@ export default async function PropiedadPage({ params }) {
                   <span className="amenity-chip">Sin amenidades registradas</span>
                 )}
               </div>
-              <p className="prop-section-title">Ubicación aproximada</p>
-              <div className="prop-map">
-                <span style={{ fontSize: '2rem' }}></span>
-                <span>{property.zone}</span>
-                <span style={{ fontSize: '11px', color: '#3d8a3d' }}>Mapa integrado con Google Maps</span>
-              </div>
+              <PropertyMap property={property} />
               {similar.length > 0 && (
                 <>
                   <p className="prop-section-title">Propiedades similares</p>

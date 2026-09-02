@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
 import MasterBrokerForm from '@/components/MasterBrokerForm';
+import TrustindexWidget from '@/components/TrustindexWidget';
 
 export const metadata = {
   title: 'Master Broker en Monterrey y Nuevo León',
@@ -573,17 +574,13 @@ export default function MasterBrokerPage() {
               <h2 className="master-section-title">
                 Acompañamiento y coordinación durante la operación
               </h2>
-              <p>
-                Este espacio utiliza las reseñas reales que Rednorte ya muestra desde Google y
-                Trustindex.
-              </p>
             </div>
             <div
               id="master-broker-reviews-slot"
               className="master-reviews-slot"
               data-component="google-reviews"
             >
-              <p>Insertar aquí el componente actual de reseñas de Google/Trustindex.</p>
+              <TrustindexWidget />
             </div>
           </div>
         </section>

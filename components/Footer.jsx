@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import CookiePrefsLink from './CookiePrefsLink';
 
 function propsFilterHref(operacion, tipo, categoria) {
   const params = new URLSearchParams();
@@ -56,9 +57,9 @@ export default function Footer() {
         <div className="footer-col">
           <h4>Propiedades</h4>
           <ul className="footer-links">
-            <li><Link href={propsFilterHref('Venta', 'Casa', '')}>Casas en venta</Link></li>
-            <li><Link href={propsFilterHref('', 'Depto', '')}>Departamentos</Link></li>
-            <li><Link href={propsFilterHref('Renta', 'Casa', '')}>Casas en renta</Link></li>
+            <li><Link href={propsFilterHref('Venta', '', '')}>Comprar</Link></li>
+            <li><Link href={propsFilterHref('Renta', '', '')}>Rentar</Link></li>
+            <li><Link href={propsFilterHref('', '', 'Residencial')}>Residencial</Link></li>
             <li><Link href={propsFilterHref('', '', 'Comercial')}>Comercial</Link></li>
             <li><Link href={propsFilterHref('', '', 'Industrial')}>Industrial</Link></li>
           </ul>
@@ -66,21 +67,32 @@ export default function Footer() {
         <div className="footer-col">
           <h4>Servicios</h4>
           <ul className="footer-links">
-            <li><Link href="/servicios">Venta</Link></li>
-            <li><Link href="/servicios">Renta</Link></li>
-            <li><Link href="/herramientas/estimacion-de-valor">Valuación gratuita</Link></li>
+            <li><Link href="/servicios/vender-propiedad">Vender propiedad</Link></li>
+            <li><Link href="/servicios/rentar-propiedad">Rentar propiedad</Link></li>
+            <li><Link href="/servicios/inversion-inmobiliaria">Inversión inmobiliaria</Link></li>
+            <li><Link href="/servicios/comercial-industrial">Comercial e industrial</Link></li>
+            <li><Link href="/herramientas/estimacion-de-valor">Estimación de valor</Link></li>
+          </ul>
+        </div>
+        <div className="footer-col">
+          <h4>Rednorte</h4>
+          <ul className="footer-links">
             <li><Link href="/nosotros">Nosotros</Link></li>
-            <li><Link href="/trabaja-con-nosotros">Bolsa de trabajo</Link></li>
+            <li><Link href="/equipo">Equipo</Link></li>
+            <li><Link href="/insights">Insights</Link></li>
+            <li><Link href="/preguntas-frecuentes">Preguntas frecuentes</Link></li>
+            <li><Link href="/trabaja-con-nosotros">Trabaja con nosotros</Link></li>
           </ul>
         </div>
         <div className="footer-col">
           <h4>Contacto</h4>
           <ul className="footer-links">
-            <li><a href="tel:+528117783953"> (811) 778-3953</a></li>
-            <li><a href="https://wa.me/528117783953" target="_blank" rel="noopener noreferrer"> WhatsApp</a></li>
-            <li><Link href="/contacto">Formulario de contacto</Link></li>
+            <li><a href="tel:+528117783953">(81) 1778-3953</a></li>
+            <li><a href="https://wa.me/528117783953" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+            <li><a href="mailto:admin@rednorte.com.mx">admin@rednorte.com.mx</a></li>
+            <li><Link href="/contacto">Ubicación</Link></li>
           </ul>
-          <h4 style={{ marginTop: '1.25rem' }}>Horario</h4>
+          <h4 style={{ marginTop: '1.5rem' }}>Horario</h4>
           <ul className="footer-links">
             <li><span>Lun–Vie: 9:00 – 18:00</span></li>
             <li><span>Sáb: 10:00 – 14:00</span></li>
@@ -93,6 +105,7 @@ export default function Footer() {
           <Link style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', textDecoration: 'none' }} href="/aviso-de-privacidad">Aviso de privacidad</Link>
           <Link style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', textDecoration: 'none' }} href="/terminos-y-condiciones">Términos y condiciones</Link>
           <Link style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', textDecoration: 'none' }} href="/politica-de-cookies">Política de cookies</Link>
+          <CookiePrefsLink style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)' }} />
         </div>
       </div>
     </footer>

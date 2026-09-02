@@ -8,7 +8,9 @@ import { usePathname } from 'next/navigation';
 const NAV_LINKS = [
   { href: '/', label: 'Inicio', match: (p) => p === '/' },
   { href: '/propiedades', label: 'Propiedades', match: (p) => p.startsWith('/propiedades') },
-  // Servicios oculto temporalmente del nav principal hasta tener el contenido listo (igual que en el sitio original).
+  // Servicios estuvo oculto mientras la pagina no tenia contenido. Ya lo tiene
+  // (el hub con los 9 servicios), asi que vuelve al menu principal.
+  { href: '/servicios', label: 'Servicios', match: (p) => p.startsWith('/servicios') },
   { href: '/herramientas', label: 'Herramientas', match: (p) => p.startsWith('/herramientas') },
   { href: '/nosotros', label: 'Nosotros', match: (p) => p.startsWith('/nosotros') },
   { href: '/contacto', label: 'Contacto', match: (p) => p.startsWith('/contacto') },
