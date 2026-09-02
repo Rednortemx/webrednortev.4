@@ -15,6 +15,12 @@ const servicios = [
     cta: 'Ver detalles →',
   },
   {
+    name: 'Compra de propiedades',
+    desc: 'Te ayudamos a encontrar, comparar, negociar y coordinar la compra de casas, departamentos, terrenos y otros inmuebles en Nuevo León, sin comisión para el comprador.',
+    href: '/servicios/comprar-propiedad',
+    cta: 'Ver detalles →',
+  },
+  {
     name: 'Renta de propiedades',
     desc: 'Gestionamos la renta de tu inmueble: selección del arrendatario, investigación de referencias, elaboración de contrato, cobro de depósito y seguimiento mensual. Tu propiedad en las mejores manos.',
     href: '/servicios/rentar-propiedad',
@@ -42,6 +48,18 @@ const servicios = [
     name: 'Asesoría para inversionistas',
     desc: 'Análisis de mercado, identificación de oportunidades con alto rendimiento, estrategias de diversificación de portafolio y acompañamiento en la toma de decisiones de inversión inmobiliaria.',
     href: '/servicios/inversion-inmobiliaria',
+    cta: 'Ver detalles →',
+  },
+  {
+    name: 'Clientes extranjeros',
+    desc: 'Compra, renta o inversión en Monterrey con atención en español, inglés y mandarín, búsqueda inmobiliaria, contratos y apoyo en trámites ante la SRE.',
+    href: '/servicios/clientes-extranjeros',
+    cta: 'Ver detalles →',
+  },
+  {
+    name: 'Master Broker',
+    desc: 'Comercialización exclusiva de propiedades en venta, con una sola estrategia, coordinación central y una red inmobiliaria ampliada bajo la gestión de Rednorte.',
+    href: '/servicios/master-broker',
     cta: 'Ver detalles →',
   },
 ];
