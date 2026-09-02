@@ -110,36 +110,36 @@ export default async function HomePage() {
               propia: mientras llegan apuntan a una página real y relacionada,
               para no dejar el enlace en 404. */}
           <div className="services-grid">
-            <div className="service-block">
+            <Link className="service-block" href="/servicios/vender-propiedad">
               <div className="service-name">Vender una propiedad</div>
               <div className="service-desc">Analizamos el valor, la competencia y las condiciones del inmueble para definir una estrategia de posicionamiento, promoción y negociación hasta el cierre.</div>
-              <Link className="service-link" href="/servicios/vender-propiedad">Quiero vender mi propiedad →</Link>
-            </div>
-            <div className="service-block">
+              <span className="service-link">Quiero vender mi propiedad →</span>
+            </Link>
+            <Link className="service-block" href="/servicios/rentar-propiedad">
               <div className="service-name">Rentar una propiedad</div>
               <div className="service-desc">Estimamos la renta, promovemos el inmueble, perfilamos e investigamos prospectos y coordinamos contrato, negociación y entrega.</div>
-              <Link className="service-link" href="/servicios/rentar-propiedad">Quiero rentar mi propiedad →</Link>
-            </div>
-            <div className="service-block">
+              <span className="service-link">Quiero rentar mi propiedad →</span>
+            </Link>
+            <Link className="service-block" href="/servicios/comprar-propiedad">
               <div className="service-name">Comprar una propiedad</div>
               <div className="service-desc">Buscamos en nuestro inventario y en la red inmobiliaria para comparar opciones, negociar condiciones y acompañarte hasta la entrega.</div>
-              <Link className="service-link" href="/servicios/comprar-propiedad">Quiero comprar una propiedad →</Link>
-            </div>
-            <div className="service-block">
+              <span className="service-link">Quiero comprar una propiedad →</span>
+            </Link>
+            <Link className="service-block" href="/servicios/inversion-inmobiliaria">
               <div className="service-name">Inversión inmobiliaria y preventas</div>
               <div className="service-desc">Primero entendemos qué quieres lograr con tu inversión y después analizamos alternativas según flujo, plusvalía, patrimonio, preventa u otras estrategias.</div>
-              <Link className="service-link" href="/servicios/inversion-inmobiliaria">Quiero analizar una inversión →</Link>
-            </div>
-            <div className="service-block">
+              <span className="service-link">Quiero analizar una inversión →</span>
+            </Link>
+            <Link className="service-block" href="/servicios/comercial-industrial">
               <div className="service-name">Inmobiliaria comercial</div>
               <div className="service-desc">Asesoría para comprar, vender o rentar locales, oficinas, consultorios, edificios y otros espacios comerciales en Nuevo León.</div>
-              <Link className="service-link" href="/servicios/comercial-industrial">Ver servicio comercial →</Link>
-            </div>
-            <div className="service-block">
+              <span className="service-link">Ver servicio comercial →</span>
+            </Link>
+            <Link className="service-block" href="/servicios/comercial-industrial">
               <div className="service-name">Inmobiliaria industrial</div>
               <div className="service-desc">Búsqueda y comercialización de naves, bodegas, terrenos, patios, parques industriales y proyectos build-to-suit.</div>
-              <Link className="service-link" href="/servicios/comercial-industrial">Ver servicio industrial →</Link>
-            </div>
+              <span className="service-link">Ver servicio industrial →</span>
+            </Link>
           </div>
           <div style={{ textAlign: 'center', marginTop: '2rem' }}>
             <Link className="btn-ver-servicios" href="/servicios">Ver todos los servicios →</Link>
