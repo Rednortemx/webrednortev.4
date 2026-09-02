@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
+import WhatsAppGateButton from '@/components/WhatsAppGateButton';
 
 export const metadata = {
   title: 'Servicios inmobiliarios en Monterrey',
@@ -313,14 +314,9 @@ export default function ServiciosPage() {
             <Link className="services-hub-btn services-hub-btn-primary" href="/contacto">
               Hablar con Rednorte
             </Link>
-            <a
-              className="services-hub-btn services-hub-btn-secondary"
-              href="https://wa.me/528117783953"
-              target="_blank"
-              rel="noreferrer"
-            >
+            <WhatsAppGateButton className="services-hub-btn services-hub-btn-secondary" source="Servicios (CTA final)">
               WhatsApp
-            </a>
+            </WhatsAppGateButton>
           </div>
         </div>
       </section>

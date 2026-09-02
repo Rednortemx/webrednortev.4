@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
 import ForeignClientsForm from '@/components/ForeignClientsForm';
 import TrustindexWidget from '@/components/TrustindexWidget';
+import WhatsAppGateButton from '@/components/WhatsAppGateButton';
 
 export const metadata = {
   title: 'Bienes raíces en Monterrey para extranjeros',
@@ -647,15 +648,12 @@ export default function ClientesExtranjerosPage() {
                 sensibles mediante este formulario. Después de revisar tu caso te indicaremos el
                 canal adecuado.
               </p>
-              <a
+              <WhatsAppGateButton
                 className="foreign-inline-link foreign-inline-link-light"
-                href="https://wa.me/528117783953"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-event="foreign_whatsapp_click"
+                source="Clientes extranjeros"
               >
                 Hablar por WhatsApp →
-              </a>
+              </WhatsAppGateButton>
             </div>
             <ForeignClientsForm />
           </div>

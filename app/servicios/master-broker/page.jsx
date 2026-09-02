@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
 import MasterBrokerForm from '@/components/MasterBrokerForm';
 import TrustindexWidget from '@/components/TrustindexWidget';
+import WhatsAppGateButton from '@/components/WhatsAppGateButton';
 
 export const metadata = {
   title: 'Master Broker en Monterrey y Nuevo León',
@@ -625,15 +626,12 @@ export default function MasterBrokerPage() {
                 <li>El servicio se activa únicamente mediante acuerdo por escrito.</li>
                 <li>La solicitud no implica aceptación automática de la propiedad.</li>
               </ul>
-              <a
+              <WhatsAppGateButton
                 className="master-inline-link master-inline-link-light"
-                href="https://wa.me/528117783953"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-event="master_broker_whatsapp_click"
+                source="Master Broker"
               >
                 Hablar directamente por WhatsApp →
-              </a>
+              </WhatsAppGateButton>
             </div>
             <MasterBrokerForm />
           </div>
