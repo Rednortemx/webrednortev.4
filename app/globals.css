@@ -316,6 +316,7 @@ section { padding: 5rem 0; }
 .services-mini .section-sub { color: rgba(255,255,255,0.6); }
 .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
 .service-block {
+ display: block; text-decoration: none;
  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
  border-radius: 12px; padding: 1.75rem 1.5rem;
  transition: all 0.25s; cursor: pointer;
