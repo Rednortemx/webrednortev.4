@@ -47,7 +47,6 @@ const ownerServices = [
       'Obtén una referencia inicial y conoce los factores que influyen en el valor comercial de una propiedad antes de tomar una decisión.',
     cta: 'Conocer el servicio',
     href: '/servicios/estimacion-de-valor',
-    destinoTemporal: '/herramientas/estimacion-de-valor',
   },
 ];
 
@@ -88,7 +87,6 @@ const specializedServices = [
       'Asesoría para comprar, vender o rentar locales, oficinas, consultorios, edificios, terrenos y otros espacios comerciales.',
     cta: 'Ver servicio comercial',
     href: '/servicios/inmobiliaria-comercial',
-    destinoTemporal: '/servicios/comercial-industrial',
   },
   {
     number: '08',
@@ -97,7 +95,6 @@ const specializedServices = [
       'Búsqueda y comercialización de naves, bodegas, terrenos, patios, parques industriales y proyectos build-to-suit.',
     cta: 'Ver servicio industrial',
     href: '/servicios/inmobiliaria-industrial',
-    destinoTemporal: '/servicios/comercial-industrial',
   },
   {
     number: '09',

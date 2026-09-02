@@ -133,12 +133,12 @@ export default async function HomePage() {
             <div className="service-block">
               <div className="service-name">Inmobiliaria comercial</div>
               <div className="service-desc">Asesoría para comprar, vender o rentar locales, oficinas, consultorios, edificios y otros espacios comerciales en Nuevo León.</div>
-              <Link className="service-link" href="/servicios/comercial-industrial">Ver servicio comercial →</Link>
+              <Link className="service-link" href="/servicios/inmobiliaria-comercial">Ver servicio comercial →</Link>
             </div>
             <div className="service-block">
               <div className="service-name">Inmobiliaria industrial</div>
               <div className="service-desc">Búsqueda y comercialización de naves, bodegas, terrenos, patios, parques industriales y proyectos build-to-suit.</div>
-              <Link className="service-link" href="/servicios/comercial-industrial">Ver servicio industrial →</Link>
+              <Link className="service-link" href="/servicios/inmobiliaria-industrial">Ver servicio industrial →</Link>
             </div>
           </div>
           <div style={{ textAlign: 'center', marginTop: '2rem' }}>
