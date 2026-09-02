@@ -9,6 +9,18 @@ body {
  line-height: 1.6;
 }
 
+/* Base reset for WhatsAppGateButton so it can drop into any spot that used
+   to be a plain <a href="https://wa.me/..."> link, picking up whatever
+   visual class it's given (.btn-wa-nav, .social-btn, .foreign-inline-link,
+   etc.) instead of default <button> chrome. Placed early on purpose: any
+   later same-specificity class (background/border/padding on the "real
+   button" styles) overrides it, while link-style classes that never set
+   those properties keep this reset. */
+.wa-gate-btn {
+ appearance: none; background: none; border: none; padding: 0; margin: 0;
+ font: inherit; color: inherit; text-align: inherit; cursor: pointer;
+}
+
 /* Color tokens */
 :root {
  --terracota: #C4622D;
@@ -392,8 +404,8 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
 .footer-address { font-size: 12.5px; line-height: 1.7; }
 .footer-col h4 { font-size: 12px; font-weight: 700; color: white; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 1rem; }
 .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
-.footer-links a { font-size: 13px; color: rgba(255,255,255,0.6); text-decoration: none; cursor: pointer; transition: color 0.2s; }
-.footer-links a:hover { color: var(--terracota); }
+.footer-links a, .footer-links button { font-size: 13px; color: rgba(255,255,255,0.6); text-decoration: none; cursor: pointer; transition: color 0.2s; }
+.footer-links a:hover, .footer-links button:hover { color: var(--terracota); }
 .footer-social { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem; }
 .social-btn {
  width: 36px; height: 36px; border-radius: 8px;

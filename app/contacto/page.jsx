@@ -1,5 +1,6 @@
 import Breadcrumb from '@/components/Breadcrumb';
 import ContactForm from '@/components/ContactForm';
+import WhatsAppGateButton from '@/components/WhatsAppGateButton';
 
 export const metadata = {
   title: 'Contacto',
@@ -23,7 +24,7 @@ export default function ContactoPage() {
             <div className="info-card">
               <h4>Información de contacto</h4>
               <div className="info-item"><div className="info-icon"></div><div className="info-text"><span className="info-label">Teléfono</span>(811) 778-3953</div></div>
-              <div className="info-item"><div className="info-icon"></div><div className="info-text"><span className="info-label">WhatsApp</span><a href="https://wa.me/528117783953" style={{ color: 'var(--terracota)' }}>+52 (811) 778-3953</a></div></div>
+              <div className="info-item"><div className="info-icon"></div><div className="info-text"><span className="info-label">WhatsApp</span><WhatsAppGateButton style={{ color: 'var(--terracota)' }} source="Página de contacto">+52 (811) 778-3953</WhatsAppGateButton></div></div>
               <div className="info-item"><div className="info-icon"></div><div className="info-text"><span className="info-label">Dirección</span>Av. José Vasconcelos Ote. 215-7, Residencial San Agustín 1er Sector, San Pedro Garza García, N.L. 66260</div></div>
               <div className="info-item"><div className="info-icon"></div><div className="info-text"><span className="info-label">Horario</span>Lun–Vie: 9:00 – 18:00 h<br />Sáb: 10:00 – 14:00 h</div></div>
             </div>

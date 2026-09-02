@@ -1,5 +1,6 @@
 import Breadcrumb from '@/components/Breadcrumb';
 import FaqAccordion from '@/components/FaqAccordion';
+import WhatsAppGateButton from '@/components/WhatsAppGateButton';
 import { faqSchema } from '@/lib/schema';
 
 // Antes esta ruta existía pero estaba vacía ("Estamos preparando esta
@@ -33,7 +34,7 @@ export default function PreguntasFrecuentesPage() {
         <div style={{ background: 'linear-gradient(135deg,var(--vino),var(--vino-dark))', borderRadius: '14px', padding: '2.5rem', textAlign: 'center', marginTop: '3rem' }}>
           <h2 style={{ color: 'white', fontSize: '1.15rem', fontWeight: 800, marginBottom: '0.5rem' }}>¿No encontraste tu respuesta?</h2>
           <p style={{ color: 'rgba(255,255,255,.75)', fontSize: '14px', marginBottom: '1.25rem' }}>Escríbenos directamente y con gusto te ayudamos.</p>
-          <a className="btn-white" href="https://wa.me/528117783953" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block' }}>Preguntar por WhatsApp</a>
+          <WhatsAppGateButton className="btn-white" style={{ display: 'inline-block' }} source="Preguntas frecuentes">Preguntar por WhatsApp</WhatsAppGateButton>
         </div>
       </div>
     </div>
