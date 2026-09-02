@@ -28,7 +28,10 @@ export default function ServicePageForm({ formClass, tipo, telefono = '528117783
       });
       if (!l) return '';
       const campo = l.querySelector('input, select, textarea');
-      return campo ? String(campo.value || '').trim() : '';
+      const v = campo ? String(campo.value || '').trim() : '';
+      // Los <select> sin elegir devuelven su texto de placeholder; se descarta
+      // para que no acabe en la hoja de leads como si fuera un dato real.
+      return /^selecciona/i.test(v) ? '' : v;
     };
 
     const estado = (texto, ok) => {
