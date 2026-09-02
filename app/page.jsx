@@ -106,9 +106,9 @@ export default async function HomePage() {
             <h2 className="section-title">¿Cómo podemos ayudarte?</h2>
             <p className="section-sub" style={{ margin: '0 auto' }}>Soluciones para comprar, vender, rentar e invertir en bienes raíces en Monterrey y Nuevo León.</p>
           </div>
-          {/* Seis tarjetas. Comprar, comercial e industrial todavía no tienen
-              página propia: mientras llegan apuntan a una página real y
-              relacionada, para no dejar el enlace en 404. */}
+          {/* Seis tarjetas. Comercial e industrial todavía no tienen página
+              propia: mientras llegan apuntan a una página real y relacionada,
+              para no dejar el enlace en 404. */}
           <div className="services-grid">
             <div className="service-block">
               <div className="service-name">Vender una propiedad</div>
@@ -123,7 +123,7 @@ export default async function HomePage() {
             <div className="service-block">
               <div className="service-name">Comprar una propiedad</div>
               <div className="service-desc">Buscamos en nuestro inventario y en la red inmobiliaria para comparar opciones, negociar condiciones y acompañarte hasta la entrega.</div>
-              <Link className="service-link" href="/contacto">Quiero comprar una propiedad →</Link>
+              <Link className="service-link" href="/servicios/comprar-propiedad">Quiero comprar una propiedad →</Link>
             </div>
             <div className="service-block">
               <div className="service-name">Inversión inmobiliaria y preventas</div>

@@ -68,10 +68,13 @@ export default function Footer() {
           <h4>Servicios</h4>
           <ul className="footer-links">
             <li><Link href="/servicios/vender-propiedad">Vender propiedad</Link></li>
+            <li><Link href="/servicios/comprar-propiedad">Comprar propiedad</Link></li>
             <li><Link href="/servicios/rentar-propiedad">Rentar propiedad</Link></li>
             <li><Link href="/servicios/inversion-inmobiliaria">Inversión inmobiliaria</Link></li>
             <li><Link href="/servicios/comercial-industrial">Comercial e industrial</Link></li>
             <li><Link href="/herramientas/estimacion-de-valor">Estimación de valor</Link></li>
+            <li><Link href="/servicios/clientes-extranjeros">Clientes extranjeros</Link></li>
+            <li><Link href="/servicios/master-broker">Master Broker</Link></li>
           </ul>
         </div>
         <div className="footer-col">
