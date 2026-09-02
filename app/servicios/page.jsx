@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
+import WhatsAppGateButton from '@/components/WhatsAppGateButton';
 
 export const metadata = {
   title: 'Servicios inmobiliarios en Monterrey',
@@ -58,7 +59,6 @@ const buyerServices = [
       'Buscamos en nuestro inventario y en la red inmobiliaria para comparar opciones, negociar condiciones y acompañarte hasta la entrega.',
     cta: 'Quiero comprar una propiedad',
     href: '/servicios/comprar-propiedad',
-    destinoTemporal: '/contacto',
   },
   {
     number: '05',
@@ -75,7 +75,6 @@ const buyerServices = [
       'Acompañamiento local para comprar, rentar o invertir en Nuevo León, incluyendo coordinación documental y gestión ante la SRE cuando resulte aplicable.',
     cta: 'Conocer atención internacional',
     href: '/servicios/clientes-extranjeros',
-    destinoTemporal: '/contacto',
   },
 ];
 
@@ -103,7 +102,6 @@ const specializedServices = [
       'Estrategia exclusiva de venta con coordinación centralizada de Rednorte y una red de colaboración inmobiliaria ampliada, incluyendo MBN cuando corresponde.',
     cta: 'Conocer Master Broker',
     href: '/servicios/master-broker',
-    destinoTemporal: '/contacto',
   },
 ];
 
@@ -313,14 +311,9 @@ export default function ServiciosPage() {
             <Link className="services-hub-btn services-hub-btn-primary" href="/contacto">
               Hablar con Rednorte
             </Link>
-            <a
-              className="services-hub-btn services-hub-btn-secondary"
-              href="https://wa.me/528117783953"
-              target="_blank"
-              rel="noreferrer"
-            >
+            <WhatsAppGateButton className="services-hub-btn services-hub-btn-secondary" source="Servicios (CTA final)">
               WhatsApp
-            </a>
+            </WhatsAppGateButton>
           </div>
         </div>
       </section>
