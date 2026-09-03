@@ -654,12 +654,12 @@ export default function MasterBrokerPage() {
                 <strong>Estimación de valor</strong>
                 <p>Conoce cómo compite la propiedad antes de definir el precio de salida.</p>
               </Link>
-              <Link href="/servicios/comercial-industrial">
+              <Link href="/servicios/inmobiliaria-industrial">
                 <span>Industrial</span>
                 <strong>Inmobiliaria industrial</strong>
                 <p>Venta de naves, bodegas, terrenos, patios y activos especializados.</p>
               </Link>
-              <Link href="/servicios/comercial-industrial">
+              <Link href="/servicios/inmobiliaria-comercial">
                 <span>Comercial</span>
                 <strong>Inmobiliaria comercial</strong>
                 <p>Venta de locales, oficinas, edificios, terrenos y espacios comerciales.</p>

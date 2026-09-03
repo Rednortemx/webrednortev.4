@@ -724,7 +724,7 @@ export default function InversionInmobiliariaPage() {
 
             <div className="invest-related-grid">
               <Link href="/propiedades">Ver propiedades disponibles</Link>
-              <Link href="/servicios/comercial-industrial">Inmuebles comerciales e industriales</Link>
+              <Link href="/servicios">Inmuebles comerciales e industriales</Link>
               <Link href="/servicios/rentar-propiedad">Rentar una propiedad</Link>
               <Link href="/herramientas/estimacion-de-valor">Estimación de valor</Link>
               <Link href="/nosotros">Conoce Rednorte</Link>
