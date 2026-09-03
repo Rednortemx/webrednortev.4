@@ -542,7 +542,7 @@ export default function VenderPropiedadPage() {
               <Link href="/herramientas/reporte-de-vendibilidad">Reporte de vendibilidad</Link>
               <Link href="/servicios/rentar-propiedad">Rentar una propiedad</Link>
               <Link href="/servicios/inversion-inmobiliaria">Inversión inmobiliaria</Link>
-              <Link href="/servicios/comercial-industrial">Comercial e industrial</Link>
+              <Link href="/servicios">Comercial e industrial</Link>
             </div>
           </div>
         </section>

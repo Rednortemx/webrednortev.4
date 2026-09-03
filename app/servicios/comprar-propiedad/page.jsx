@@ -376,7 +376,7 @@ export default function ComprarPropiedadPage() {
             <Link href="/servicios/inversion-inmobiliaria">
               ¿Buscas rendimiento o plusvalía? Conoce Inversión inmobiliaria →
             </Link>
-            <Link href="/servicios/comercial-industrial">
+            <Link href="/servicios/inmobiliaria-industrial">
               ¿Buscas una nave, bodega o terreno industrial? Ver servicio industrial →
             </Link>
           </div>
@@ -611,7 +611,7 @@ export default function ComprarPropiedadPage() {
           <div className="buy-related-grid">
             <Link href="/propiedades">Ver propiedades disponibles</Link>
             <Link href="/servicios/inversion-inmobiliaria">Inversión inmobiliaria</Link>
-            <Link href="/servicios/comercial-industrial">Inmobiliaria industrial</Link>
+            <Link href="/servicios/inmobiliaria-industrial">Inmobiliaria industrial</Link>
             <Link href="/servicios/rentar-propiedad">Rentar una propiedad</Link>
             <Link href="/servicios/vender-propiedad">Vender una propiedad</Link>
             <Link href="/contacto">Hablar con Rednorte</Link>

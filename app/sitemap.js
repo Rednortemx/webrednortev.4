@@ -19,7 +19,6 @@ const STATIC_ROUTES = [
   '/servicios/estimacion-de-valor',
   '/servicios/inmobiliaria-comercial',
   '/servicios/inmobiliaria-industrial',
-  '/servicios/comercial-industrial',
   '/servicios/clientes-extranjeros',
   '/servicios/master-broker',
   '/herramientas',

@@ -43,5 +43,6 @@ export const config = {
     '/agentes',
     '/nuestro-equipo',
     '/assets/img/favicon.ico',
+    '/servicios/comercial-industrial',
   ],
 };

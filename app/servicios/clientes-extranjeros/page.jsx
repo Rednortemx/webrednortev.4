@@ -63,7 +63,7 @@ const servicePaths = [
     description:
       'Apoyamos a empresas que llegan o se expanden en Nuevo León con oficinas, inmuebles industriales y vivienda para ejecutivos.',
     href: '/servicios/clientes-extranjeros?need=empresa#asesoria-extranjeros',
-    relatedHref: '/servicios/comercial-industrial',
+    relatedHref: '/servicios',
     relatedLabel: 'Ver soluciones para empresas →',
   },
 ];
@@ -530,8 +530,8 @@ export default function ClientesExtranjerosPage() {
               </p>
             </div>
             <div className="foreign-company-links">
-              <Link href="/servicios/comercial-industrial">Oficinas y espacios comerciales →</Link>
-              <Link href="/servicios/comercial-industrial">Naves, bodegas y terrenos industriales →</Link>
+              <Link href="/servicios/inmobiliaria-comercial">Oficinas y espacios comerciales →</Link>
+              <Link href="/servicios/inmobiliaria-industrial">Naves, bodegas y terrenos industriales →</Link>
               <a href="/servicios/clientes-extranjeros?need=ejecutivos#asesoria-extranjeros">
                 Vivienda para ejecutivos →
               </a>
@@ -669,8 +669,8 @@ export default function ClientesExtranjerosPage() {
               <Link href="/servicios/comprar-propiedad">Comprar una propiedad →</Link>
               <Link href="/servicios/rentar-propiedad">Rentar una propiedad →</Link>
               <Link href="/servicios/inversion-inmobiliaria">Inversión y preventas →</Link>
-              <Link href="/servicios/comercial-industrial">Inmobiliaria comercial →</Link>
-              <Link href="/servicios/comercial-industrial">Inmobiliaria industrial →</Link>
+              <Link href="/servicios/inmobiliaria-comercial">Inmobiliaria comercial →</Link>
+              <Link href="/servicios/inmobiliaria-industrial">Inmobiliaria industrial →</Link>
               <Link href="/herramientas/estimacion-de-valor">Estimación de valor →</Link>
             </div>
           </div>

@@ -590,7 +590,7 @@ export default function RentarPropiedadPage() {
             <div className="rent-related-links">
               <Link href="/servicios/vender-propiedad">Vender una propiedad</Link>
               <Link href="/servicios/inversion-inmobiliaria">Inversión inmobiliaria</Link>
-              <Link href="/servicios/comercial-industrial">Comercial e industrial</Link>
+              <Link href="/servicios">Comercial e industrial</Link>
               <Link href="/propiedades">Propiedades disponibles</Link>
               <Link href="/preguntas-frecuentes">Preguntas frecuentes</Link>
             </div>
