@@ -33,6 +33,15 @@ function translateNode(root) {
       }
     }
   });
+
+  // Placeholders live in an attribute, not a text node, so the walker above
+  // never sees them — translate them separately using the same dictionary.
+  root.querySelectorAll('input[placeholder], textarea[placeholder]').forEach((el) => {
+    const trimmed = el.placeholder.trim();
+    if (!trimmed) return;
+    if (el.dataset.origPlaceholder === undefined) el.dataset.origPlaceholder = el.placeholder;
+    if (translations[trimmed]) el.placeholder = translations[trimmed];
+  });
 }
 
 function revertNode(root) {
@@ -41,6 +50,9 @@ function revertNode(root) {
   while ((node = walker.nextNode())) {
     if (node._origText !== undefined) node.nodeValue = node._origText;
   }
+  root.querySelectorAll('input[data-orig-placeholder], textarea[data-orig-placeholder]').forEach((el) => {
+    el.placeholder = el.dataset.origPlaceholder;
+  });
 }
 
 export default function LanguageToggle() {
