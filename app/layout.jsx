@@ -1,4 +1,5 @@
 import './globals.css';
+import { Analytics } from '@vercel/analytics/next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import CookieBanner from '@/components/CookieBanner';
@@ -36,6 +37,7 @@ export default function RootLayout({ children }) {
         <CookieBanner />
         <GlobalModals />
         <LanguageToggle />
+        <Analytics />
       </body>
     </html>
   );
