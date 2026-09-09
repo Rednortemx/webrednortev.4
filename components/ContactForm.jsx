@@ -1,87 +1,190 @@
 'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { openModal } from '@/lib/modal';
+import { useEffect, useState } from 'react';
 
-const MOTIVOS = ['Quiero comprar', 'Quiero vender', 'Quiero rentar', 'Ofrecer en renta', 'Valuación', 'Quiero invertir', 'Info propiedad'];
+const REASONS = [
+  'Quiero comprar',
+  'Quiero vender',
+  'Quiero rentar una propiedad',
+  'Quiero poner en renta mi propiedad',
+  'Estimación de valor',
+  'Quiero invertir',
+  'Información sobre una propiedad',
+  'Comercial / Industrial',
+];
 
-// Ported from the legacy setMotivo()/buildContactoMessage()/enviarContactoWA()/continuarContactoWA().
+// ?motivo= slugs used by links into this page (e.g. /herramientas's
+// "Solicitar análisis personalizado" links to /contacto?motivo=estimacion)
+// so the right reason comes pre-selected instead of defaulting to the first one.
+const REASON_SLUGS = {
+  comprar: 'Quiero comprar',
+  vender: 'Quiero vender',
+  rentar: 'Quiero rentar una propiedad',
+  'poner-en-renta': 'Quiero poner en renta mi propiedad',
+  estimacion: 'Estimación de valor',
+  invertir: 'Quiero invertir',
+  'info-propiedad': 'Información sobre una propiedad',
+  'comercial-industrial': 'Comercial / Industrial',
+};
+
+// Ported from the uploaded "quick institutional pages" design. Fixed on
+// integration: the payload sent to /api/leads used a richer
+// {lead_type, source, contact_reason, name, phone, ...} schema that
+// doesn't match what app/api/leads/route.js actually reads
+// ({tipo, nombre, telefono, email, detalle, notas}) — every extra field
+// was being silently dropped. Also added the site-wide policy that every
+// WhatsApp-opening button (except the floating one) must collect name +
+// phone first: "Continuar por WhatsApp" here had zero validation.
 export default function ContactForm() {
-  const [motivo, setMotivo] = useState(MOTIVOS[0]);
-  const [nombre, setNombre] = useState('');
-  const [tel, setTel] = useState('');
-  const [email, setEmail] = useState('');
-  const [mensaje, setMensaje] = useState('');
-  const [priv, setPriv] = useState(false);
+  const [reason, setReason] = useState(REASONS[0]);
 
-  const buildMessage = () => {
-    const lines = ['Hola, me gustaría más información.', ''];
-    if (motivo) lines.push(`Motivo: ${motivo}`);
-    if (nombre) lines.push(`Nombre: ${nombre}`);
-    if (tel) lines.push(`Teléfono: ${tel}`);
-    if (email) lines.push(`Correo: ${email}`);
-    if (mensaje) lines.push('', `Mensaje: ${mensaje}`);
+  // /contacto is statically prerendered, so the ?motivo= slug can only be
+  // read once this component is actually running in the browser — done in
+  // an effect rather than a lazy useState initializer so it isn't at the
+  // mercy of hydration reusing the server-rendered (query-string-less) state.
+  useEffect(() => {
+    const slug = new URLSearchParams(window.location.search).get('motivo');
+    if (REASON_SLUGS[slug]) setReason(REASON_SLUGS[slug]);
+  }, []);
+  const [form, setForm] = useState({ name: '', phone: '', email: '', message: '', privacy: false });
+  const [state, setState] = useState({ loading: false, error: '', success: false });
+
+  const buildWhatsAppMessage = () => {
+    const lines = ['Hola, me gustaría más información.', '', `Motivo: ${reason}`, `Nombre: ${form.name}`, `Teléfono: ${form.phone}`];
+    if (form.email) lines.push(`Correo: ${form.email}`);
+    if (form.message) lines.push('', `Mensaje: ${form.message}`);
     return lines.join('\n');
   };
 
-  const enviar = () => {
-    if (!nombre || !tel || !email) {
-      alert('Por favor completa nombre, teléfono y correo electrónico.');
-      return;
+  const validate = () => {
+    if (!form.name || !form.phone || !form.email) {
+      setState({ loading: false, error: 'Completa nombre, teléfono y correo electrónico.', success: false });
+      return false;
     }
-    if (!priv) {
-      alert('Debes aceptar el Aviso de Privacidad para continuar.');
-      return;
+    if (!form.privacy) {
+      setState({ loading: false, error: 'Debes aceptar el Aviso de Privacidad.', success: false });
+      return false;
     }
+    return true;
+  };
+
+  const postLead = () =>
     fetch('/api/leads', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ tipo: 'Contacto general', nombre, telefono: tel, email, detalle: motivo, notas: mensaje }),
-    }).catch(() => {});
+      body: JSON.stringify({
+        tipo: 'Contacto general',
+        nombre: form.name,
+        telefono: form.phone,
+        email: form.email,
+        detalle: reason,
+        notas: form.message,
+      }),
+    });
 
-    window.open('https://wa.me/528117783953?text=' + encodeURIComponent(buildMessage()), '_blank');
-    openModal('successModal');
-  };
+  async function submit(e) {
+    e.preventDefault();
+    if (!validate()) return;
 
-  const continuar = () => {
-    if (!nombre || !tel || !email) {
-      alert('Por favor completa nombre, teléfono y correo electrónico.');
-      return;
+    setState({ loading: true, error: '', success: false });
+    try {
+      const response = await postLead();
+      if (!response.ok) throw new Error('No se pudo enviar el mensaje.');
+      setState({ loading: false, error: '', success: true });
+    } catch (error) {
+      setState({ loading: false, error: error?.message || 'Ocurrió un error. Intenta nuevamente.', success: false });
     }
-    if (!priv) {
-      alert('Debes aceptar el Aviso de Privacidad para continuar.');
-      return;
-    }
-    fetch('/api/leads', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ tipo: 'Contacto general', nombre, telefono: tel, email, detalle: motivo, notas: mensaje }),
-    }).catch(() => {});
+  }
 
-    window.open('https://wa.me/528117783953?text=' + encodeURIComponent(buildMessage()), '_blank');
-  };
+  function continuarWhatsApp(e) {
+    e.preventDefault();
+    if (!validate()) return;
+    postLead().catch(() => {});
+    window.open(`https://wa.me/528117783953?text=${encodeURIComponent(buildWhatsAppMessage())}`, '_blank');
+  }
 
   return (
-    <div className="form-card">
-      <h3 style={{ fontSize: '14px', fontWeight: 700, color: 'var(--gris-medio)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.75rem' }}>Motivo de contacto</h3>
-      <div className="motivos">
-        {MOTIVOS.map((m) => (
-          <button key={m} type="button" className={`motivo-btn${motivo === m ? ' active' : ''}`} onClick={() => setMotivo(m)}>{m}</button>
-        ))}
+    <form className="quick-form" onSubmit={submit}>
+      <fieldset>
+        <legend>Motivo de contacto</legend>
+        <div className="quick-reason-grid">
+          {REASONS.map((item) => (
+            <button
+              type="button"
+              className={reason === item ? 'is-active' : ''}
+              onClick={() => setReason(item)}
+              key={item}
+            >
+              {item}
+            </button>
+          ))}
+        </div>
+      </fieldset>
+
+      <div className="quick-form-grid">
+        <label>
+          <span>Nombre *</span>
+          <input
+            required
+            value={form.name}
+            onChange={(e) => setForm((v) => ({ ...v, name: e.target.value }))}
+            placeholder="Tu nombre completo"
+          />
+        </label>
+        <label>
+          <span>Teléfono *</span>
+          <input
+            required
+            type="tel"
+            value={form.phone}
+            onChange={(e) => setForm((v) => ({ ...v, phone: e.target.value }))}
+            placeholder="+52 (81)"
+          />
+        </label>
       </div>
-      <div className="form-row" style={{ marginTop: '1.25rem' }}>
-        <div className="form-group"><label>Nombre *</label><input type="text" placeholder="Tu nombre completo" value={nombre} onChange={(e) => setNombre(e.target.value)} /></div>
-        <div className="form-group"><label>Teléfono *</label><input type="tel" placeholder="+52 (81)" value={tel} onChange={(e) => setTel(e.target.value)} /></div>
-      </div>
-      <div className="form-group"><label>Correo electrónico *</label><input type="email" placeholder="correo@ejemplo.com" value={email} onChange={(e) => setEmail(e.target.value)} /></div>
-      <div className="form-group"><label>Mensaje</label><textarea rows="4" placeholder="Cuéntanos más sobre lo que necesitas..." value={mensaje} onChange={(e) => setMensaje(e.target.value)}></textarea></div>
-      <div className="form-check">
-        <input type="checkbox" id="priv2" checked={priv} onChange={(e) => setPriv(e.target.checked)} />
-        <label htmlFor="priv2">Acepto el <Link href="/aviso-de-privacidad" style={{ color: 'var(--terracota)' }}>Aviso de Privacidad</Link>.</label>
-      </div>
-      <button className="btn-primary-full" type="button" onClick={enviar}>Enviar mensaje</button>
-      <button className="btn-wa-full" type="button" onClick={continuar}> Continuar por WhatsApp</button>
-    </div>
+
+      <label>
+        <span>Correo electrónico *</span>
+        <input
+          required
+          type="email"
+          value={form.email}
+          onChange={(e) => setForm((v) => ({ ...v, email: e.target.value }))}
+          placeholder="correo@ejemplo.com"
+        />
+      </label>
+
+      <label>
+        <span>Mensaje</span>
+        <textarea
+          rows="5"
+          value={form.message}
+          onChange={(e) => setForm((v) => ({ ...v, message: e.target.value }))}
+          placeholder="Cuéntanos más sobre lo que necesitas..."
+        />
+      </label>
+
+      <label className="quick-check">
+        <input
+          type="checkbox"
+          checked={form.privacy}
+          onChange={(e) => setForm((v) => ({ ...v, privacy: e.target.checked }))}
+        />
+        <span>
+          Acepto el <a href="/aviso-de-privacidad">Aviso de Privacidad</a>.
+        </span>
+      </label>
+
+      {state.error && <p className="quick-form-message is-error">{state.error}</p>}
+      {state.success && <p className="quick-form-message is-success">Mensaje enviado correctamente.</p>}
+
+      <button className="quick-submit" disabled={state.loading} type="submit">
+        {state.loading ? 'Enviando…' : 'Enviar mensaje'}
+      </button>
+
+      <button className="quick-whatsapp-submit" type="button" onClick={continuarWhatsApp}>
+        Continuar por WhatsApp
+      </button>
+    </form>
   );
 }
