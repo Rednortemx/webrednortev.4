@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import Link from 'next/link';
 import PropertyCard from './PropertyCard';
 
 const PROPS_PER_PAGE = 12;
@@ -46,7 +47,7 @@ export default function PropertyFilters({ properties, initialFilters }) {
     operacion: operacion, tipo, categoria, zona, precioMin, precioMax, recamaras, banos, m2Min, m2Max,
   });
   const [sort, setSort] = useState('recientes');
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(Number(initialFilters.page) || 1);
 
   const filtered = useMemo(() => {
     const f = appliedFilters;
@@ -93,6 +94,27 @@ export default function PropertyFilters({ properties, initialFilters }) {
     setM2Min(''); setM2Max('');
     setAppliedFilters({ operacion: '', tipo: '', categoria: '', zona: '', precioMin: '', precioMax: '', recamaras: '0', banos: '0', m2Min: '', m2Max: '' });
     setPage(1);
+  };
+
+  // Real, crawlable <a href> per page (see app/propiedades/page.jsx) instead
+  // of a plain onClick — a page number that only exists as a JS click handler
+  // is invisible to Googlebot, which follows links but doesn't click buttons.
+  // This is why ~980 of the ~1,000 live listings had no internal link pointing
+  // to them at all outside of the sitemap.
+  const buildPageHref = (targetPage) => {
+    const params = new URLSearchParams();
+    const f = appliedFilters;
+    if (f.operacion) params.set('operacion', f.operacion);
+    if (f.tipo) params.set('tipo', f.tipo);
+    if (f.categoria) params.set('categoria', f.categoria);
+    if (f.zona) params.set('zona', f.zona);
+    if (f.precioMin) params.set('precioMin', f.precioMin);
+    if (f.precioMax) params.set('precioMax', f.precioMax);
+    if (f.recamaras && f.recamaras !== '0') params.set('recamaras', f.recamaras);
+    if (f.banos && f.banos !== '0') params.set('banos', f.banos);
+    if (targetPage > 1) params.set('page', String(targetPage));
+    const qs = params.toString();
+    return qs ? `/propiedades?${qs}` : '/propiedades';
   };
 
   return (
@@ -246,17 +268,33 @@ export default function PropertyFilters({ properties, initialFilters }) {
         </div>
         {totalPages > 1 && (
           <div className="pagination">
-            <button className="pag-btn" disabled={currentPage <= 1} onClick={() => setPage(currentPage - 10)} title="Retroceder 10 páginas" type="button">«</button>
-            <button className="pag-btn" disabled={currentPage === 1} onClick={() => setPage(currentPage - 1)} type="button">‹</button>
+            {currentPage <= 1 ? (
+              <span className="pag-btn" aria-disabled="true" title="Retroceder 10 páginas">«</span>
+            ) : (
+              <Link className="pag-btn" href={buildPageHref(Math.max(1, currentPage - 10))} title="Retroceder 10 páginas">«</Link>
+            )}
+            {currentPage === 1 ? (
+              <span className="pag-btn" aria-disabled="true">‹</span>
+            ) : (
+              <Link className="pag-btn" href={buildPageHref(currentPage - 1)}>‹</Link>
+            )}
             {getPaginationItems(currentPage, totalPages).map((item, i) =>
               item === '...' ? (
                 <span key={`e${i}`} className="pag-ellipsis">…</span>
               ) : (
-                <button key={item} className={`pag-btn${item === currentPage ? ' active' : ''}`} onClick={() => setPage(item)} type="button">{item}</button>
+                <Link key={item} className={`pag-btn${item === currentPage ? ' active' : ''}`} href={buildPageHref(item)}>{item}</Link>
               )
             )}
-            <button className="pag-btn" disabled={currentPage === totalPages} onClick={() => setPage(currentPage + 1)} type="button">›</button>
-            <button className="pag-btn" disabled={currentPage >= totalPages} onClick={() => setPage(currentPage + 10)} title="Adelantar 10 páginas" type="button">»</button>
+            {currentPage === totalPages ? (
+              <span className="pag-btn" aria-disabled="true">›</span>
+            ) : (
+              <Link className="pag-btn" href={buildPageHref(currentPage + 1)}>›</Link>
+            )}
+            {currentPage >= totalPages ? (
+              <span className="pag-btn" aria-disabled="true" title="Adelantar 10 páginas">»</span>
+            ) : (
+              <Link className="pag-btn" href={buildPageHref(Math.min(totalPages, currentPage + 10))} title="Adelantar 10 páginas">»</Link>
+            )}
           </div>
         )}
       </div>
