@@ -13,7 +13,12 @@ export function middleware(request) {
 
   // Se normaliza la barra final para que /team y /team/ se traten igual.
   const limpio = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname;
-  const destino = REDIRECTS_ESTATICOS[limpio.toLowerCase()];
+  const limpioLower = limpio.toLowerCase();
+  // Las fichas individuales del equipo del sitio anterior (/team/nombre-apellido)
+  // no tienen contenido equivalente en /equipo/[slug] (todavía sin datos reales
+  // de asesores) — se mandan al listado, igual que ya se hacía con /team a secas,
+  // en vez de dejarlas 404 sin ninguna señal para Google de que el contenido se movió.
+  const destino = REDIRECTS_ESTATICOS[limpioLower] || (limpioLower.startsWith('/team/') ? '/equipo' : null);
 
   if (destino) {
     const url = new URL(destino, request.url);
@@ -38,7 +43,7 @@ export const config = {
     '/es-mx',
     '/blog',
     '/team',
-    '/team/',
+    '/team/:path*',
     '/agents',
     '/agentes',
     '/nuestro-equipo',
