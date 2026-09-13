@@ -1,3 +1,5 @@
+import ExternalContentGate from './ExternalContentGate';
+
 // Mapa de la ficha de propiedad.
 //
 // Antes esto era un recuadro verde fijo con el nombre de la zona escrito
@@ -18,18 +20,26 @@ export default function PropertyMap({ property }) {
 
   const zoom = hasCoords ? 16 : 13;
   const embedSrc = `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=${zoom}&output=embed`;
+  const externalHref = `https://maps.google.com/?q=${encodeURIComponent(query)}`;
 
   return (
     <>
       <p className="prop-section-title">{hasCoords ? 'Ubicación' : 'Ubicación aproximada'}</p>
       <div className="prop-map">
-        <iframe
-          src={embedSrc}
-          title={`Mapa de ${property.title}`}
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          allowFullScreen
-        />
+        <ExternalContentGate
+          provider="Google Maps"
+          description="El mapa se cargará únicamente si permites los servicios opcionales."
+          externalHref={externalHref}
+          externalLabel="Abrir en Google Maps"
+        >
+          <iframe
+            src={embedSrc}
+            title={`Mapa de ${property.title}`}
+            loading="lazy"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          />
+        </ExternalContentGate>
       </div>
       <p className="prop-map-caption">{property.zone}</p>
     </>

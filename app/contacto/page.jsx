@@ -1,6 +1,7 @@
 import Breadcrumb from '@/components/Breadcrumb';
 import ContactForm from '@/components/ContactForm';
 import WhatsAppGateButton from '@/components/WhatsAppGateButton';
+import ExternalContentGate from '@/components/ExternalContentGate';
 
 export const metadata = {
   title: 'Contacto',
@@ -31,7 +32,14 @@ export default function ContactoPage() {
             <div className="info-card">
               <h4>Ubicación</h4>
               <div className="map-embed-frame">
-                <iframe src="https://maps.google.com/maps?q=Av.+Jos%C3%A9+Vasconcelos+Ote.+215+San+Pedro+Garza+Garcia&output=embed" title="Ubicación Rednorte Inmobiliaria" loading="lazy" allowFullScreen></iframe>
+                <ExternalContentGate
+                  provider="Google Maps"
+                  description="El mapa se cargará únicamente si permites los servicios opcionales."
+                  externalHref="https://maps.google.com/?q=Av.+Vasconcelos+215+San+Pedro+Garza+Garcia"
+                  externalLabel="Abrir en Google Maps"
+                >
+                  <iframe src="https://maps.google.com/maps?q=Av.+Jos%C3%A9+Vasconcelos+Ote.+215+San+Pedro+Garza+Garcia&output=embed" title="Ubicación Rednorte Inmobiliaria" loading="lazy" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+                </ExternalContentGate>
               </div>
               <a className="btn-como-llegar" href="https://maps.google.com/?q=Av.+Vasconcelos+215+San+Pedro+Garza+Garcia" target="_blank" rel="noopener noreferrer"> Cómo llegar</a>
             </div>

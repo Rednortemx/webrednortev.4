@@ -12,7 +12,7 @@ export default function AvisoPrivacidadPage() {
       <Breadcrumb items={[{ label: 'Aviso de privacidad' }]} />
       <div className="legal-page">
         <h1>Aviso de Privacidad Integral</h1>
-        <p className="legal-date">Última actualización: 8 de julio de 2026</p>
+        <p className="legal-date">Última actualización: 13 de septiembre de 2026</p>
         <div className="legal-section">
           <p>En cumplimiento con lo dispuesto por la Ley Federal de Protección de Datos Personales en Posesión de los Particulares y demás disposiciones aplicables, Red de Administración y Compraventa, S.A. de C.V., bajo el nombre comercial Rednorte Inmobiliaria, con RFC RAC230525TH3, con domicilio en Av. José Vasconcelos Ote. 215-7, Residencial San Agustín 1er Sector, C.P. 66260, San Pedro Garza García, Nuevo León, es responsable del uso, tratamiento, protección y resguardo de sus datos personales.</p>
           <p>Para efectos del presente Aviso de Privacidad, el titular de los datos personales podrá ser cualquier persona física que tenga contacto con Rednorte Inmobiliaria o con sus asesores, incluyendo, de manera enunciativa más no limitativa, propietarios, vendedores, compradores, arrendadores, arrendatarios, prospectos, clientes, asesores, aliados comerciales, representantes legales, apoderados o cualquier tercero relacionado con una operación inmobiliaria.</p>
@@ -54,10 +54,11 @@ export default function AvisoPrivacidadPage() {
           <p>Rednorte Inmobiliaria no vende bases de datos personales.</p>
         </div>
         <div className="legal-section">
-          <h2>VI. Uso de herramientas tecnológicas, cookies y píxeles</h2>
+          <h2>VI. Sitio web, analítica y contenido externo</h2>
           <p>Rednorte Inmobiliaria utiliza herramientas tecnológicas y medios digitales para la operación de sus servicios, incluyendo CRM, correo electrónico, mensajería instantánea, plataformas inmobiliarias, formularios digitales, herramientas de gestión comercial, herramientas de automatización, almacenamiento en la nube y medios de comunicación electrónica.</p>
-          <p>Asimismo, el sitio web de Rednorte Inmobiliaria podrá utilizar cookies, web beacons, píxeles, etiquetas de seguimiento, herramientas de analítica, medición publicitaria, remarketing y tecnologías similares, propias o de terceros, con fines de funcionamiento del sitio, análisis estadístico, medición de campañas, mejora de experiencia de usuario, publicidad, seguimiento comercial y optimización de servicios.</p>
-          <p>El titular podrá deshabilitar dichas tecnologías desde la configuración de su navegador o dispositivo, sin perjuicio de que algunas funcionalidades del sitio web puedan verse limitadas.</p>
+          <p>En rednorte.mx se utiliza almacenamiento local necesario para recordar la elección de privacidad del visitante. Con autorización previa se activa Vercel Web Analytics para obtener estadísticas agregadas de navegación y se cargan contenidos externos de Google Maps y Trustindex. La analítica no recibe los datos escritos en los formularios y Rednorte elimina los parámetros y fragmentos de las direcciones antes de enviar eventos de página.</p>
+          <p>El visitante puede rechazar o permitir estas tecnologías opcionales y modificar posteriormente su decisión mediante el enlace “Preferencias de cookies” disponible en el pie del sitio. Rechazarlas no impide el uso de los formularios ni de las funciones principales.</p>
+          <p>El inventario, las categorías de información técnica y los controles aplicables se describen en la <a href="/politica-de-cookies" style={{ color: 'var(--terracota)' }}>Política de Cookies y Tecnologías</a>.</p>
         </div>
         <div className="legal-section">
           <h2>VII. Consentimiento para datos patrimoniales y financieros</h2>

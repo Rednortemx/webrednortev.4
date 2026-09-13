@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import usePrivacyConsent from './usePrivacyConsent';
 
 const WIDGET_ID = '2febd0b79c3a9262701634a905e';
 
@@ -24,8 +25,10 @@ const WIDGET_ID = '2febd0b79c3a9262701634a905e';
 // de inmediato al abrir es su comportamiento normal, no una falla.
 export default function TrustindexWidget() {
   const contenedorRef = useRef(null);
+  const { optional, allowOptional } = usePrivacyConsent();
 
   useEffect(() => {
+    if (!optional) return;
     const cont = contenedorRef.current;
     if (!cont || cont.dataset.iniciado) return;
     cont.dataset.iniciado = '1';
@@ -34,7 +37,20 @@ export default function TrustindexWidget() {
     script.src = `https://cdn.trustindex.io/loader.js?${WIDGET_ID}`;
     script.async = true;
     cont.appendChild(script);
-  }, []);
+  }, [optional]);
+
+  if (!optional) {
+    return (
+      <div className="external-content-placeholder external-content-placeholder--reviews" role="region" aria-label="Reseñas externas de Trustindex">
+        <strong>Reseñas externas bloqueadas</strong>
+        <p>Trustindex se cargará únicamente si permites los servicios opcionales.</p>
+        <div className="external-content-actions">
+          <button type="button" onClick={allowOptional}>Permitir y cargar reseñas</button>
+          <a href="https://www.google.com/search?q=Rednorte+Inmobiliaria+rese%C3%B1as" target="_blank" rel="noopener noreferrer">Ver en Google</a>
+        </div>
+      </div>
+    );
+  }
 
   return <div ref={contenedorRef} />;
 }
