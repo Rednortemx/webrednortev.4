@@ -39,17 +39,6 @@ export default function CitaSection({ property, advisor }) {
     if (email) lines.push(`Correo: ${email}`);
     if (comentarios) lines.push('', `Comentarios: ${comentarios}`);
 
-    if (property) {
-      fetch('/api/contactar-agente', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          propertyCode: property.id,
-          client: { name: nombre, email, phone: tel, message: `Cita: ${fechaFmt} ${hora} (${modalidad}). ${comentarios || ''}`.trim() },
-        }),
-      }).catch(() => {});
-    }
-
     fetch('/api/leads', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -63,7 +52,11 @@ export default function CitaSection({ property, advisor }) {
       }),
     }).catch(() => {});
 
-    window.open('https://wa.me/' + advisorNumber + '?text=' + encodeURIComponent(lines.join('\n')), '_blank');
+    window.open(
+      'https://wa.me/' + advisorNumber + '?text=' + encodeURIComponent(lines.join('\n')),
+      '_blank',
+      'noopener,noreferrer',
+    );
   };
 
   return (

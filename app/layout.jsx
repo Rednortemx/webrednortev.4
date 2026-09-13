@@ -6,8 +6,9 @@ import CookieBanner from '@/components/CookieBanner';
 import GlobalModals from '@/components/GlobalModals';
 import LanguageToggle from '@/components/LanguageToggle';
 import { organizationSchema } from '@/lib/schema';
+import { getCanonicalSiteUrl, serializeJsonLd } from '@/lib/security';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.rednorte.mx';
+const SITE_URL = getCanonicalSiteUrl();
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
@@ -27,7 +28,7 @@ export default function RootLayout({ children }) {
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema()) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(organizationSchema()) }}
         />
       </head>
       <body>

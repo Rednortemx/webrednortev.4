@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import HoneypotField from '@/components/HoneypotField';
 
 const INITIAL_FORM = {
   requestType: 'Quiero encontrar una propiedad',
@@ -94,7 +95,10 @@ export default function BuyPropertyForm() {
       const response = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(buildLeadPayload(form)),
+        body: JSON.stringify({
+          ...buildLeadPayload(form),
+          website: String(event.currentTarget.elements.website?.value || ''),
+        }),
       });
 
       if (!response.ok) {
@@ -127,6 +131,7 @@ export default function BuyPropertyForm() {
 
   return (
     <form className="buy-lead-form" onSubmit={handleSubmit} data-event="buy_property_form_start">
+      <HoneypotField />
       <div className="buy-form-fields">
         <label className="buy-form-full">
           <span>¿Qué necesitas? *</span>

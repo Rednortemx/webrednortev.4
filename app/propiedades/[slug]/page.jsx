@@ -8,8 +8,9 @@ import { fetchAllProperties, findPropertyById } from '@/lib/properties';
 import { getAdvisorForProperty, defaultAdvisor } from '@/lib/advisor';
 import { buildPropertySlug, extractCodeFromSlug } from '@/lib/slug';
 import { propertyListingSchema, breadcrumbSchema } from '@/lib/schema';
+import { getCanonicalSiteUrl, serializeJsonLd } from '@/lib/security';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.rednorte.mx';
+const SITE_URL = getCanonicalSiteUrl();
 
 // The URL is /propiedades/{palabras-descriptivas}-{CODIGO} — only the code
 // at the end is ever used to look the property up (see lib/slug.js). This
@@ -74,11 +75,11 @@ export default async function PropiedadPage({ params }) {
     <div className="page-content">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(propertyListingSchema(property, canonicalUrl)) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(propertyListingSchema(property, canonicalUrl)) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema(breadcrumbItems)) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbSchema(breadcrumbItems)) }}
       />
       <Breadcrumb items={breadcrumbItems} />
       <div className="prop-detail">

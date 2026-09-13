@@ -55,7 +55,15 @@ export default function PropertyGallery({ imgs, icon, title }) {
         {shown.map((src, i) => (
           <div key={i} className={`gallery-thumb${i === idx ? ' active' : ''}`} onClick={() => goto(i)} id={`thumb-${i}`}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={src} alt={`Foto ${i + 1}`} loading="lazy" onError={(e) => { e.currentTarget.parentElement.innerHTML = '<span style="font-size:1.1rem"></span>'; }} />
+            <img
+              src={src}
+              alt={`Foto ${i + 1}`}
+              loading="lazy"
+              onError={(e) => {
+                e.currentTarget.hidden = true;
+                e.currentTarget.parentElement?.classList.add('is-broken');
+              }}
+            />
           </div>
         ))}
       </div>

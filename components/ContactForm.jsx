@@ -35,6 +35,7 @@ export default function ContactForm() {
   const [email, setEmail] = useState('');
   const [mensaje, setMensaje] = useState('');
   const [priv, setPriv] = useState(false);
+  const [status, setStatus] = useState({ sending: false, message: '', error: false });
 
   const buildMessage = () => {
     const lines = ['Hola, me gustaría más información.', ''];
@@ -46,7 +47,8 @@ export default function ContactForm() {
     return lines.join('\n');
   };
 
-  const enviar = () => {
+  const submitLead = async (showSuccessModal) => {
+    if (status.sending) return;
     if (!nombre || !tel || !email) {
       alert('Por favor completa nombre, teléfono y correo electrónico.');
       return;
@@ -55,32 +57,30 @@ export default function ContactForm() {
       alert('Debes aceptar el Aviso de Privacidad para continuar.');
       return;
     }
-    fetch('/api/leads', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ tipo: 'Contacto general', nombre, telefono: tel, email, detalle: motivo, notas: mensaje }),
-    }).catch(() => {});
 
-    window.open('https://wa.me/528117783953?text=' + encodeURIComponent(buildMessage()), '_blank');
-    openModal('successModal');
-  };
+    const whatsappUrl = 'https://wa.me/528117783953?text=' + encodeURIComponent(buildMessage());
+    const whatsappWindow = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    setStatus({ sending: true, message: 'Enviando información…', error: false });
 
-  const continuar = () => {
-    if (!nombre || !tel || !email) {
-      alert('Por favor completa nombre, teléfono y correo electrónico.');
-      return;
+    try {
+      const response = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tipo: 'Contacto general', nombre, telefono: tel, email, detalle: motivo, notas: mensaje }),
+      });
+      if (!response.ok) throw new Error(`Lead API respondió ${response.status}`);
+
+      setStatus({ sending: false, message: 'Recibimos tu solicitud correctamente.', error: false });
+      if (showSuccessModal) openModal('successModal');
+    } catch {
+      setStatus({
+        sending: false,
+        message: 'No pudimos registrar la solicitud, pero abrimos WhatsApp como canal alternativo.',
+        error: true,
+      });
     }
-    if (!priv) {
-      alert('Debes aceptar el Aviso de Privacidad para continuar.');
-      return;
-    }
-    fetch('/api/leads', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ tipo: 'Contacto general', nombre, telefono: tel, email, detalle: motivo, notas: mensaje }),
-    }).catch(() => {});
 
-    window.open('https://wa.me/528117783953?text=' + encodeURIComponent(buildMessage()), '_blank');
+    if (!whatsappWindow) window.location.href = whatsappUrl;
   };
 
   return (
@@ -101,8 +101,15 @@ export default function ContactForm() {
         <input type="checkbox" id="priv2" checked={priv} onChange={(e) => setPriv(e.target.checked)} />
         <label htmlFor="priv2">Acepto el <Link href="/aviso-de-privacidad" style={{ color: 'var(--terracota)' }}>Aviso de Privacidad</Link>.</label>
       </div>
-      <button className="btn-primary-full" type="button" onClick={enviar}>Enviar mensaje</button>
-      <button className="btn-wa-full" type="button" onClick={continuar}> Continuar por WhatsApp</button>
+      <button className="btn-primary-full" type="button" onClick={() => submitLead(true)} disabled={status.sending}>
+        {status.sending ? 'Enviando…' : 'Enviar mensaje'}
+      </button>
+      <button className="btn-wa-full" type="button" onClick={() => submitLead(false)} disabled={status.sending}> Continuar por WhatsApp</button>
+      {status.message && (
+        <p aria-live="polite" style={{ color: status.error ? '#9e342d' : '#2e7d32', fontSize: '13px', marginTop: '.75rem' }}>
+          {status.message}
+        </p>
+      )}
     </div>
   );
 }

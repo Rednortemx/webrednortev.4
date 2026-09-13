@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import HoneypotField from '@/components/HoneypotField';
 
 const INITIAL_FORM = {
   goal: 'Rentar mi propiedad',
@@ -95,7 +96,10 @@ export default function RentPropertyForm() {
       const response = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(buildLeadPayload(form)),
+        body: JSON.stringify({
+          ...buildLeadPayload(form),
+          website: String(event.currentTarget.elements.website?.value || ''),
+        }),
       });
 
       if (!response.ok) {
@@ -126,6 +130,7 @@ export default function RentPropertyForm() {
 
   return (
     <form className="rent-lead-form" onSubmit={handleSubmit} data-event="rent_property_form_start">
+      <HoneypotField />
       <div className="rent-form-fields">
         <label className="rent-form-full">
           <span>¿Qué necesitas? *</span>

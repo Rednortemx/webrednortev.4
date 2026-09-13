@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import HoneypotField from '@/components/HoneypotField';
 
 const REQUEST_TYPES = {
   comprar: 'Comprar una propiedad',
@@ -111,7 +112,10 @@ export default function ForeignClientsForm() {
       const response = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(buildLeadPayload(form)),
+        body: JSON.stringify({
+          ...buildLeadPayload(form),
+          website: String(event.currentTarget.elements.website?.value || ''),
+        }),
       });
 
       if (!response.ok) {
@@ -148,6 +152,7 @@ export default function ForeignClientsForm() {
       onSubmit={handleSubmit}
       data-event="foreign_clients_form_start"
     >
+      <HoneypotField />
       <div className="foreign-form-fields">
         <label className="foreign-form-full">
           <span>¿En qué podemos ayudarte? *</span>

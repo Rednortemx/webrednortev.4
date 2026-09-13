@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import HoneypotField from '@/components/HoneypotField';
 
 const INVESTMENT_GOALS = [
   'Generar flujo mensual',
@@ -126,7 +127,10 @@ export default function InvestmentAdvisoryForm() {
       const response = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(buildLeadPayload(form)),
+        body: JSON.stringify({
+          ...buildLeadPayload(form),
+          website: String(event.currentTarget.elements.website?.value || ''),
+        }),
       });
 
       if (!response.ok) {
@@ -157,6 +161,7 @@ export default function InvestmentAdvisoryForm() {
 
   return (
     <form className="invest-lead-form" onSubmit={handleSubmit} data-event="investment_form_start">
+      <HoneypotField />
       <div className="invest-form-fields">
         <label className="invest-form-full">
           <span>¿Qué necesitas? *</span>

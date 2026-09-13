@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import HoneypotField from '@/components/HoneypotField';
 
 const INITIAL_FORM = {
   name: '',
@@ -114,7 +115,10 @@ export default function SellPropertyForm() {
       const response = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(buildLeadPayload(form)),
+        body: JSON.stringify({
+          ...buildLeadPayload(form),
+          website: String(event.currentTarget.elements.website?.value || ''),
+        }),
       });
 
       if (!response.ok) {
@@ -145,6 +149,7 @@ export default function SellPropertyForm() {
 
   return (
     <form className="sell-lead-form" onSubmit={handleSubmit} data-event="sell_property_form_start">
+      <HoneypotField />
       <div className="sell-form-fields">
         <label>
           <span>Nombre completo *</span>
