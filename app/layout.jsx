@@ -1,11 +1,11 @@
 import './globals.css';
 import { Poppins } from 'next/font/google';
-import { Analytics } from '@vercel/analytics/next';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import CookieBanner from '@/components/CookieBanner';
 import GlobalModals from '@/components/GlobalModals';
 import LanguageToggle from '@/components/LanguageToggle';
+import PrivacyAnalytics from '@/components/PrivacyAnalytics';
 import { organizationSchema } from '@/lib/schema';
 import { getCanonicalSiteUrl, serializeJsonLd } from '@/lib/security';
 
@@ -43,7 +43,7 @@ export default function RootLayout({ children }) {
         <CookieBanner />
         <GlobalModals />
         <LanguageToggle />
-        <Analytics />
+        <PrivacyAnalytics />
       </body>
     </html>
   );

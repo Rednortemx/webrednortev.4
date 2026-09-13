@@ -913,6 +913,24 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
  border: 1px solid var(--gris-claro); margin-top: 0.75rem;
 }
 .map-embed-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+.external-content-placeholder {
+ width: 100%; min-height: 100%; padding: 1.25rem; display: flex;
+ flex-direction: column; align-items: center; justify-content: center; gap: 0.65rem;
+ text-align: center; background: var(--crema-dark); color: var(--cafe);
+}
+.external-content-placeholder--reviews {
+ min-height: 180px; border: 1px solid var(--gris-claro); border-radius: 12px;
+}
+.external-content-placeholder strong { color: var(--negro); font-size: 14px; }
+.external-content-placeholder p { max-width: 520px; margin: 0; font-size: 12px; line-height: 1.6; }
+.external-content-actions { display: flex; align-items: center; justify-content: center; gap: 0.65rem; flex-wrap: wrap; }
+.external-content-actions button,
+.external-content-actions a {
+ border-radius: 8px; padding: 0.55rem 0.8rem; font: 600 12px var(--font-poppins), sans-serif;
+ cursor: pointer; text-decoration: none;
+}
+.external-content-actions button { border: 0; background: var(--terracota); color: white; }
+.external-content-actions a { border: 1px solid var(--terracota); color: var(--terracota); background: white; }
 .btn-como-llegar {
  width: 100%; padding: 0.7rem; background: none; border: 1.5px solid var(--terracota);
  border-radius: 10px; font-size: 13px; font-weight: 700; color: var(--terracota);
@@ -946,6 +964,12 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
 .legal-section p, .legal-section li { font-size: 14px; color: var(--cafe); line-height: 1.8; }
 .legal-section ul { padding-left: 1.25rem; margin-top: 0.5rem; }
 .legal-section li { margin-bottom: 0.3rem; }
+.legal-table-wrap { overflow-x: auto; border: 1px solid var(--gris-claro); border-radius: 10px; }
+.legal-table { width: 100%; min-width: 680px; border-collapse: collapse; }
+.legal-table th, .legal-table td { padding: 0.8rem; border-bottom: 1px solid var(--gris-claro); text-align: left; vertical-align: top; font-size: 12px; line-height: 1.6; }
+.legal-table th { background: var(--crema-dark); color: var(--negro); }
+.legal-table tr:last-child td { border-bottom: 0; }
+.legal-preferences-button { background: var(--terracota); color: white; border: 0; border-radius: 8px; padding: 0.65rem 1rem; font: 700 13px var(--font-poppins), sans-serif; cursor: pointer; }
 
 /* Cookie banner */
 .cookie-banner {
