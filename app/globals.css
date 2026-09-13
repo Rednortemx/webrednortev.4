@@ -8158,6 +8158,11 @@ body{top:0 !important;}
    /herramientas · /contacto · /trabaja-con-nosotros
    =========================================================== */
 
+/* OJO: las variables --quick-* viven en .quick-page, así que cualquier
+   bloque .quick-* (incluidos .quick-form y .quick-submit) SOLO se ve bien
+   dentro de un ancestro con esa clase. Fuera de ahí los colores quedan sin
+   resolver y los botones salen invisibles: eso fue lo que pasó al meter el
+   formulario nuevo en /contacto, que envuelve en .contacto-page. */
 .quick-page {
   --quick-ink: #17110c;
   --quick-brown: #3c3429;
