@@ -47,7 +47,7 @@ export default function ContactForm() {
     return lines.join('\n');
   };
 
-  const submitLead = async (showSuccessModal) => {
+  const submitLead = async ({ openWhatsApp = false } = {}) => {
     if (status.sending) return;
     if (!nombre || !tel || !email) {
       alert('Por favor completa nombre, teléfono y correo electrónico.');
@@ -59,7 +59,9 @@ export default function ContactForm() {
     }
 
     const whatsappUrl = 'https://wa.me/528117783953?text=' + encodeURIComponent(buildMessage());
-    const whatsappWindow = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    const whatsappWindow = openWhatsApp
+      ? window.open(whatsappUrl, '_blank', 'noopener,noreferrer')
+      : null;
     setStatus({ sending: true, message: 'Enviando información…', error: false });
 
     try {
@@ -71,16 +73,18 @@ export default function ContactForm() {
       if (!response.ok) throw new Error(`Lead API respondió ${response.status}`);
 
       setStatus({ sending: false, message: 'Recibimos tu solicitud correctamente.', error: false });
-      if (showSuccessModal) openModal('successModal');
+      if (!openWhatsApp) openModal('successModal');
     } catch {
       setStatus({
         sending: false,
-        message: 'No pudimos registrar la solicitud, pero abrimos WhatsApp como canal alternativo.',
+        message: openWhatsApp
+          ? 'No pudimos registrar la solicitud, pero abrimos WhatsApp como canal alternativo.'
+          : 'No pudimos registrar la solicitud. Intenta nuevamente o continúa por WhatsApp.',
         error: true,
       });
     }
 
-    if (!whatsappWindow) window.location.href = whatsappUrl;
+    if (openWhatsApp && !whatsappWindow) window.location.href = whatsappUrl;
   };
 
   return (
@@ -92,19 +96,19 @@ export default function ContactForm() {
         ))}
       </div>
       <div className="form-row" style={{ marginTop: '1.25rem' }}>
-        <div className="form-group"><label>Nombre *</label><input type="text" placeholder="Tu nombre completo" value={nombre} onChange={(e) => setNombre(e.target.value)} /></div>
-        <div className="form-group"><label>Teléfono *</label><input type="tel" placeholder="+52 (81)" value={tel} onChange={(e) => setTel(e.target.value)} /></div>
+        <div className="form-group"><label htmlFor="contacto-nombre">Nombre *</label><input id="contacto-nombre" type="text" autoComplete="name" required placeholder="Tu nombre completo" value={nombre} onChange={(e) => setNombre(e.target.value)} /></div>
+        <div className="form-group"><label htmlFor="contacto-telefono">Teléfono *</label><input id="contacto-telefono" type="tel" autoComplete="tel" inputMode="tel" required placeholder="+52 (81)" value={tel} onChange={(e) => setTel(e.target.value)} /></div>
       </div>
-      <div className="form-group"><label>Correo electrónico *</label><input type="email" placeholder="correo@ejemplo.com" value={email} onChange={(e) => setEmail(e.target.value)} /></div>
-      <div className="form-group"><label>Mensaje</label><textarea rows="4" placeholder="Cuéntanos más sobre lo que necesitas..." value={mensaje} onChange={(e) => setMensaje(e.target.value)}></textarea></div>
+      <div className="form-group"><label htmlFor="contacto-email">Correo electrónico *</label><input id="contacto-email" type="email" autoComplete="email" required placeholder="correo@ejemplo.com" value={email} onChange={(e) => setEmail(e.target.value)} /></div>
+      <div className="form-group"><label htmlFor="contacto-mensaje">Mensaje</label><textarea id="contacto-mensaje" rows="4" placeholder="Cuéntanos más sobre lo que necesitas..." value={mensaje} onChange={(e) => setMensaje(e.target.value)}></textarea></div>
       <div className="form-check">
         <input type="checkbox" id="priv2" checked={priv} onChange={(e) => setPriv(e.target.checked)} />
         <label htmlFor="priv2">Acepto el <Link href="/aviso-de-privacidad" style={{ color: 'var(--terracota)' }}>Aviso de Privacidad</Link>.</label>
       </div>
-      <button className="btn-primary-full" type="button" onClick={() => submitLead(true)} disabled={status.sending}>
+      <button className="btn-primary-full" type="button" onClick={() => submitLead()} disabled={status.sending}>
         {status.sending ? 'Enviando…' : 'Enviar mensaje'}
       </button>
-      <button className="btn-wa-full" type="button" onClick={() => submitLead(false)} disabled={status.sending}> Continuar por WhatsApp</button>
+      <button className="btn-wa-full" type="button" onClick={() => submitLead({ openWhatsApp: true })} disabled={status.sending}> Continuar por WhatsApp</button>
       {status.message && (
         <p aria-live="polite" style={{ color: status.error ? '#9e342d' : '#2e7d32', fontSize: '13px', marginTop: '.75rem' }}>
           {status.message}

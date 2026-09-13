@@ -66,21 +66,21 @@ export default function CitaSection({ property, advisor }) {
         <h2 className="section-title">Agenda una cita con el asesor</h2>
         <p className="section-sub" style={{ margin: '0 auto' }}>Elige la fecha y hora que mejor te convenga. El asesor recibirá tu solicitud por WhatsApp y confirmará en breve.</p>
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: '2rem', alignItems: 'start' }}>
+      <div className="cita-grid-inner">
         <div className="form-card">
           <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--negro)', marginBottom: '1.5rem' }}>Datos de contacto</h3>
           <div className="form-row">
-            <div className="form-group"><label>Nombre completo *</label><input type="text" placeholder="Tu nombre completo" value={nombre} onChange={(e) => setNombre(e.target.value)} /></div>
-            <div className="form-group"><label>Telefono *</label><input type="tel" placeholder="+52 (81) 0000-0000" value={tel} onChange={(e) => setTel(e.target.value)} /></div>
+            <div className="form-group"><label htmlFor="cita-nombre">Nombre completo *</label><input id="cita-nombre" type="text" autoComplete="name" required placeholder="Tu nombre completo" value={nombre} onChange={(e) => setNombre(e.target.value)} /></div>
+            <div className="form-group"><label htmlFor="cita-telefono">Teléfono *</label><input id="cita-telefono" type="tel" autoComplete="tel" inputMode="tel" required placeholder="+52 (81) 0000-0000" value={tel} onChange={(e) => setTel(e.target.value)} /></div>
           </div>
-          <div className="form-group"><label>Correo electronico</label><input type="email" placeholder="correo@ejemplo.com" value={email} onChange={(e) => setEmail(e.target.value)} /></div>
+          <div className="form-group"><label htmlFor="cita-email">Correo electrónico</label><input id="cita-email" type="email" autoComplete="email" placeholder="correo@ejemplo.com" value={email} onChange={(e) => setEmail(e.target.value)} /></div>
           <div style={{ borderTop: '1px solid var(--gris-claro)', margin: '1.25rem 0', paddingTop: '1.25rem' }}>
             <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--negro)', marginBottom: '1.25rem' }}>Fecha y hora de la cita</h3>
             <div className="form-row">
-              <div className="form-group"><label>Fecha *</label><input type="date" style={{ appearance: 'auto' }} value={fecha} onChange={(e) => setFecha(e.target.value)} /></div>
+              <div className="form-group"><label htmlFor="cita-fecha">Fecha *</label><input id="cita-fecha" type="date" required style={{ appearance: 'auto' }} value={fecha} onChange={(e) => setFecha(e.target.value)} /></div>
               <div className="form-group">
-                <label>Hora *</label>
-                <select value={hora} onChange={(e) => setHora(e.target.value)}>
+                <label htmlFor="cita-hora">Hora *</label>
+                <select id="cita-hora" required value={hora} onChange={(e) => setHora(e.target.value)}>
                   <option value="">Seleccionar hora</option>
                   {['9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM', '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM', '3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM', '5:00 PM', '5:30 PM'].map((h) => (
                     <option key={h}>{h}</option>
@@ -95,15 +95,15 @@ export default function CitaSection({ property, advisor }) {
               <button className="motivo-btn active" type="button">Visita presencial</button>
             </div>
           </div>
-          <div className="form-group"><label>Comentarios adicionales</label>
-            <textarea rows="3" placeholder="Alguna pregunta especifica, direccion, preferencias..." value={comentarios} onChange={(e) => setComentarios(e.target.value)}></textarea>
+          <div className="form-group"><label htmlFor="cita-comentarios">Comentarios adicionales</label>
+            <textarea id="cita-comentarios" rows="3" placeholder="Alguna pregunta específica, dirección, preferencias..." value={comentarios} onChange={(e) => setComentarios(e.target.value)}></textarea>
           </div>
           <div className="form-check">
             <input type="checkbox" id="cita-priv" checked={priv} onChange={(e) => setPriv(e.target.checked)} />
             <label htmlFor="cita-priv">Acepto el <Link href="/aviso-de-privacidad" style={{ color: 'var(--terracota)' }}>Aviso de Privacidad</Link>.</label>
           </div>
           <button className="btn-primary-full" type="button" onClick={enviar}>Confirmar cita por WhatsApp</button>
-          <p style={{ fontSize: '11px', color: 'var(--gris-medio)', textAlign: 'center', marginTop: '.5rem' }}>Se abrira WhatsApp con los datos de tu cita. El asesor confirmara disponibilidad.</p>
+          <p style={{ fontSize: '11px', color: 'var(--gris-medio)', textAlign: 'center', marginTop: '.5rem' }}>Se abrirá WhatsApp con los datos de tu cita. El asesor confirmará disponibilidad.</p>
         </div>
         <div>
           <div style={{ background: 'white', borderRadius: '14px', border: '1px solid var(--gris-claro)', padding: '1.5rem', marginBottom: '1rem' }}>
@@ -124,13 +124,13 @@ export default function CitaSection({ property, advisor }) {
             </div>
             <a className="advisor-phone" href={`tel:+${advisorNumber}`} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', color: 'var(--terracota)', fontWeight: 600, margin: '-0.75rem 0 1rem', textDecoration: 'none' }}> {formatMxPhone(advisor?.phone) || '+52 (811) 778-3953'}</a>
             <div style={{ fontSize: '12px', color: 'var(--cafe)', lineHeight: 1.7, paddingTop: '.75rem', borderTop: '1px solid var(--gris-claro)' }}>
-              <p><strong>Horario de atencion:</strong></p>
+              <p><strong>Horario de atención:</strong></p>
               <p>Lun-Vie: 9:00 - 18:00 h</p>
               <p>Sab: 10:00 - 14:00 h</p>
             </div>
           </div>
           <div style={{ background: 'var(--crema-dark)', borderRadius: '12px', padding: '1.25rem', border: '1px solid var(--gris-claro)' }}>
-            <p style={{ fontSize: '13px', fontWeight: 700, color: 'var(--negro)', marginBottom: '.5rem' }}>Como funciona</p>
+            <p style={{ fontSize: '13px', fontWeight: 700, color: 'var(--negro)', marginBottom: '.5rem' }}>Cómo funciona</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '.65rem' }}>
               {[
                 'Llena el formulario con tus datos y elige fecha y hora.',

@@ -122,16 +122,16 @@ export default function PropertyFilters({ properties, initialFilters }) {
       <aside className="filters-panel">
         <h3> Filtrar propiedades</h3>
         <div className="filter-group">
-          <label>Operación</label>
-          <select value={operacion} onChange={(e) => setOperacion(e.target.value)}>
+          <label htmlFor="filtro-operacion">Operación</label>
+          <select id="filtro-operacion" value={operacion} onChange={(e) => setOperacion(e.target.value)}>
             <option value="">Venta y renta</option>
             <option value="Venta">Venta</option>
             <option value="Renta">Renta</option>
           </select>
         </div>
         <div className="filter-group">
-          <label>Tipo de propiedad</label>
-          <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
+          <label htmlFor="filtro-tipo">Tipo de propiedad</label>
+          <select id="filtro-tipo" value={tipo} onChange={(e) => setTipo(e.target.value)}>
             <option value="">Todos</option>
             <option value="Casa">Casa</option>
             <option value="Depto">Departamento</option>
@@ -142,8 +142,8 @@ export default function PropertyFilters({ properties, initialFilters }) {
           </select>
         </div>
         <div className="filter-group">
-          <label>Categoría</label>
-          <select value={categoria} onChange={(e) => setCategoria(e.target.value)}>
+          <label htmlFor="filtro-categoria">Categoría</label>
+          <select id="filtro-categoria" value={categoria} onChange={(e) => setCategoria(e.target.value)}>
             <option value="">Todas</option>
             <option value="Residencial">Residencial</option>
             <option value="Comercial">Comercial</option>
@@ -151,8 +151,8 @@ export default function PropertyFilters({ properties, initialFilters }) {
           </select>
         </div>
         <div className="filter-group">
-          <label>Municipio / Zona</label>
-          <select value={zona} onChange={(e) => setZona(e.target.value)}>
+          <label htmlFor="filtro-zona">Municipio / Zona</label>
+          <select id="filtro-zona" value={zona} onChange={(e) => setZona(e.target.value)}>
             <option value="">Todos</option>
             <option value="Abasolo">Abasolo</option>
             <option value="Agualeguas">Agualeguas</option>
@@ -208,15 +208,15 @@ export default function PropertyFilters({ properties, initialFilters }) {
           </select>
         </div>
         <div className="filter-group">
-          <label>Precio</label>
+          <label id="filtro-precio-label">Precio</label>
           <div className="price-range">
-            <input type="text" inputMode="numeric" placeholder="Mínimo" value={precioMin} onChange={(e) => setPrecioMin(e.target.value)} />
-            <input type="text" inputMode="numeric" placeholder="Máximo" value={precioMax} onChange={(e) => setPrecioMax(e.target.value)} />
+            <input type="text" inputMode="numeric" aria-label="Precio mínimo" placeholder="Mínimo" value={precioMin} onChange={(e) => setPrecioMin(e.target.value)} />
+            <input type="text" inputMode="numeric" aria-label="Precio máximo" placeholder="Máximo" value={precioMax} onChange={(e) => setPrecioMax(e.target.value)} />
           </div>
         </div>
         <div className="filter-group">
-          <label>Recámaras mínimas</label>
-          <select value={recamaras} onChange={(e) => setRecamaras(e.target.value)}>
+          <label htmlFor="filtro-recamaras">Recámaras mínimas</label>
+          <select id="filtro-recamaras" value={recamaras} onChange={(e) => setRecamaras(e.target.value)}>
             <option value="0">Cualquiera</option>
             <option value="1">1+</option>
             <option value="2">2+</option>
@@ -225,8 +225,8 @@ export default function PropertyFilters({ properties, initialFilters }) {
           </select>
         </div>
         <div className="filter-group">
-          <label>Baños mínimos</label>
-          <select value={banos} onChange={(e) => setBanos(e.target.value)}>
+          <label htmlFor="filtro-banos">Baños mínimos</label>
+          <select id="filtro-banos" value={banos} onChange={(e) => setBanos(e.target.value)}>
             <option value="0">Cualquiera</option>
             <option value="1">1+</option>
             <option value="2">2+</option>
@@ -234,10 +234,10 @@ export default function PropertyFilters({ properties, initialFilters }) {
           </select>
         </div>
         <div className="filter-group">
-          <label>Superficie (m²)</label>
+          <label id="filtro-superficie-label">Superficie (m²)</label>
           <div className="price-range">
-            <input type="text" inputMode="numeric" placeholder="Mín m²" value={m2Min} onChange={(e) => setM2Min(e.target.value)} />
-            <input type="text" inputMode="numeric" placeholder="Máx m²" value={m2Max} onChange={(e) => setM2Max(e.target.value)} />
+            <input type="text" inputMode="numeric" aria-label="Superficie mínima" placeholder="Mín m²" value={m2Min} onChange={(e) => setM2Min(e.target.value)} />
+            <input type="text" inputMode="numeric" aria-label="Superficie máxima" placeholder="Máx m²" value={m2Max} onChange={(e) => setM2Max(e.target.value)} />
           </div>
         </div>
         <button className="btn-search" style={{ marginTop: '0.5rem' }} type="button" onClick={applyFilters}>Aplicar filtros</button>
@@ -248,8 +248,8 @@ export default function PropertyFilters({ properties, initialFilters }) {
         <div className="props-header">
           <div className="props-count"><strong>{filtered.length} propiedades</strong> encontradas</div>
           <div className="props-sort">
-            <label>Ordenar:</label>
-            <select value={sort} onChange={(e) => { setSort(e.target.value); setPage(1); }}>
+            <label htmlFor="orden-propiedades">Ordenar:</label>
+            <select id="orden-propiedades" value={sort} onChange={(e) => { setSort(e.target.value); setPage(1); }}>
               <option value="recientes">Más recientes</option>
               <option value="precio-asc">Precio: menor a mayor</option>
               <option value="precio-desc">Precio: mayor a menor</option>

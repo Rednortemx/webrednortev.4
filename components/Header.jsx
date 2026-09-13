@@ -34,7 +34,7 @@ export default function Header() {
               <span className="logo-sub">Inmobiliaria</span>
             </div>
           </Link>
-          <nav>
+          <nav aria-label="Navegación principal">
             {NAV_LINKS.map((item) => (
               <Link key={item.href} href={item.href} className={item.match(pathname) ? 'active' : ''}>
                 {item.label}
@@ -49,12 +49,20 @@ export default function Header() {
               Hablar por WhatsApp
             </WhatsAppGateButton>
           </div>
-          <button className="hamburger" id="hamburger" onClick={() => setMenuOpen((v) => !v)} aria-label="Menú">
+          <button
+            className="hamburger"
+            id="hamburger"
+            type="button"
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+          >
             <span></span><span></span><span></span>
           </button>
         </div>
       </header>
-      <div className={`mobile-menu${menuOpen ? ' open' : ''}`} id="mobile-menu">
+      <div className={`mobile-menu${menuOpen ? ' open' : ''}`} id="mobile-menu" aria-hidden={!menuOpen}>
         {NAV_LINKS.map((item) => (
           <Link key={item.href} href={item.href} onClick={() => setMenuOpen(false)}>
             {item.label}
