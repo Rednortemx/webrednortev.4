@@ -4,7 +4,9 @@
 // per-page <meta name="robots"> tags), so they don't need to be Disallow'd
 // here too — Disallow would actually prevent Google from crawling the page
 // at all to see the noindex tag. We just point at the sitemap.
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.rednorte.mx';
+import { getCanonicalSiteUrl } from '@/lib/security';
+
+const SITE_URL = getCanonicalSiteUrl();
 
 export default function robots() {
   return {

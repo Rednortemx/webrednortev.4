@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import HoneypotField from '@/components/HoneypotField';
 
 const INITIAL_FORM = {
   goal: 'Solicitar evaluación Master Broker',
@@ -119,7 +120,10 @@ export default function MasterBrokerForm() {
       const response = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(buildLeadPayload(form)),
+        body: JSON.stringify({
+          ...buildLeadPayload(form),
+          website: String(event.currentTarget.elements.website?.value || ''),
+        }),
       });
 
       if (!response.ok) {
@@ -156,6 +160,7 @@ export default function MasterBrokerForm() {
       onSubmit={handleSubmit}
       data-event="master_broker_form_start"
     >
+      <HoneypotField />
       <div className="master-form-fields">
         <label className="master-form-full">
           <span>¿Qué necesitas? *</span>

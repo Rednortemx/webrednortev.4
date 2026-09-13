@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
+import HoneypotField from '@/components/HoneypotField';
 
 const roles = ['Asesor inmobiliario', 'Operaciones / administración', 'Marketing', 'Otro'];
 
@@ -12,13 +14,17 @@ const roles = ['Asesor inmobiliario', 'Operaciones / administración', 'Marketin
 // the old BolsaForm this replaces never called /api/leads at all, it only
 // opened WhatsApp.
 export default function CareersForm() {
-  const [form, setForm] = useState({ name: '', phone: '', email: '', role: roles[0], why: '' });
+  const [form, setForm] = useState({ name: '', phone: '', email: '', role: roles[0], why: '', privacyConsent: false });
   const [state, setState] = useState({ loading: false, error: '', success: false });
 
   async function submit(e) {
     e.preventDefault();
     if (!form.name || !form.phone || !form.email) {
       setState({ loading: false, error: 'Completa nombre, teléfono y correo electrónico.', success: false });
+      return;
+    }
+    if (!form.privacyConsent) {
+      setState({ loading: false, error: 'Debes aceptar el Aviso de Privacidad.', success: false });
       return;
     }
 
@@ -34,6 +40,7 @@ export default function CareersForm() {
           email: form.email,
           detalle: form.role,
           notas: form.why,
+          website: String(e.currentTarget.elements.website?.value || ''),
         }),
       });
       if (!response.ok) throw new Error('No se pudo enviar la solicitud.');
@@ -45,6 +52,7 @@ export default function CareersForm() {
 
   return (
     <form className="quick-form careers-form" onSubmit={submit}>
+      <HoneypotField />
       <div className="quick-form-grid">
         <label>
           <span>Nombre completo *</span>
@@ -95,6 +103,19 @@ export default function CareersForm() {
           onChange={(e) => setForm((v) => ({ ...v, why: e.target.value }))}
           placeholder="Cuéntanos sobre ti..."
         />
+      </label>
+
+      <label className="form-check">
+        <input
+          type="checkbox"
+          checked={form.privacyConsent}
+          onChange={(e) => setForm((v) => ({ ...v, privacyConsent: e.target.checked }))}
+          required
+        />
+        <span>
+          He leído el <Link href="/aviso-de-privacidad">Aviso de Privacidad</Link> y autorizo el
+          tratamiento de mis datos para atender esta solicitud.
+        </span>
       </label>
 
       {state.error && <p className="quick-form-message is-error">{state.error}</p>}

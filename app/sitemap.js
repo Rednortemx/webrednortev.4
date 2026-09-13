@@ -8,8 +8,9 @@
 import { fetchAllProperties } from '@/lib/properties';
 import { buildPropertySlug } from '@/lib/slug';
 import { teamMembers } from '@/lib/teamMembers';
+import { getCanonicalSiteUrl } from '@/lib/security';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.rednorte.mx';
+const SITE_URL = getCanonicalSiteUrl();
 
 const STATIC_ROUTES = [
   '',

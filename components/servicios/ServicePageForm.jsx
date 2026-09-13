@@ -20,6 +20,15 @@ export default function ServicePageForm({ formClass, tipo, telefono = '528117783
     if (!form) return;
     listoRef.current = true;
 
+    const honeypot = document.createElement('input');
+    honeypot.type = 'text';
+    honeypot.name = 'website';
+    honeypot.tabIndex = -1;
+    honeypot.autocomplete = 'off';
+    honeypot.setAttribute('aria-hidden', 'true');
+    honeypot.style.cssText = 'position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden';
+    form.appendChild(honeypot);
+
     const valor = (etiqueta) => {
       const labels = [...form.querySelectorAll('label')];
       const l = labels.find((el) => {
@@ -90,12 +99,13 @@ export default function ServicePageForm({ formClass, tipo, telefono = '528117783
 
       estado('Enviando…', true);
       try {
-        await fetch('/api/leads', {
+        const response = await fetch('/api/leads', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ tipo, nombre, telefono: tel, email, detalle, notas }),
+          body: JSON.stringify({ tipo, nombre, telefono: tel, email, detalle, notas, website: honeypot.value }),
           keepalive: true,
         });
+        if (!response.ok) throw new Error(`Lead API respondió ${response.status}`);
         estado(
           'Recibimos tu solicitud. Un integrante de Rednorte se comunicará contigo para definir el siguiente paso.',
           true
@@ -118,6 +128,7 @@ export default function ServicePageForm({ formClass, tipo, telefono = '528117783
     return () => {
       form.removeEventListener('submit', enviar);
       if (boton) boton.removeEventListener('click', enviar);
+      honeypot.remove();
     };
   }, [formClass, tipo, telefono]);
 
