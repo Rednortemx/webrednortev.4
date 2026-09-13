@@ -556,8 +556,8 @@ export default function NosotrosPage() {
               >
                 Ver LinkedIn
               </a>
-              <Link className="about-inline-link" href="/equipo">
-                Conocer al equipo →
+              <Link className="about-inline-link" href="/equipo/roque-avila">
+                Conocer a Roque Ávila →
               </Link>
             </div>
           </div>
