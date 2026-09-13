@@ -5,7 +5,7 @@ import FeaturedCarousel from '@/components/FeaturedCarousel';
 import GoogleReviews from '@/components/GoogleReviews';
 import FaqHome from '@/components/FaqHome';
 import { faqSchema } from '@/lib/schema';
-import { fetchAllProperties } from '@/lib/properties';
+import { fetchAllProperties, toPropertyCardData } from '@/lib/properties';
 
 export const metadata = {
   title: 'Rednorte Inmobiliaria | Propiedades en Monterrey y su Área Metropolitana',
@@ -24,7 +24,7 @@ function propsFilterHref(operacion, tipo, categoria) {
 
 export default async function HomePage() {
   const { properties } = await fetchAllProperties();
-  const featured = properties.slice(0, 10);
+  const featured = properties.slice(0, 10).map((property) => toPropertyCardData(property));
 
   return (
     <div className="page-content">

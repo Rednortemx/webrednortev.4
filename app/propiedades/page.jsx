@@ -1,6 +1,6 @@
 import Breadcrumb from '@/components/Breadcrumb';
 import PropertyFilters from '@/components/PropertyFilters';
-import { fetchAllProperties } from '@/lib/properties';
+import { fetchAllProperties, toPropertyCardData } from '@/lib/properties';
 
 // Canonical is self-referencing per page (page 1 -> /propiedades, page N ->
 // /propiedades?page=N) instead of always pointing back at page 1. A fixed
@@ -29,6 +29,7 @@ export async function generateMetadata({ searchParams }) {
 export default async function PropiedadesPage({ searchParams }) {
   const sp = await searchParams;
   const { properties, source } = await fetchAllProperties();
+  const propertyCards = properties.map((property) => toPropertyCardData(property));
 
   const initialFilters = {
     operacion: sp?.operacion || '',
@@ -49,7 +50,7 @@ export default async function PropiedadesPage({ searchParams }) {
         <span className="crm-dot"></span> {source === 'live' ? 'Inventario actualizado' : 'Inventario no disponible en este momento'}
       </div>
       <h1 style={{ margin: '1rem 2rem 0', fontSize: '1.6rem', color: 'var(--negro)' }}>Propiedades en venta y renta en Monterrey y Nuevo León</h1>
-      <PropertyFilters properties={properties} initialFilters={initialFilters} />
+      <PropertyFilters properties={propertyCards} initialFilters={initialFilters} />
     </div>
   );
 }

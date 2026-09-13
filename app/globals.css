@@ -2,7 +2,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
- font-family: 'Poppins', sans-serif;
+ font-family: var(--font-poppins), sans-serif;
  color: #1a1208;
  background: #faf8f5;
  font-size: 16px;
@@ -89,7 +89,7 @@ nav a.active { color: var(--terracota); }
  background: var(--vino); color: white;
  border: none; border-radius: 8px;
  padding: 0.5rem 0.9rem; font-size: 12.5px; font-weight: 600;
- cursor: pointer; font-family: 'Poppins', sans-serif;
+ cursor: pointer; font-family: var(--font-poppins), sans-serif;
  transition: background 0.2s; text-decoration: none;
  white-space: nowrap;
 }
@@ -98,7 +98,7 @@ nav a.active { color: var(--terracota); }
  background: var(--whatsapp); color: white;
  border: none; border-radius: 8px;
  padding: 0.5rem 1rem; font-size: 13px; font-weight: 600;
- cursor: pointer; font-family: 'Poppins', sans-serif;
+ cursor: pointer; font-family: var(--font-poppins), sans-serif;
  display: flex; align-items: center; gap: 6px;
  transition: background 0.2s; text-decoration: none;
 }
@@ -172,7 +172,7 @@ nav a.active { color: var(--terracota); }
  background: var(--terracota); color: white;
  border: none; border-radius: 10px;
  padding: 0.85rem 1.75rem; font-size: 15px; font-weight: 600;
- cursor: pointer; font-family: 'Poppins', sans-serif;
+ cursor: pointer; font-family: var(--font-poppins), sans-serif;
  transition: all 0.2s; text-decoration: none;
  display: inline-flex; align-items: center; gap: 8px;
 }
@@ -181,7 +181,7 @@ nav a.active { color: var(--terracota); }
  background: transparent; color: white;
  border: 1.5px solid rgba(255,255,255,0.4); border-radius: 10px;
  padding: 0.85rem 1.75rem; font-size: 15px; font-weight: 600;
- cursor: pointer; font-family: 'Poppins', sans-serif;
+ cursor: pointer; font-family: var(--font-poppins), sans-serif;
  transition: all 0.2s; text-decoration: none;
 }
 .btn-outline-white:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.7); }
@@ -205,7 +205,7 @@ nav a.active { color: var(--terracota); }
 .search-tab {
  flex: 1; padding: 0.65rem; font-size: 13px; font-weight: 600;
  background: none; border: none; cursor: pointer;
- font-family: 'Poppins', sans-serif; color: var(--gris-medio);
+ font-family: var(--font-poppins), sans-serif; color: var(--gris-medio);
  transition: all 0.2s;
 }
 .search-tab.active { background: var(--terracota); color: white; }
@@ -214,14 +214,14 @@ nav a.active { color: var(--terracota); }
 .search-field select, .search-field input {
  width: 100%; padding: 0.7rem 0.85rem;
  border: 1.5px solid var(--gris-claro); border-radius: 8px;
- font-size: 13px; font-family: 'Poppins', sans-serif; color: var(--negro);
+ font-size: 13px; font-family: var(--font-poppins), sans-serif; color: var(--negro);
  background: var(--crema); outline: none; appearance: none;
 }
 .search-field select:focus, .search-field input:focus { border-color: var(--terracota); }
 .btn-search {
  width: 100%; padding: 1rem; background: var(--terracota); color: white;
  border: none; border-radius: 10px; font-size: 14.5px; font-weight: 700;
- cursor: pointer; font-family: 'Poppins', sans-serif; transition: background 0.2s;
+ cursor: pointer; font-family: var(--font-poppins), sans-serif; transition: background 0.2s;
 }
 .btn-search:hover { background: var(--terracota-dark); }
 
@@ -366,7 +366,7 @@ section { padding: 5rem 0; }
  background: white; color: var(--vino);
  border: none; border-radius: 10px;
  padding: 0.85rem 1.75rem; font-size: 15px; font-weight: 700;
- cursor: pointer; font-family: 'Poppins', sans-serif;
+ cursor: pointer; font-family: var(--font-poppins), sans-serif;
  transition: all 0.2s; text-decoration: none;
 }
 .btn-white:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
@@ -437,7 +437,7 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
 .faq-question {
  width: 100%; display: flex; align-items: center; gap: 0.9rem;
  background: none; border: none; cursor: pointer; text-align: left;
- padding: 1.15rem 1.5rem; font-family: 'Poppins', sans-serif;
+ padding: 1.15rem 1.5rem; font-family: var(--font-poppins), sans-serif;
 }
 .faq-question:hover { background: var(--crema-dark); }
 .faq-num {
@@ -556,7 +556,7 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
 .filter-group select, .filter-group input {
  width: 100%; padding: 0.5rem 0.65rem;
  border: 1.5px solid var(--gris-claro); border-radius: 8px;
- font-size: 13px; font-family: 'Poppins', sans-serif; color: var(--negro);
+ font-size: 13px; font-family: var(--font-poppins), sans-serif; color: var(--negro);
  background: var(--crema); outline: none; appearance: none;
 }
 .filter-group select:focus, .filter-group input:focus { border-color: var(--terracota); }
@@ -564,7 +564,7 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
 .btn-clear-filters {
  width: 100%; padding: 0.6rem; background: none; border: 1.5px solid var(--gris-claro);
  border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--gris-medio);
- cursor: pointer; font-family: 'Poppins', sans-serif; transition: all 0.2s; margin-top: 0.5rem;
+ cursor: pointer; font-family: var(--font-poppins), sans-serif; transition: all 0.2s; margin-top: 0.5rem;
 }
 .btn-clear-filters:hover { border-color: var(--terracota); color: var(--terracota); }
 
@@ -580,7 +580,7 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
 .props-sort label { font-size: 13px; color: var(--gris-medio); }
 .props-sort select {
  padding: 0.4rem 0.65rem; border: 1.5px solid var(--gris-claro); border-radius: 8px;
- font-size: 13px; font-family: 'Poppins', sans-serif; background: white; outline: none;
+ font-size: 13px; font-family: var(--font-poppins), sans-serif; background: white; outline: none;
 }
 .crm-indicator {
  display: inline-flex; align-items: center; gap: 6px;
@@ -650,7 +650,7 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
 .card-carousel { position: relative; height: 200px; overflow: hidden; background: var(--crema-dark); border-radius: 14px 14px 0 0; }
 .card-carousel-track { display: flex; height: 100%; transition: transform 0.35s ease; }
 .card-carousel-slide {
- min-width: 100%; height: 100%;
+ position: relative; min-width: 100%; height: 100%;
  display: flex; align-items: center; justify-content: center;
  font-size: 2.8rem; color: var(--gris-medio); flex-shrink: 0;
 }
@@ -720,7 +720,7 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
 .btn-wa-big {
  width: 100%; padding: 0.9rem; background: var(--whatsapp); color: white;
  border: none; border-radius: 10px; font-size: 14px; font-weight: 700;
- cursor: pointer; font-family: 'Poppins', sans-serif; margin-bottom: 0.75rem;
+ cursor: pointer; font-family: var(--font-poppins), sans-serif; margin-bottom: 0.75rem;
  display: flex; align-items: center; justify-content: center; gap: 8px;
  transition: background 0.2s;
 }
@@ -728,7 +728,7 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
 .btn-share {
  width: 100%; padding: 0.75rem; background: none; border: 1.5px solid var(--gris-claro);
  border-radius: 10px; font-size: 13px; font-weight: 600; color: var(--cafe);
- cursor: pointer; font-family: 'Poppins', sans-serif; transition: all 0.2s;
+ cursor: pointer; font-family: var(--font-poppins), sans-serif; transition: all 0.2s;
  display: flex; align-items: center; justify-content: center; gap: 6px;
 }
 .btn-share:hover { border-color: var(--terracota); color: var(--terracota); }
@@ -761,7 +761,7 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
  background: var(--terracota-light); color: var(--terracota);
  border: 1.5px solid var(--terracota); border-radius: 8px;
  padding: 0.55rem 1.1rem; font-size: 13px; font-weight: 700;
- cursor: pointer; font-family: 'Poppins', sans-serif; transition: all 0.2s;
+ cursor: pointer; font-family: var(--font-poppins), sans-serif; transition: all 0.2s;
  text-decoration: none;
 }
 .btn-contactar:hover { background: var(--terracota); color: white; }
@@ -779,7 +779,7 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
 .form-group input, .form-group select, .form-group textarea {
  width: 100%; padding: 0.6rem 0.85rem;
  border: 1.5px solid var(--gris-claro); border-radius: 8px;
- font-size: 14px; font-family: 'Poppins', sans-serif; color: var(--negro);
+ font-size: 14px; font-family: var(--font-poppins), sans-serif; color: var(--negro);
  background: var(--crema); outline: none; transition: border 0.2s; appearance: none;
 }
 .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--terracota); }
@@ -790,14 +790,14 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
 .btn-primary-full {
  width: 100%; padding: 0.9rem; background: var(--terracota); color: white;
  border: none; border-radius: 10px; font-size: 15px; font-weight: 700;
- cursor: pointer; font-family: 'Poppins', sans-serif; margin-bottom: 0.75rem;
+ cursor: pointer; font-family: var(--font-poppins), sans-serif; margin-bottom: 0.75rem;
  transition: background 0.2s;
 }
 .btn-primary-full:hover { background: var(--terracota-dark); }
 .btn-wa-full {
  width: 100%; padding: 0.85rem; background: var(--whatsapp); color: white;
  border: none; border-radius: 10px; font-size: 14px; font-weight: 600;
- cursor: pointer; font-family: 'Poppins', sans-serif;
+ cursor: pointer; font-family: var(--font-poppins), sans-serif;
  display: flex; align-items: center; justify-content: center; gap: 8px;
  transition: background 0.2s;
 }
@@ -862,7 +862,7 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
  background: var(--terracota); color: white;
  border-radius: 10px; padding: 0.85rem 1.75rem;
  font-size: 15px; font-weight: 700; cursor: pointer;
- font-family: 'Poppins', sans-serif; border: none; margin-top: 2rem;
+ font-family: var(--font-poppins), sans-serif; border: none; margin-top: 2rem;
  transition: background 0.2s;
 }
 .btn-contactar-nos:hover { background: var(--terracota-dark); }
@@ -874,7 +874,7 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
 .motivo-btn {
  background: white; border: 1.5px solid var(--gris-claro);
  border-radius: 20px; padding: 0.4rem 1rem; font-size: 13px; font-weight: 500;
- color: var(--cafe); cursor: pointer; font-family: 'Poppins', sans-serif;
+ color: var(--cafe); cursor: pointer; font-family: var(--font-poppins), sans-serif;
  transition: all 0.2s;
 }
 .motivo-btn.active { background: var(--terracota); border-color: var(--terracota); color: white; }
@@ -907,7 +907,7 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
 .btn-como-llegar {
  width: 100%; padding: 0.7rem; background: none; border: 1.5px solid var(--terracota);
  border-radius: 10px; font-size: 13px; font-weight: 700; color: var(--terracota);
- cursor: pointer; font-family: 'Poppins', sans-serif; margin-top: 0.75rem;
+ cursor: pointer; font-family: var(--font-poppins), sans-serif; margin-top: 0.75rem;
  transition: all 0.2s;
 }
 .btn-como-llegar:hover { background: var(--terracota); color: white; }
@@ -915,7 +915,7 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
 .red-btn {
  flex: 1; padding: 0.6rem; border-radius: 8px; text-align: center;
  font-size: 12px; font-weight: 600; cursor: pointer; border: 1.5px solid;
- transition: all 0.2s; font-family: 'Poppins', sans-serif;
+ transition: all 0.2s; font-family: var(--font-poppins), sans-serif;
 }
 
 /* 404 */
@@ -952,12 +952,12 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
 .btn-cookie-accept {
  background: var(--terracota); color: white; border: none; border-radius: 8px;
  padding: 0.55rem 1.25rem; font-size: 13px; font-weight: 700; cursor: pointer;
- font-family: 'Poppins', sans-serif;
+ font-family: var(--font-poppins), sans-serif;
 }
 .btn-cookie-reject {
  background: none; color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.2);
  border-radius: 8px; padding: 0.55rem 1rem; font-size: 13px; cursor: pointer;
- font-family: 'Poppins', sans-serif;
+ font-family: var(--font-poppins), sans-serif;
 }
 
 /* Success modal */
@@ -978,7 +978,7 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
 .btn-modal-close {
  background: var(--terracota); color: white; border: none; border-radius: 10px;
  padding: 0.75rem 2rem; font-size: 14px; font-weight: 700;
- cursor: pointer; font-family: 'Poppins', sans-serif;
+ cursor: pointer; font-family: var(--font-poppins), sans-serif;
 }
 
 /* Responsive */
@@ -1123,7 +1123,7 @@ body{top:0 !important;}
   padding: 0.85rem 1.35rem;
   border-radius: 10px;
   border: 1px solid transparent;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 0.94rem;
   font-weight: 700;
   line-height: 1.2;
@@ -1683,7 +1683,7 @@ body{top:0 !important;}
   padding: 0.8rem 0.9rem;
   color: var(--negro);
   background: #fff;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 0.9rem;
 }
 
@@ -1957,7 +1957,7 @@ body{top:0 !important;}
   padding: 0.86rem 1.35rem;
   border: 1px solid transparent;
   border-radius: 10px;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 0.92rem;
   font-weight: 700;
   line-height: 1.2;
@@ -2389,7 +2389,7 @@ body{top:0 !important;}
   padding: 0.85rem 1.35rem;
   border: 1px solid transparent;
   border-radius: 10px;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 0.93rem;
   font-weight: 700;
   line-height: 1.2;
@@ -3167,7 +3167,7 @@ body{top:0 !important;}
   padding: 0.86rem 1.35rem;
   border: 1px solid transparent;
   border-radius: 10px;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 0.93rem;
   font-weight: 700;
   line-height: 1.2;
@@ -3768,7 +3768,7 @@ body{top:0 !important;}
   border-radius: 9px;
   background: #fff;
   color: var(--negro);
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 0.92rem;
 }
 
@@ -4056,7 +4056,7 @@ body{top:0 !important;}
   padding: 0.85rem 1.35rem;
   border: 1px solid transparent;
   border-radius: 10px;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 0.93rem;
   font-weight: 700;
   line-height: 1.2;
@@ -4954,7 +4954,7 @@ body{top:0 !important;}
   padding: 0.85rem 1.35rem;
   border-radius: 10px;
   border: 1px solid transparent;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 0.94rem;
   font-weight: 700;
   line-height: 1.2;
@@ -5514,7 +5514,7 @@ body{top:0 !important;}
   padding: 0.8rem 0.9rem;
   color: var(--negro);
   background: #fff;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 0.9rem;
 }
 
@@ -5921,7 +5921,7 @@ body{top:0 !important;}
   padding: 0.85rem 1.35rem;
   border: 1px solid transparent;
   border-radius: 10px;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 0.94rem;
   font-weight: 700;
   line-height: 1.2;
@@ -6833,7 +6833,7 @@ body{top:0 !important;}
   padding: 0.86rem 1.35rem;
   border: 1px solid transparent;
   border-radius: 10px;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 0.92rem;
   font-weight: 700;
   line-height: 1.2;
@@ -6988,7 +6988,7 @@ body{top:0 !important;}
   border-radius: 999px;
   background: #fff;
   color: var(--cafe);
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 0.78rem;
   cursor: pointer;
   transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
@@ -7036,7 +7036,7 @@ body{top:0 !important;}
   outline: none;
   background: #fff;
   color: var(--negro);
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 0.93rem;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
@@ -7084,7 +7084,7 @@ body{top:0 !important;}
   border-radius: 999px;
   background: #fff;
   color: var(--cafe);
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 0.78rem;
   font-weight: 600;
   cursor: pointer;
@@ -7187,7 +7187,7 @@ body{top:0 !important;}
   background: #fff;
   color: var(--negro);
   text-align: left;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 0.96rem;
   font-weight: 700;
   line-height: 1.45;
@@ -7273,7 +7273,7 @@ body{top:0 !important;}
   border-radius: 9px;
   background: var(--terracota);
   color: #fff;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 0.82rem;
   font-weight: 700;
   text-decoration: none;

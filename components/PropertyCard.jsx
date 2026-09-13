@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { buildPropertySlug } from '@/lib/slug';
 
 // Ported from the legacy cardCarousel()/propCard() functions. The whole
@@ -38,13 +39,16 @@ export default function PropertyCard({ property }) {
           </div>
         ) : (
           <div className="card-carousel" data-idx={idx} data-total={p.imgs.length}>
-            <div className="card-carousel-track" style={{ transform: `translateX(-${idx * 100}%)` }}>
-              {p.imgs.map((src, i) => (
-                <div className="card-carousel-slide" key={i}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={src} alt={p.title} loading="lazy" />
-                </div>
-              ))}
+            <div className="card-carousel-track">
+              <div className="card-carousel-slide">
+                <Image
+                  key={p.imgs[idx]}
+                  src={p.imgs[idx]}
+                  alt={p.title}
+                  fill
+                  sizes="(max-width: 720px) 88vw, (max-width: 1100px) 44vw, 320px"
+                />
+              </div>
             </div>
             {p.imgs.length > 1 && (
               <div className="card-carousel-dots">
