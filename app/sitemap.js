@@ -1,10 +1,13 @@
 // app/sitemap.js
 // Generates /sitemap.xml. Only lists indexable routes — the noindex
-// sections (equipo, insights, trabaja-con-nosotros) and their [slug]
-// children are intentionally excluded, since they carry
-// robots: { index: false } in their own metadata.
+// sections (insights, trabaja-con-nosotros) and their [slug] children are
+// intentionally excluded, since they carry robots: { index: false } in
+// their own metadata. /equipo lost its noindex once it got real content
+// (see app/equipo/page.jsx and lib/teamMembers.js), so its profile URLs
+// are generated here from the same teamMembers list.
 import { fetchAllProperties } from '@/lib/properties';
 import { buildPropertySlug } from '@/lib/slug';
+import { teamMembers } from '@/lib/teamMembers';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.rednorte.mx';
 
@@ -25,6 +28,7 @@ const STATIC_ROUTES = [
   '/herramientas/estimacion-de-valor',
   '/herramientas/reporte-de-vendibilidad',
   '/nosotros',
+  '/equipo',
   '/contacto',
   '/preguntas-frecuentes',
   '/aviso-de-privacidad',
@@ -35,6 +39,11 @@ const STATIC_ROUTES = [
 export default async function sitemap() {
   const staticEntries = STATIC_ROUTES.map((path) => ({
     url: `${SITE_URL}${path}`,
+    lastModified: new Date(),
+  }));
+
+  const teamEntries = teamMembers.map((member) => ({
+    url: `${SITE_URL}/equipo/${member.slug}`,
     lastModified: new Date(),
   }));
 
@@ -51,5 +60,5 @@ export default async function sitemap() {
     // sin inventario en vivo disponible, el sitemap solo incluye las rutas estáticas
   }
 
-  return [...staticEntries, ...propertyEntries];
+  return [...staticEntries, ...teamEntries, ...propertyEntries];
 }
