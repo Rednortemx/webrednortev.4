@@ -34,8 +34,8 @@ export default function HeroSearch() {
       </div>
       <div className="search-grid">
         <div className="search-field">
-          <label>Tipo de propiedad</label>
-          <select ref={tipoRef} defaultValue="">
+          <label htmlFor="hero-tipo">Tipo de propiedad</label>
+          <select id="hero-tipo" ref={tipoRef} defaultValue="">
             <option value="">Todos</option>
             <option value="Casa">Casa</option>
             <option value="Depto">Departamento</option>
@@ -45,8 +45,8 @@ export default function HeroSearch() {
           </select>
         </div>
         <div className="search-field">
-          <label>Municipio / Zona</label>
-          <select ref={zonaRef} defaultValue="">
+          <label htmlFor="hero-zona">Municipio / Zona</label>
+          <select id="hero-zona" ref={zonaRef} defaultValue="">
             <option value="">Todos</option>
             <option value="Abasolo">Abasolo</option>
             <option value="Agualeguas">Agualeguas</option>
@@ -102,8 +102,8 @@ export default function HeroSearch() {
           </select>
         </div>
         <div className="search-field">
-          <label>Precio máximo</label>
-          <select ref={precioRef} defaultValue="">
+          <label htmlFor="hero-precio">Precio máximo</label>
+          <select id="hero-precio" ref={precioRef} defaultValue="">
             <option value="">Sin límite</option>
             <option value="2000000">Hasta $2M</option>
             <option value="5000000">Hasta $5M</option>
@@ -112,8 +112,8 @@ export default function HeroSearch() {
           </select>
         </div>
         <div className="search-field">
-          <label>Recámaras</label>
-          <select ref={recamarasRef} defaultValue="0">
+          <label htmlFor="hero-recamaras">Recámaras</label>
+          <select id="hero-recamaras" ref={recamarasRef} defaultValue="0">
             <option value="0">Cualquiera</option>
             <option value="1">1+</option>
             <option value="2">2+</option>

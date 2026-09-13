@@ -53,7 +53,15 @@ export default function PropertyGallery({ imgs, icon, title }) {
       </div>
       <div className="gallery-thumbs" id="ficha-thumbs">
         {shown.map((src, i) => (
-          <div key={i} className={`gallery-thumb${i === idx ? ' active' : ''}`} onClick={() => goto(i)} id={`thumb-${i}`}>
+          <button
+            key={i}
+            className={`gallery-thumb${i === idx ? ' active' : ''}`}
+            onClick={() => goto(i)}
+            id={`thumb-${i}`}
+            type="button"
+            aria-label={`Mostrar foto ${i + 1} de ${title}`}
+            aria-current={i === idx ? 'true' : undefined}
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={src}
@@ -64,7 +72,7 @@ export default function PropertyGallery({ imgs, icon, title }) {
                 e.currentTarget.parentElement?.classList.add('is-broken');
               }}
             />
-          </div>
+          </button>
         ))}
       </div>
     </>
