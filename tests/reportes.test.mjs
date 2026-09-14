@@ -57,12 +57,20 @@ test('publica solo datos agregados y fuentes HTTPS', async () => {
 });
 
 test('protege JSON-LD y ofrece tablas y navegación accesibles', async () => {
-  const page = await readFile(reportPageUrl, 'utf8');
+  const [page, hub] = await Promise.all([
+    readFile(reportPageUrl, 'utf8'),
+    readFile(new URL('../app/reportes/page.jsx', import.meta.url), 'utf8'),
+  ]);
 
   assert.match(page, /serializeJsonLd\(schema\)/);
   assert.match(page, /<caption className="report-sr-only">/);
   assert.match(page, /aria-label="Secciones del reporte"/);
   assert.match(page, /rel="noopener noreferrer"/);
+  assert.match(
+    page,
+    /export const metadata = \{\n  title: 'Reporte inmobiliario Monterrey y Nuevo León 2026',/,
+  );
+  assert.match(hub, /export const metadata = \{\n  title: 'Reportes inmobiliarios',/);
 });
 
 test('aísla el diseño del reporte y evita tarjetas externas angostas', async () => {

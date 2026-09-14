@@ -4,7 +4,7 @@ import { rednorteReport2026V2 as report } from '@/lib/rednorteReport2026V2';
 import { serializeJsonLd } from '@/lib/security';
 
 export const metadata = {
-  title: 'Reporte inmobiliario Monterrey y Nuevo León 2026 | Rednorte',
+  title: 'Reporte inmobiliario Monterrey y Nuevo León 2026',
   description:
     'Reporte Rednorte 2026 con inventario activo, señales de interés, índice de concentración, municipios, tipos de propiedad, canales y patrones operativos en Monterrey y Nuevo León.',
   alternates: { canonical: '/reportes/mercado-inmobiliario-monterrey-nuevo-leon-2026' },
