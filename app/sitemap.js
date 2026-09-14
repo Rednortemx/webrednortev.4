@@ -38,14 +38,15 @@ const STATIC_ROUTES = [
 ];
 
 export default async function sitemap() {
+  // No enviamos lastModified porque hoy no existe una fecha fiable por URL.
+  // Usar la hora de cada solicitud haría parecer que las 584 páginas cambiaron
+  // continuamente, aunque su contenido siga igual.
   const staticEntries = STATIC_ROUTES.map((path) => ({
     url: `${SITE_URL}${path}`,
-    lastModified: new Date(),
   }));
 
   const teamEntries = teamMembers.map((member) => ({
     url: `${SITE_URL}/equipo/${member.slug}`,
-    lastModified: new Date(),
   }));
 
   let propertyEntries = [];
@@ -54,7 +55,6 @@ export default async function sitemap() {
     if (source === 'live') {
       propertyEntries = properties.map((p) => ({
         url: `${SITE_URL}/propiedades/${buildPropertySlug(p)}`,
-        lastModified: new Date(),
       }));
     }
   } catch {
