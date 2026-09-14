@@ -3,7 +3,7 @@ import Breadcrumb from '@/components/Breadcrumb';
 import { serializeJsonLd } from '@/lib/security';
 
 export const metadata = {
-  title: 'Reportes inmobiliarios | Rednorte Inmobiliaria',
+  title: 'Reportes inmobiliarios',
   description: 'Reportes propios sobre inventario, señales de interés y mercado inmobiliario de Monterrey y Nuevo León.',
   alternates: { canonical: '/reportes' },
   openGraph: {
