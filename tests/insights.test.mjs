@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
 import {
@@ -37,4 +38,27 @@ test('publica seis Insights completos y relacionados de forma consistente', () =
 
 test('no conserva borradores dentro del catálogo público', () => {
   assert.deepEqual(insights, getPublishedInsights());
+});
+
+test('mantiene separado el header global del encabezado editorial', async () => {
+  const [headerComponent, globalStyles] = await Promise.all([
+    readFile(new URL('../components/Header.jsx', import.meta.url), 'utf8'),
+    readFile(new URL('../app/globals.css', import.meta.url), 'utf8'),
+  ]);
+
+  assert.match(headerComponent, /<header className="site-header">/);
+  assert.match(globalStyles, /\.site-header\s*\{/);
+  assert.doesNotMatch(globalStyles, /(^|\n)header\s*\{/);
+});
+
+test('coloca la navegación de secciones antes del contenido del Insight', async () => {
+  const insightPage = await readFile(
+    new URL('../app/insights/[slug]/page.jsx', import.meta.url),
+    'utf8',
+  );
+
+  assert.ok(
+    insightPage.indexOf('className="insight-sticky-aside"')
+      < insightPage.indexOf('className="insight-main-column"'),
+  );
 });
