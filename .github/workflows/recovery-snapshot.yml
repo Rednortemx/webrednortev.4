@@ -1,0 +1,44 @@
+name: Recovery snapshot
+
+on:
+  schedule:
+    # Monday at 09:00 Monterrey. Scheduled runs may start with a short delay.
+    - cron: "0 15 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: recovery-snapshot
+  cancel-in-progress: false
+
+jobs:
+  source-snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout complete history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create and verify repository bundle
+        shell: bash
+        run: |
+          git bundle create rednorte-source.bundle --all
+          git bundle verify rednorte-source.bundle
+          git rev-parse HEAD > snapshot-commit.txt
+          date -u +'%Y-%m-%dT%H:%M:%SZ' > snapshot-created-at.txt
+
+      - name: Store recovery snapshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: rednorte-source-${{ github.run_number }}
+          path: |
+            rednorte-source.bundle
+            snapshot-commit.txt
+            snapshot-created-at.txt
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 9
