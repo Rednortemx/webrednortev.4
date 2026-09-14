@@ -46,12 +46,14 @@ export default async function PropiedadesPage({ searchParams }) {
   return (
     <div className="page-content">
       <Breadcrumb items={[{ label: 'Propiedades' }]} />
-      {source !== 'live' && (
-        <div className="crm-indicator" style={{ margin: '1rem 2rem 0' }}>
-          <span className="crm-dot"></span> Inventario no disponible en este momento
-        </div>
-      )}
-      <h1 style={{ margin: '1rem 2rem 0', fontSize: '1.6rem', color: 'var(--negro)' }}>Propiedades en venta y renta en Monterrey y Nuevo León</h1>
+      <div className="propiedades-heading">
+        {source !== 'live' && (
+          <div className="crm-indicator">
+            <span className="crm-dot"></span> Inventario no disponible en este momento
+          </div>
+        )}
+        <h1>Propiedades en venta y renta en Monterrey y Nuevo León</h1>
+      </div>
       <PropertyFilters properties={propertyCards} initialFilters={initialFilters} />
     </div>
   );

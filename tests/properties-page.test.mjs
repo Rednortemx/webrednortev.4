@@ -9,3 +9,12 @@ test('propiedades omite la etiqueta positiva y conserva el aviso de contingencia
   assert.match(page, /source !== 'live'/);
   assert.match(page, /Inventario no disponible en este momento/);
 });
+
+test('el H1 de propiedades usa el contenedor centrado de la página', async () => {
+  const page = await readFile(new URL('../app/propiedades/page.jsx', import.meta.url), 'utf8');
+  const styles = await readFile(new URL('../app/globals.css', import.meta.url), 'utf8');
+
+  assert.match(page, /className="propiedades-heading"/);
+  assert.match(styles, /\.propiedades-heading\s*\{[^}]*max-width:\s*1200px[^}]*margin:\s*0 auto[^}]*text-align:\s*center/s);
+  assert.doesNotMatch(page, /<h1 style=/);
+});
