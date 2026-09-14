@@ -62,3 +62,16 @@ test('coloca la navegación de secciones antes del contenido del Insight', async
       < insightPage.indexOf('className="insight-main-column"'),
   );
 });
+
+test('aísla el ritmo vertical y usa relacionados compactos', async () => {
+  const [styles, relatedComponent] = await Promise.all([
+    readFile(new URL('../app/globals.insights.css', import.meta.url), 'utf8'),
+    readFile(new URL('../components/InsightRelated.jsx', import.meta.url), 'utf8'),
+  ]);
+
+  assert.match(styles, /:where\(\.insights-page,\.insight-detail-page\) section\{padding:0\}/);
+  assert.match(styles, /grid-template-columns:190px minmax\(0,820px\)/);
+  assert.match(styles, /\.insight-related-list\{/);
+  assert.match(relatedComponent, /className="insight-related-list"/);
+  assert.doesNotMatch(relatedComponent, /<InsightCard/);
+});
