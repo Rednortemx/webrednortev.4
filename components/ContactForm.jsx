@@ -6,6 +6,7 @@ const submitLeadRequest = createLeadSubmitter('contacto');
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { openModal } from '@/lib/modal';
+import { SITE_CONTACT } from '@/lib/siteConfig';
 
 const MOTIVOS = ['Quiero comprar', 'Quiero vender', 'Quiero rentar', 'Ofrecer en renta', 'Valuación', 'Quiero invertir', 'Info propiedad'];
 
@@ -62,7 +63,7 @@ export default function ContactForm() {
     }
 
     if (openWhatsApp) trackConversion('whatsapp_clic', 'contacto');
-    const whatsappUrl = 'https://wa.me/528117783953?text=' + encodeURIComponent(buildMessage());
+    const whatsappUrl = `https://wa.me/${SITE_CONTACT.phoneDigits}?text=` + encodeURIComponent(buildMessage());
     const whatsappWindow = openWhatsApp
       ? window.open(whatsappUrl, '_blank', 'noopener,noreferrer')
       : null;

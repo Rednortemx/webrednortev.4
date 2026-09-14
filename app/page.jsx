@@ -7,6 +7,7 @@ import FaqHome from '@/components/FaqHome';
 import { faqSchema } from '@/lib/schema';
 import { fetchAllProperties, toPropertyCardData } from '@/lib/properties';
 import { serializeJsonLd } from '@/lib/security';
+import { SITE_METRICS } from '@/lib/siteConfig';
 
 export const metadata = {
   title: 'Rednorte Inmobiliaria | Propiedades en Monterrey y su Área Metropolitana',
@@ -39,15 +40,15 @@ export default async function HomePage() {
             <p>Rednorte Inmobiliaria combina asesoría, datos y marketing para ayudarte a tomar mejores decisiones inmobiliarias.</p>
             <div className="hero-stats">
               <div className="hero-stat">
-                <div className="hero-stat-num">520+</div>
+                <div className="hero-stat-num">{SITE_METRICS.activeProperties}</div>
                 <div className="hero-stat-label">Propiedades activas</div>
               </div>
               <div className="hero-stat">
-                <div className="hero-stat-num">+30</div>
+                <div className="hero-stat-num">{SITE_METRICS.teamMembers}</div>
                 <div className="hero-stat-label">Integrantes en el equipo</div>
               </div>
               <div className="hero-stat">
-                <div className="hero-stat-num">Desde 2018</div>
+                <div className="hero-stat-num">Desde {SITE_METRICS.since}</div>
                 <div className="hero-stat-label">Operando en Nuevo León</div>
               </div>
             </div>
@@ -157,7 +158,7 @@ export default async function HomePage() {
             </div>
             <div className="nosotros-text">
               <p className="section-label">Quiénes somos</p>
-              <h2 className="section-title">Desde 2018 conectando personas con propiedades</h2>
+              <h2 className="section-title">Desde {SITE_METRICS.since} conectando personas con propiedades</h2>
               <p style={{ fontSize: '14.5px', color: 'var(--cafe)', lineHeight: 1.7, marginBottom: '1rem' }}>En Rednorte Inmobiliaria somos un equipo de asesores profesionales con profundo conocimiento del mercado de Nuevo León. Trabajamos con integridad, transparencia y resultados.</p>
               <ul className="nosotros-list">
                 <li>Especialistas en residencial, comercial e industrial</li>

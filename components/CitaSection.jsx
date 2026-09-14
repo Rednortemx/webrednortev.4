@@ -6,6 +6,7 @@ const submitLeadRequest = createLeadSubmitter('cita');
 import { useState } from 'react';
 import Link from 'next/link';
 import { formatMxPhone, advisorInitials } from '@/lib/format';
+import { SITE_CONTACT } from '@/lib/siteConfig';
 
 // Ported from the legacy page-cita section (index.html lines ~4912-5013) and
 // its enviarCitaWA(). Per the migration plan this is NOT its own route —
@@ -21,7 +22,7 @@ export default function CitaSection({ property, advisor }) {
   const [priv, setPriv] = useState(false);
   const modalidad = 'Visita presencial';
 
-  const advisorNumber = String(advisor?.phone || '528117783953').replace(/\D/g, '');
+  const advisorNumber = String(advisor?.phone || SITE_CONTACT.phoneDigits).replace(/\D/g, '');
 
   const enviar = () => {
     if (!nombre || !tel || !fecha || !hora) {
@@ -126,7 +127,7 @@ export default function CitaSection({ property, advisor }) {
                 <div className="advisor-role">{advisor?.company || 'Equipo de asesores'}</div>
               </div>
             </div>
-            <a className="advisor-phone" href={`tel:+${advisorNumber}`} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', color: 'var(--terracota)', fontWeight: 600, margin: '-0.75rem 0 1rem', textDecoration: 'none' }}> {formatMxPhone(advisor?.phone) || '+52 (811) 778-3953'}</a>
+            <a className="advisor-phone" href={`tel:+${advisorNumber}`} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', color: 'var(--terracota)', fontWeight: 600, margin: '-0.75rem 0 1rem', textDecoration: 'none' }}> {formatMxPhone(advisor?.phone) || SITE_CONTACT.phoneInternationalDisplay}</a>
             <div style={{ fontSize: '12px', color: 'var(--cafe)', lineHeight: 1.7, paddingTop: '.75rem', borderTop: '1px solid var(--gris-claro)' }}>
               <p><strong>Horario de atención:</strong></p>
               <p>Lun-Vie: 9:00 - 18:00 h</p>

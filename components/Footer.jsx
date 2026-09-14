@@ -3,6 +3,7 @@ import Image from 'next/image';
 import CookiePrefsLink from './CookiePrefsLink';
 import WhatsAppGateButton from './WhatsAppGateButton';
 import { SOCIAL_URLS } from '@/lib/socialLinks';
+import { SITE_CONTACT } from '@/lib/siteConfig';
 
 function propsFilterHref(operacion, tipo, categoria) {
   const params = new URLSearchParams();
@@ -28,7 +29,7 @@ export default function Footer() {
             </div>
           </div>
           <p className="footer-desc">Especialistas en venta, renta e inversión inmobiliaria en Monterrey y Nuevo León. Conectamos propiedades con decisiones inteligentes.</p>
-          <p className="footer-address"> Av. José Vasconcelos Ote. 215-7<br />Residencial San Agustín 1er Sector<br />San Pedro Garza García, N.L. 66260</p>
+          <p className="footer-address">{SITE_CONTACT.address.streetAddress}<br />{SITE_CONTACT.address.neighborhood}<br />{SITE_CONTACT.address.locality}, {SITE_CONTACT.address.regionShort} {SITE_CONTACT.address.postalCode}</p>
           <div className="footer-social">
             <a className="social-btn" href={SOCIAL_URLS.facebook} target="_blank" rel="noopener noreferrer" title="Facebook">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12.06C22 6.505 17.523 2 12 2S2 6.505 2 12.06c0 5.02 3.657 9.184 8.438 9.94v-7.03H7.898v-2.91h2.54V9.845c0-2.507 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.459h-1.26c-1.243 0-1.63.771-1.63 1.562v1.877h2.773l-.443 2.91h-2.33V22c4.78-.756 8.437-4.92 8.437-9.94z" /></svg>
@@ -56,19 +57,19 @@ export default function Footer() {
             </WhatsAppGateButton>
           </div>
         </div>
-        <div className="footer-col">
-          <h4>Propiedades</h4>
-          <ul className="footer-links">
+        <details className="footer-col footer-section">
+          <summary><h4>Propiedades</h4><span className="footer-section-toggle" aria-hidden="true">+</span></summary>
+          <div className="footer-section-content"><ul className="footer-links">
             <li><Link href={propsFilterHref('Venta', '', '')}>Comprar</Link></li>
             <li><Link href={propsFilterHref('Renta', '', '')}>Rentar</Link></li>
             <li><Link href={propsFilterHref('', '', 'Residencial')}>Residencial</Link></li>
             <li><Link href={propsFilterHref('', '', 'Comercial')}>Comercial</Link></li>
             <li><Link href={propsFilterHref('', '', 'Industrial')}>Industrial</Link></li>
-          </ul>
-        </div>
-        <div className="footer-col">
-          <h4>Servicios</h4>
-          <ul className="footer-links">
+          </ul></div>
+        </details>
+        <details className="footer-col footer-section">
+          <summary><h4>Servicios</h4><span className="footer-section-toggle" aria-hidden="true">+</span></summary>
+          <div className="footer-section-content"><ul className="footer-links">
             <li><Link href="/servicios/vender-propiedad">Vender propiedad</Link></li>
             <li><Link href="/servicios/comprar-propiedad">Comprar propiedad</Link></li>
             <li><Link href="/servicios/rentar-propiedad">Rentar propiedad</Link></li>
@@ -78,11 +79,11 @@ export default function Footer() {
             <li><Link href="/servicios/estimacion-de-valor">Estimación de valor</Link></li>
             <li><Link href="/servicios/clientes-extranjeros">Clientes extranjeros</Link></li>
             <li><Link href="/servicios/master-broker">Master Broker</Link></li>
-          </ul>
-        </div>
-        <div className="footer-col">
-          <h4>Rednorte</h4>
-          <ul className="footer-links">
+          </ul></div>
+        </details>
+        <details className="footer-col footer-section">
+          <summary><h4>Rednorte</h4><span className="footer-section-toggle" aria-hidden="true">+</span></summary>
+          <div className="footer-section-content"><ul className="footer-links">
             <li><Link href="/nosotros">Nosotros</Link></li>
             <li><Link href="/equipo">Equipo</Link></li>
             <li><Link href="/nosotros/canaco-monterrey">CANACO Monterrey</Link></li>
@@ -90,22 +91,23 @@ export default function Footer() {
             <li><Link href="/reportes">Reportes</Link></li>
             <li><Link href="/preguntas-frecuentes">Preguntas frecuentes</Link></li>
             <li><Link href="/trabaja-con-nosotros">Trabaja con nosotros</Link></li>
-          </ul>
-        </div>
-        <div className="footer-col">
-          <h4>Contacto</h4>
-          <ul className="footer-links">
-            <li><a href="tel:+528117783953">(81) 1778-3953</a></li>
+          </ul></div>
+        </details>
+        <details className="footer-col footer-section">
+          <summary><h4>Contacto</h4><span className="footer-section-toggle" aria-hidden="true">+</span></summary>
+          <div className="footer-section-content"><ul className="footer-links">
+            <li><a href={SITE_CONTACT.phoneHref}>{SITE_CONTACT.phoneDisplay}</a></li>
             <li><WhatsAppGateButton source="Footer (contacto)">WhatsApp</WhatsAppGateButton></li>
-            <li><a href="mailto:admin@rednorte.com.mx">admin@rednorte.com.mx</a></li>
+            <li><a href={`mailto:${SITE_CONTACT.email}`}>{SITE_CONTACT.email}</a></li>
             <li><Link href="/contacto">Contacto y ubicación</Link></li>
           </ul>
           <h4 style={{ marginTop: '1.5rem' }}>Horario</h4>
           <ul className="footer-links">
-            <li><span>Lun–Vie: 9:00 – 18:00</span></li>
-            <li><span>Sáb: 10:00 – 14:00</span></li>
+            <li><span>{SITE_CONTACT.hours.weekdays}</span></li>
+            <li><span>{SITE_CONTACT.hours.saturday}</span></li>
           </ul>
-        </div>
+          </div>
+        </details>
       </div>
       <div className="footer-bottom" style={{ borderTop: '1px solid rgba(255,255,255,0.08)', maxWidth: '1200px', margin: '0 auto', padding: '1.25rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
         <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)' }}>© 2026 Rednorte Inmobiliaria. Todos los derechos reservados.</p>

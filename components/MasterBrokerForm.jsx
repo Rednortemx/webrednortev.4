@@ -6,6 +6,7 @@ const submitLeadRequest = createLeadSubmitter('master_broker');
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import HoneypotField from '@/components/HoneypotField';
+import { SITE_CONTACT } from '@/lib/siteConfig';
 
 const INITIAL_FORM = {
   goal: 'Solicitar evaluación Master Broker',
@@ -114,7 +115,7 @@ export default function MasterBrokerForm() {
 
     setStatus({ type: 'submitting', message: 'Enviando información…' });
 
-    const whatsappUrl = `https://wa.me/528117783953?text=${encodeURIComponent(
+    const whatsappUrl = `https://wa.me/${SITE_CONTACT.phoneDigits}?text=${encodeURIComponent(
       buildWhatsAppMessage(form),
     )}`;
     trackConversion('whatsapp_clic', 'master_broker');

@@ -6,6 +6,7 @@ const submitLeadRequest = createLeadSubmitter('rentar');
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import HoneypotField from '@/components/HoneypotField';
+import { SITE_CONTACT } from '@/lib/siteConfig';
 
 const INITIAL_FORM = {
   goal: 'Rentar mi propiedad',
@@ -92,7 +93,7 @@ export default function RentPropertyForm() {
 
     setStatus({ type: 'submitting', message: 'Enviando información…' });
 
-    const whatsappUrl = `https://wa.me/528117783953?text=${encodeURIComponent(buildWhatsAppMessage(form))}`;
+    const whatsappUrl = `https://wa.me/${SITE_CONTACT.phoneDigits}?text=${encodeURIComponent(buildWhatsAppMessage(form))}`;
     trackConversion('whatsapp_clic', 'rentar');
     const whatsappWindow = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
 

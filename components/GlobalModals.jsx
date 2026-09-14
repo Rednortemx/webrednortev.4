@@ -6,8 +6,7 @@ const submitLeadRequest = createLeadSubmitter('whatsapp');
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { closeModal } from '@/lib/modal';
-
-const DEFAULT_PHONE = '528117783953';
+import { SITE_CONTACT } from '@/lib/siteConfig';
 
 // Mounts the site-wide modals once in the root layout. Any client component
 // can open/close them via lib/modal.js's openModal(id, data)/closeModal(id),
@@ -103,7 +102,7 @@ export default function GlobalModals() {
       return;
     }
 
-    const phone = gateData.phone || DEFAULT_PHONE;
+    const phone = gateData.phone || SITE_CONTACT.phoneDigits;
     const contexto = gateData.message ? `${gateData.message}\n\n` : '';
     const texto = `${contexto}Hola, soy ${nombre.trim()}. Mi teléfono es ${telefono.trim()}.`;
 
@@ -131,7 +130,7 @@ export default function GlobalModals() {
         <div className="modal-box" role="dialog" aria-modal="true" aria-labelledby="success-modal-title" aria-describedby="success-modal-description">
           <div className="modal-icon"></div>
           <h3 id="success-modal-title">¡Mensaje enviado!</h3>
-          <p id="success-modal-description">Recibimos tu solicitud. Uno de nuestros asesores se comunicará contigo en menos de 24 horas.</p>
+          <p id="success-modal-description">{SITE_CONTACT.response.success}</p>
           <button ref={successButtonRef} className="btn-modal-close" onClick={() => close('successModal')} type="button">Aceptar</button>
         </div>
       </div>

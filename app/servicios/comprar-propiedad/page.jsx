@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
 import BuyPropertyForm from '@/components/BuyPropertyForm';
 import TrustindexWidget from '@/components/TrustindexWidget';
+import { SITE_CONTACT } from '@/lib/siteConfig';
 
 export const metadata = {
   title: 'Comprar una propiedad en Monterrey y Nuevo León',
@@ -173,11 +174,10 @@ const serviceSchema = {
         telephone: '+52 81 1778 3953',
         address: {
           '@type': 'PostalAddress',
-          streetAddress:
-            'Av. José Vasconcelos Ote. 215, Local 7, Residencial San Agustín 1er Sector',
-          addressLocality: 'San Pedro Garza García',
-          addressRegion: 'Nuevo León',
-          postalCode: '66260',
+          streetAddress: `${SITE_CONTACT.address.streetAddress}, ${SITE_CONTACT.address.neighborhood}`,
+          addressLocality: SITE_CONTACT.address.locality,
+          addressRegion: SITE_CONTACT.address.region,
+          postalCode: SITE_CONTACT.address.postalCode,
           addressCountry: 'MX',
         },
       },

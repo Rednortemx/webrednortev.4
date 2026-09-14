@@ -6,6 +6,7 @@ const submitLeadRequest = createLeadSubmitter('inversion');
 import { useState } from 'react';
 import Link from 'next/link';
 import HoneypotField from '@/components/HoneypotField';
+import { SITE_CONTACT } from '@/lib/siteConfig';
 
 const INVESTMENT_GOALS = [
   'Generar flujo mensual',
@@ -123,7 +124,7 @@ export default function InvestmentAdvisoryForm() {
 
     setStatus({ type: 'submitting', message: 'Enviando información…' });
 
-    const whatsappUrl = `https://wa.me/528117783953?text=${encodeURIComponent(buildWhatsAppMessage(form))}`;
+    const whatsappUrl = `https://wa.me/${SITE_CONTACT.phoneDigits}?text=${encodeURIComponent(buildWhatsAppMessage(form))}`;
     trackConversion('whatsapp_clic', 'inversion');
     const whatsappWindow = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
 

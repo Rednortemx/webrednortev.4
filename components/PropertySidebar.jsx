@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { formatMxPhone, advisorInitials } from '@/lib/format';
 import CitaSection from './CitaSection';
 import WhatsAppGateButton from './WhatsAppGateButton';
+import { SITE_CONTACT } from '@/lib/siteConfig';
 
 // Ported from the legacy ficha sidebar (advisor card + "Hacer una cita" +
 // share). "Hacer una cita" used to call navTo('cita'), a whole separate
@@ -12,7 +13,7 @@ import WhatsAppGateButton from './WhatsAppGateButton';
 export default function PropertySidebar({ property, advisor }) {
   const [citaOpen, setCitaOpen] = useState(false);
   const [shareLabel, setShareLabel] = useState('↗ Compartir propiedad');
-  const advisorNumber = String(advisor?.phone || '528117783953').replace(/\D/g, '');
+  const advisorNumber = String(advisor?.phone || SITE_CONTACT.phoneDigits).replace(/\D/g, '');
 
   const openCita = () => {
     setCitaOpen(true);
@@ -59,7 +60,7 @@ export default function PropertySidebar({ property, advisor }) {
             <div className="advisor-role">{advisor?.company || 'Equipo de asesores'}</div>
           </div>
         </div>
-        <a className="advisor-phone" href={`tel:+${advisorNumber}`} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', color: 'var(--terracota)', fontWeight: 600, margin: '-0.5rem 0 1rem', textDecoration: 'none' }}> {formatMxPhone(advisor?.phone) || '+52 (811) 778-3953'}</a>
+        <a className="advisor-phone" href={`tel:+${advisorNumber}`} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', color: 'var(--terracota)', fontWeight: 600, margin: '-0.5rem 0 1rem', textDecoration: 'none' }}> {formatMxPhone(advisor?.phone) || SITE_CONTACT.phoneInternationalDisplay}</a>
         <WhatsAppGateButton
           className="btn-wa-big"
           phone={advisorNumber}

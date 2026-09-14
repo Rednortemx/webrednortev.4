@@ -1,4 +1,6 @@
 import './globals.css';
+import './globals.services.css';
+import './globals.institutional.css';
 import './globals.insights.css';
 import './globals.reportes.css';
 import './globals.canaco.css';

@@ -6,6 +6,7 @@ const submitLeadRequest = createLeadSubmitter('extranjeros');
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import HoneypotField from '@/components/HoneypotField';
+import { SITE_CONTACT } from '@/lib/siteConfig';
 
 const REQUEST_TYPES = {
   comprar: 'Comprar una propiedad',
@@ -106,7 +107,7 @@ export default function ForeignClientsForm() {
 
     setStatus({ type: 'submitting', message: 'Enviando información…' });
 
-    const whatsappUrl = `https://wa.me/528117783953?text=${encodeURIComponent(
+    const whatsappUrl = `https://wa.me/${SITE_CONTACT.phoneDigits}?text=${encodeURIComponent(
       buildWhatsAppMessage(form),
     )}`;
     trackConversion('whatsapp_clic', 'extranjeros');
