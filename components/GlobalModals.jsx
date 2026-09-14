@@ -1,5 +1,8 @@
 'use client';
 
+import { createLeadSubmitter, trackConversion } from '@/lib/conversions';
+const submitLeadRequest = createLeadSubmitter('whatsapp');
+
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { closeModal } from '@/lib/modal';
@@ -104,7 +107,7 @@ export default function GlobalModals() {
     const contexto = gateData.message ? `${gateData.message}\n\n` : '';
     const texto = `${contexto}Hola, soy ${nombre.trim()}. Mi teléfono es ${telefono.trim()}.`;
 
-    fetch('/api/leads', {
+    submitLeadRequest('/api/leads', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -117,6 +120,7 @@ export default function GlobalModals() {
       }),
     }).catch(() => {});
 
+    trackConversion('whatsapp_clic', 'whatsapp');
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(texto)}`, '_blank', 'noopener,noreferrer');
     close('whatsappGateModal');
   };

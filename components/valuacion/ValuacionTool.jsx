@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import { estimadorShellHtml } from './estimadorShell';
 import { estimadorStyles } from './estimadorStyles';
 import { estimadorScriptSrc } from './estimadorScript';
+import { bindToolConversions } from '@/lib/toolConversions';
 
 // Monta el Estimador de Valor.
 //
@@ -20,6 +21,7 @@ export default function ValuacionTool() {
   const scriptRef = useRef(null);
 
   useEffect(() => {
+    const unbind = bindToolConversions(document.querySelector('.ov-val'), 'estimador');
     const style = document.createElement('style');
     style.textContent = estimadorStyles;
     document.head.appendChild(style);
@@ -33,6 +35,7 @@ export default function ValuacionTool() {
     scriptRef.current = script;
 
     return () => {
+      unbind();
       if (styleRef.current) {
         styleRef.current.remove();
         styleRef.current = null;

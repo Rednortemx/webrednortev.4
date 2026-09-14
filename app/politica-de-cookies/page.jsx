@@ -14,7 +14,7 @@ export default function PoliticaCookiesPage() {
       <Breadcrumb items={[{ label: 'Política de cookies y tecnologías' }]} />
       <div className="legal-page">
         <h1>Política de Cookies y Tecnologías</h1>
-        <p className="legal-date">Última actualización: 13 de septiembre de 2026</p>
+        <p className="legal-date">Última actualización: 14 de septiembre de 2026</p>
 
         <div className="legal-section">
           <p>Esta Política explica las tecnologías que utiliza rednorte.mx, operado por Red de Administración y Compraventa, S.A. de C.V., bajo el nombre comercial Rednorte Inmobiliaria, y los controles disponibles para cada visitante.</p>
@@ -69,6 +69,7 @@ export default function PoliticaCookiesPage() {
 
         <div className="legal-section">
           <h2>III. Analítica</h2>
+          <p>Con permiso para analítica también contamos envíos confirmados por el servidor, clics de salida a WhatsApp, búsquedas, aplicación de filtros e inicio y finalización de herramientas. Los eventos incluyen únicamente etiquetas predefinidas de acción y origen; no incluyen respuestas, resultados de valuación, nombres, teléfonos, correos ni mensajes. Un clic hacia WhatsApp no confirma el envío de un mensaje y una solicitud de cita no confirma su aceptación por el asesor. Las estadísticas solo representan a quienes permiten la medición.</p>
           <p>Vercel Web Analytics no utiliza cookies de terceros. De acuerdo con la documentación del proveedor, genera estadísticas anónimas y agregadas; la identificación temporal del visitante se basa en un hash derivado de la solicitud y la sesión se descarta después de 24 horas.</p>
           <p>Puede procesar fecha y hora, ruta visitada, página de procedencia, ubicación geográfica aproximada, sistema operativo, navegador y tipo de dispositivo. Rednorte no envía datos de formularios como nombre, teléfono, correo electrónico o mensajes a esta herramienta.</p>
         </div>

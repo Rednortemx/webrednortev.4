@@ -1,5 +1,8 @@
 'use client';
 
+import { createLeadSubmitter, trackConversion } from '@/lib/conversions';
+const submitLeadRequest = createLeadSubmitter('contacto');
+
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { openModal } from '@/lib/modal';
@@ -58,6 +61,7 @@ export default function ContactForm() {
       return;
     }
 
+    if (openWhatsApp) trackConversion('whatsapp_clic', 'contacto');
     const whatsappUrl = 'https://wa.me/528117783953?text=' + encodeURIComponent(buildMessage());
     const whatsappWindow = openWhatsApp
       ? window.open(whatsappUrl, '_blank', 'noopener,noreferrer')
@@ -65,7 +69,7 @@ export default function ContactForm() {
     setStatus({ sending: true, message: 'Enviando información…', error: false });
 
     try {
-      const response = await fetch('/api/leads', {
+      const response = await submitLeadRequest('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ tipo: 'Contacto general', nombre, telefono: tel, email, detalle: motivo, notas: mensaje }),

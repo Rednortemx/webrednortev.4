@@ -2,6 +2,7 @@
 
 import { Analytics } from '@vercel/analytics/next';
 import usePrivacyConsent from './usePrivacyConsent';
+import { beforeAnalyticsSend } from '@/lib/conversions';
 
 export default function PrivacyAnalytics() {
   const { optional } = usePrivacyConsent();
@@ -10,16 +11,7 @@ export default function PrivacyAnalytics() {
 
   return (
     <Analytics
-      beforeSend={(event) => {
-        try {
-          const url = new URL(event.url);
-          url.search = '';
-          url.hash = '';
-          return { ...event, url: url.toString() };
-        } catch {
-          return event;
-        }
-      }}
+      beforeSend={beforeAnalyticsSend}
     />
   );
 }
