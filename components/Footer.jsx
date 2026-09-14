@@ -57,8 +57,9 @@ export default function Footer() {
             </WhatsAppGateButton>
           </div>
         </div>
-        <details className="footer-col footer-section">
-          <summary><h4>Propiedades</h4><span className="footer-section-toggle" aria-hidden="true">+</span></summary>
+        <section className="footer-col footer-section">
+          <input className="footer-section-control" id="footer-propiedades" type="checkbox" />
+          <label className="footer-section-heading" htmlFor="footer-propiedades"><h4>Propiedades</h4><span className="footer-section-toggle" aria-hidden="true">+</span></label>
           <div className="footer-section-content"><ul className="footer-links">
             <li><Link href={propsFilterHref('Venta', '', '')}>Comprar</Link></li>
             <li><Link href={propsFilterHref('Renta', '', '')}>Rentar</Link></li>
@@ -66,9 +67,10 @@ export default function Footer() {
             <li><Link href={propsFilterHref('', '', 'Comercial')}>Comercial</Link></li>
             <li><Link href={propsFilterHref('', '', 'Industrial')}>Industrial</Link></li>
           </ul></div>
-        </details>
-        <details className="footer-col footer-section">
-          <summary><h4>Servicios</h4><span className="footer-section-toggle" aria-hidden="true">+</span></summary>
+        </section>
+        <section className="footer-col footer-section">
+          <input className="footer-section-control" id="footer-servicios" type="checkbox" />
+          <label className="footer-section-heading" htmlFor="footer-servicios"><h4>Servicios</h4><span className="footer-section-toggle" aria-hidden="true">+</span></label>
           <div className="footer-section-content"><ul className="footer-links">
             <li><Link href="/servicios/vender-propiedad">Vender propiedad</Link></li>
             <li><Link href="/servicios/comprar-propiedad">Comprar propiedad</Link></li>
@@ -80,9 +82,10 @@ export default function Footer() {
             <li><Link href="/servicios/clientes-extranjeros">Clientes extranjeros</Link></li>
             <li><Link href="/servicios/master-broker">Master Broker</Link></li>
           </ul></div>
-        </details>
-        <details className="footer-col footer-section">
-          <summary><h4>Rednorte</h4><span className="footer-section-toggle" aria-hidden="true">+</span></summary>
+        </section>
+        <section className="footer-col footer-section">
+          <input className="footer-section-control" id="footer-rednorte" type="checkbox" />
+          <label className="footer-section-heading" htmlFor="footer-rednorte"><h4>Rednorte</h4><span className="footer-section-toggle" aria-hidden="true">+</span></label>
           <div className="footer-section-content"><ul className="footer-links">
             <li><Link href="/nosotros">Nosotros</Link></li>
             <li><Link href="/equipo">Equipo</Link></li>
@@ -92,9 +95,10 @@ export default function Footer() {
             <li><Link href="/preguntas-frecuentes">Preguntas frecuentes</Link></li>
             <li><Link href="/trabaja-con-nosotros">Trabaja con nosotros</Link></li>
           </ul></div>
-        </details>
-        <details className="footer-col footer-section">
-          <summary><h4>Contacto</h4><span className="footer-section-toggle" aria-hidden="true">+</span></summary>
+        </section>
+        <section className="footer-col footer-section">
+          <input className="footer-section-control" id="footer-contacto" type="checkbox" />
+          <label className="footer-section-heading" htmlFor="footer-contacto"><h4>Contacto</h4><span className="footer-section-toggle" aria-hidden="true">+</span></label>
           <div className="footer-section-content"><ul className="footer-links">
             <li><a href={SITE_CONTACT.phoneHref}>{SITE_CONTACT.phoneDisplay}</a></li>
             <li><WhatsAppGateButton source="Footer (contacto)">WhatsApp</WhatsAppGateButton></li>
@@ -107,7 +111,7 @@ export default function Footer() {
             <li><span>{SITE_CONTACT.hours.saturday}</span></li>
           </ul>
           </div>
-        </details>
+        </section>
       </div>
       <div className="footer-bottom" style={{ borderTop: '1px solid rgba(255,255,255,0.08)', maxWidth: '1200px', margin: '0 auto', padding: '1.25rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
         <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)' }}>© 2026 Rednorte Inmobiliaria. Todos los derechos reservados.</p>
