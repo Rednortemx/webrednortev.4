@@ -1,5 +1,8 @@
 'use client';
 
+import { createLeadSubmitter, trackConversion } from '@/lib/conversions';
+const submitLeadRequest = createLeadSubmitter('vender');
+
 import { useState } from 'react';
 import Link from 'next/link';
 import HoneypotField from '@/components/HoneypotField';
@@ -108,11 +111,12 @@ export default function SellPropertyForm() {
     setStatus({ type: 'submitting', message: 'Enviando información…' });
 
     const whatsappUrl = `https://wa.me/528117783953?text=${encodeURIComponent(buildWhatsAppMessage(form))}`;
+    trackConversion('whatsapp_clic', 'vender');
     const whatsappWindow = window.open(whatsappUrl, '_blank');
     if (whatsappWindow) whatsappWindow.opener = null;
 
     try {
-      const response = await fetch('/api/leads', {
+      const response = await submitLeadRequest('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

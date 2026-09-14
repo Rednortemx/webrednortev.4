@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import PropertyCard from './PropertyCard';
+import { trackConversion } from '@/lib/conversions';
 
 const PROPS_PER_PAGE = 12;
 
@@ -84,6 +85,7 @@ export default function PropertyFilters({ properties, initialFilters }) {
   const pageItems = filtered.slice(start, start + PROPS_PER_PAGE);
 
   const applyFilters = () => {
+    trackConversion('filtros_aplicados', 'inventario');
     setAppliedFilters({ operacion, tipo, categoria, zona, precioMin, precioMax, recamaras, banos, m2Min, m2Max });
     setPage(1);
   };

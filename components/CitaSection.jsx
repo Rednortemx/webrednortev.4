@@ -1,5 +1,8 @@
 'use client';
 
+import { createLeadSubmitter, trackConversion } from '@/lib/conversions';
+const submitLeadRequest = createLeadSubmitter('cita');
+
 import { useState } from 'react';
 import Link from 'next/link';
 import { formatMxPhone, advisorInitials } from '@/lib/format';
@@ -39,7 +42,7 @@ export default function CitaSection({ property, advisor }) {
     if (email) lines.push(`Correo: ${email}`);
     if (comentarios) lines.push('', `Comentarios: ${comentarios}`);
 
-    fetch('/api/leads', {
+    submitLeadRequest('/api/leads', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -52,6 +55,7 @@ export default function CitaSection({ property, advisor }) {
       }),
     }).catch(() => {});
 
+    trackConversion('whatsapp_clic', 'cita');
     window.open(
       'https://wa.me/' + advisorNumber + '?text=' + encodeURIComponent(lines.join('\n')),
       '_blank',

@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import { trackConversion } from '@/lib/conversions';
 
 // Ported from the legacy setSearchTab()/searchHeroProperties(). On submit it
 // now navigates to a real, filterable /propiedades?... URL instead of just
@@ -15,6 +16,7 @@ export default function HeroSearch() {
   const recamarasRef = useRef(null);
 
   const submit = () => {
+    trackConversion('busqueda_realizada', 'inicio');
     const params = new URLSearchParams();
     if (op) params.set('operacion', op);
     if (tipoRef.current?.value) params.set('tipo', tipoRef.current.value);

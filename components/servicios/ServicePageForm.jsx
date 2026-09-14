@@ -1,5 +1,8 @@
 'use client';
 
+import { createLeadSubmitter, trackConversion } from '@/lib/conversions';
+const submitLeadRequest = createLeadSubmitter('servicio');
+
 import { useEffect, useRef } from 'react';
 
 // Conecta el formulario de las paginas de servicio con /api/leads.
@@ -94,12 +97,13 @@ export default function ServicePageForm({ formClass, tipo, telefono = '528117783
         notas ? 'Detalle: ' + notas : '',
       ].filter(Boolean);
       const wa = 'https://wa.me/' + telefono + '?text=' + encodeURIComponent(lineas.join('\n'));
+      trackConversion('whatsapp_clic', 'servicio');
       const ventana = window.open(wa, '_blank');
       if (ventana) ventana.opener = null;
 
       estado('Enviando…', true);
       try {
-        const response = await fetch('/api/leads', {
+        const response = await submitLeadRequest('/api/leads', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ tipo, nombre, telefono: tel, email, detalle, notas, website: honeypot.value }),

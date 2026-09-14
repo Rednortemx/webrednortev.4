@@ -1,5 +1,8 @@
 'use client';
 
+import { createLeadSubmitter, trackConversion } from '@/lib/conversions';
+const submitLeadRequest = createLeadSubmitter('master_broker');
+
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import HoneypotField from '@/components/HoneypotField';
@@ -114,10 +117,11 @@ export default function MasterBrokerForm() {
     const whatsappUrl = `https://wa.me/528117783953?text=${encodeURIComponent(
       buildWhatsAppMessage(form),
     )}`;
+    trackConversion('whatsapp_clic', 'master_broker');
     const whatsappWindow = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
 
     try {
-      const response = await fetch('/api/leads', {
+      const response = await submitLeadRequest('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
