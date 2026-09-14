@@ -1,8 +1,7 @@
 'use client';
 
 import { openModal } from '@/lib/modal';
-
-const DEFAULT_PHONE = '528117783953';
+import { SITE_CONTACT } from '@/lib/siteConfig';
 
 // Drop-in replacement for a plain <a href="https://wa.me/..."> WhatsApp
 // link. Instead of opening WhatsApp directly, it opens the shared
@@ -14,7 +13,7 @@ const DEFAULT_PHONE = '528117783953';
 // The site-wide floating WhatsApp button (Header.jsx's .wa-float) is
 // intentionally excluded from this gate and keeps linking straight to
 // WhatsApp.
-export default function WhatsAppGateButton({ phone = DEFAULT_PHONE, source, message, children, className, style, title }) {
+export default function WhatsAppGateButton({ phone = SITE_CONTACT.phoneDigits, source, message, children, className, style, title }) {
   const handleClick = () => {
     openModal('whatsappGateModal', { phone, source, message });
   };

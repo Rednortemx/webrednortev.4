@@ -6,6 +6,7 @@ const submitLeadRequest = createLeadSubmitter('comprar');
 import { useState } from 'react';
 import Link from 'next/link';
 import HoneypotField from '@/components/HoneypotField';
+import { SITE_CONTACT } from '@/lib/siteConfig';
 
 const INITIAL_FORM = {
   requestType: 'Quiero encontrar una propiedad',
@@ -89,7 +90,7 @@ export default function BuyPropertyForm() {
 
     setStatus({ type: 'submitting', message: 'Enviando información…' });
 
-    const whatsappUrl = `https://wa.me/528117783953?text=${encodeURIComponent(
+    const whatsappUrl = `https://wa.me/${SITE_CONTACT.phoneDigits}?text=${encodeURIComponent(
       buildWhatsAppMessage(form),
     )}`;
     trackConversion('whatsapp_clic', 'comprar');

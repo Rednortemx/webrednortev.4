@@ -4,6 +4,7 @@ import { createLeadSubmitter, trackConversion } from '@/lib/conversions';
 const submitLeadRequest = createLeadSubmitter('servicio');
 
 import { useEffect, useRef } from 'react';
+import { SITE_CONTACT } from '@/lib/siteConfig';
 
 // Conecta el formulario de las paginas de servicio con /api/leads.
 //
@@ -14,7 +15,7 @@ import { useEffect, useRef } from 'react';
 //
 // Al enviar hace dos cosas: registra el lead en la hoja de seguimiento y
 // abre WhatsApp con el resumen, igual que el formulario de vender-propiedad.
-export default function ServicePageForm({ formClass, tipo, telefono = '528117783953' }) {
+export default function ServicePageForm({ formClass, tipo, telefono = SITE_CONTACT.phoneDigits }) {
   const listoRef = useRef(false);
 
   useEffect(() => {
