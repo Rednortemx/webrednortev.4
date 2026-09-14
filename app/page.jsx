@@ -9,7 +9,7 @@ import { fetchAllProperties, toPropertyCardData } from '@/lib/properties';
 import { serializeJsonLd } from '@/lib/security';
 
 export const metadata = {
-  title: 'Propiedades en Monterrey y su Área Metropolitana',
+  title: 'Rednorte Inmobiliaria | Propiedades en Monterrey y su Área Metropolitana',
   description: 'Compra, vende, renta o valúa propiedades residenciales, comerciales e industriales con Rednorte Inmobiliaria en Monterrey y Nuevo León.',
   alternates: { canonical: '/' },
 };
