@@ -1,0 +1,22 @@
+Sección,Segmento,Inventario,Inventario_pct,Interes_vinculado,Interes_pct,Indice_concentracion,Nota
+Operación,Renta,284,51.4,1792,60.4,1.18,1.00 = participación proporcional
+Operación,Venta,269,48.6,1173,39.6,0.81,1.00 = participación proporcional
+Municipio,Monterrey,277,50.1,1405,47.4,0.95,Se incluyen municipios con al menos 10 propiedades activas
+Municipio,San Pedro Garza García,63,11.4,461,15.5,1.36,Se incluyen municipios con al menos 10 propiedades activas
+Municipio,Santa Catarina,46,8.3,194,6.5,0.79,Se incluyen municipios con al menos 10 propiedades activas
+Municipio,Apodaca,39,7.1,231,7.8,1.1,Se incluyen municipios con al menos 10 propiedades activas
+Municipio,Santiago,36,6.5,38,1.3,0.2,Se incluyen municipios con al menos 10 propiedades activas
+Municipio,Guadalupe,27,4.9,145,4.9,1.0,Se incluyen municipios con al menos 10 propiedades activas
+Municipio,San Nicolás de los Garza,14,2.5,153,5.2,2.04,Se incluyen municipios con al menos 10 propiedades activas
+Municipio,Escobedo,10,1.8,202,6.8,3.77,Se incluyen municipios con al menos 10 propiedades activas
+Municipio,García,10,1.8,26,0.9,0.48,Se incluyen municipios con al menos 10 propiedades activas
+Tipo,Casa,181,32.7,1423,48.0,1.47,Se incluyen tipos con al menos 20 propiedades activas
+Tipo,Departamento,162,29.3,1007,34.0,1.16,Se incluyen tipos con al menos 20 propiedades activas
+Tipo,Terreno,52,9.4,150,5.1,0.54,Se incluyen tipos con al menos 20 propiedades activas
+Tipo,Local,51,9.2,165,5.6,0.6,Se incluyen tipos con al menos 20 propiedades activas
+Tipo,Oficina,42,7.6,71,2.4,0.32,Se incluyen tipos con al menos 20 propiedades activas
+Tipo,Bodega,34,6.1,98,3.3,0.54,Se incluyen tipos con al menos 20 propiedades activas
+
+Concentración de propiedades,Propiedades activas con >=1 interés,390,70.5,,,,No implica misma antigüedad de publicación
+Concentración de propiedades,Top 10% del inventario,56,,,59.2,,% del interés vinculado
+Concentración de propiedades,Top 20% del inventario,111,,,75.8,,% del interés vinculado
