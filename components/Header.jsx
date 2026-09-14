@@ -7,15 +7,9 @@ import { usePathname } from 'next/navigation';
 import WhatsAppGateButton from './WhatsAppGateButton';
 
 const NAV_LINKS = [
-  { href: '/', label: 'Inicio', match: (p) => p === '/' },
   { href: '/propiedades', label: 'Propiedades', match: (p) => p.startsWith('/propiedades') },
-  // Servicios estuvo oculto mientras la pagina no tenia contenido. Ya lo tiene
-  // (el hub con los 9 servicios), asi que vuelve al menu principal.
   { href: '/servicios', label: 'Servicios', match: (p) => p.startsWith('/servicios') },
   { href: '/herramientas', label: 'Herramientas', match: (p) => p.startsWith('/herramientas') },
-  { href: '/insights', label: 'Insights', match: (p) => p.startsWith('/insights') },
-  { href: '/nosotros', label: 'Nosotros', match: (p) => p.startsWith('/nosotros') },
-  { href: '/contacto', label: 'Contacto', match: (p) => p.startsWith('/contacto') },
 ];
 
 export default function Header() {

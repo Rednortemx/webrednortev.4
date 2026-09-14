@@ -84,6 +84,7 @@ export default function Footer() {
           <ul className="footer-links">
             <li><Link href="/nosotros">Nosotros</Link></li>
             <li><Link href="/equipo">Equipo</Link></li>
+            <li><Link href="/nosotros/canaco-monterrey">CANACO Monterrey</Link></li>
             <li><Link href="/insights">Insights</Link></li>
             <li><Link href="/reportes">Reportes</Link></li>
             <li><Link href="/preguntas-frecuentes">Preguntas frecuentes</Link></li>
@@ -96,7 +97,7 @@ export default function Footer() {
             <li><a href="tel:+528117783953">(81) 1778-3953</a></li>
             <li><WhatsAppGateButton source="Footer (contacto)">WhatsApp</WhatsAppGateButton></li>
             <li><a href="mailto:admin@rednorte.com.mx">admin@rednorte.com.mx</a></li>
-            <li><Link href="/contacto">Ubicación</Link></li>
+            <li><Link href="/contacto">Contacto y ubicación</Link></li>
           </ul>
           <h4 style={{ marginTop: '1.5rem' }}>Horario</h4>
           <ul className="footer-links">
