@@ -3,6 +3,7 @@
 
 import { createHash, randomBytes, randomUUID } from 'node:crypto';
 import { NextResponse } from 'next/server';
+import { validLeadWebhookUrl } from '../../../lib/leadWebhook';
 
 export const runtime = 'nodejs';
 
@@ -88,30 +89,47 @@ function logFailure(event, requestId, metadata = {}) {
   console.error(JSON.stringify({ event, requestId, ...metadata }));
 }
 
+function logDelivery(requestId, metadata = {}) {
+  console.info(JSON.stringify({ event: 'lead_webhook_delivered', requestId, ...metadata }));
+}
+
+export async function GET() {
+  const ready = Boolean(validLeadWebhookUrl(process.env.LEADS_WEBHOOK_URL));
+  return json(
+    { status: ready ? 'ready' : 'unavailable' },
+    ready ? 200 : 503,
+  );
+}
+
 export async function POST(req) {
   const requestId = randomUUID();
   const responseHeaders = { 'X-Request-Id': requestId };
+  const reply = (data, status, extraHeaders = {}) => json(
+    { ...data, requestId },
+    status,
+    { ...responseHeaders, ...extraHeaders },
+  );
 
   if (!isSameOrigin(req)) {
-    return json({ success: false, message: 'Origen no permitido' }, 403, responseHeaders);
+    return reply({ success: false, message: 'Origen no permitido' }, 403);
   }
 
   const fetchSite = req.headers.get('sec-fetch-site');
   if (fetchSite && fetchSite !== 'same-origin') {
-    return json({ success: false, message: 'Origen no permitido' }, 403, responseHeaders);
+    return reply({ success: false, message: 'Origen no permitido' }, 403);
   }
 
   const contentType = req.headers.get('content-type') || '';
   if (!contentType.toLowerCase().startsWith('application/json')) {
-    return json({ success: false, message: 'Tipo de contenido no permitido' }, 415, responseHeaders);
+    return reply({ success: false, message: 'Tipo de contenido no permitido' }, 415);
   }
 
   const limit = rateLimit(req);
   if (limit.limited) {
-    return json(
+    return reply(
       { success: false, message: 'Demasiadas solicitudes. Intenta más tarde.' },
       429,
-      { ...responseHeaders, 'Retry-After': String(limit.retryAfter) },
+      { 'Retry-After': String(limit.retryAfter) },
     );
   }
 
@@ -119,21 +137,21 @@ export async function POST(req) {
   try {
     const rawBody = await req.text();
     if (Buffer.byteLength(rawBody, 'utf8') > MAX_BODY_BYTES) {
-      return json({ success: false, message: 'Solicitud demasiado grande' }, 413, responseHeaders);
+      return reply({ success: false, message: 'Solicitud demasiado grande' }, 413);
     }
     payload = JSON.parse(rawBody);
   } catch {
-    return json({ success: false, message: 'Cuerpo inválido' }, 400, responseHeaders);
+    return reply({ success: false, message: 'Cuerpo inválido' }, 400);
   }
 
   if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
-    return json({ success: false, message: 'Cuerpo inválido' }, 400, responseHeaders);
+    return reply({ success: false, message: 'Cuerpo inválido' }, 400);
   }
 
   // Honeypot. Legitimate forms never populate this field; common form bots do.
   // Return success without forwarding so automated senders cannot tune against it.
   if (clean(payload.website, 200)) {
-    return json({ success: true }, 200, responseHeaders);
+    return reply({ success: true }, 200);
   }
 
   const lead = {
@@ -146,32 +164,32 @@ export async function POST(req) {
   };
 
   if (!TIPOS_PERMITIDOS.has(lead.tipo)) {
-    return json({ success: false, message: 'Tipo de solicitud inválido' }, 400, responseHeaders);
+    return reply({ success: false, message: 'Tipo de solicitud inválido' }, 400);
   }
 
   if (lead.nombre.length < 2) {
-    return json({ success: false, message: 'Nombre inválido' }, 400, responseHeaders);
+    return reply({ success: false, message: 'Nombre inválido' }, 400);
   }
 
   const phoneDigits = lead.telefono.replace(/\D/g, '');
   if (phoneDigits.length < 7 || phoneDigits.length > 15) {
-    return json({ success: false, message: 'Teléfono inválido' }, 400, responseHeaders);
+    return reply({ success: false, message: 'Teléfono inválido' }, 400);
   }
 
   if (lead.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(lead.email)) {
-    return json({ success: false, message: 'Correo electrónico inválido' }, 400, responseHeaders);
+    return reply({ success: false, message: 'Correo electrónico inválido' }, 400);
   }
 
-  const webhookUrl = process.env.LEADS_WEBHOOK_URL;
+  const webhookUrl = validLeadWebhookUrl(process.env.LEADS_WEBHOOK_URL);
   if (!webhookUrl) {
-    logFailure('lead_configuration_missing', requestId);
-    return json(
+    logFailure('lead_configuration_invalid', requestId);
+    return reply(
       { success: false, message: 'El formulario no está disponible temporalmente' },
       503,
-      responseHeaders,
     );
   }
 
+  const startedAt = Date.now();
   try {
     const response = await fetch(webhookUrl, {
       method: 'POST',
@@ -182,24 +200,32 @@ export async function POST(req) {
     });
 
     if (!response.ok) {
-      logFailure('lead_webhook_rejected', requestId, { status: response.status, tipo: lead.tipo });
-      return json(
+      logFailure('lead_webhook_rejected', requestId, {
+        status: response.status,
+        tipo: lead.tipo,
+        durationMs: Date.now() - startedAt,
+      });
+      return reply(
         { success: false, message: 'No fue posible registrar la solicitud' },
         502,
-        responseHeaders,
       );
     }
 
-    return json({ success: true }, 200, responseHeaders);
+    logDelivery(requestId, {
+      status: response.status,
+      tipo: lead.tipo,
+      durationMs: Date.now() - startedAt,
+    });
+    return reply({ success: true }, 200);
   } catch (error) {
     logFailure('lead_webhook_failed', requestId, {
       tipo: lead.tipo,
       error: error instanceof Error ? error.name : 'UnknownError',
+      durationMs: Date.now() - startedAt,
     });
-    return json(
+    return reply(
       { success: false, message: 'No fue posible registrar la solicitud' },
       502,
-      responseHeaders,
     );
   }
 }
