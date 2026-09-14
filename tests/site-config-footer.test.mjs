@@ -20,14 +20,15 @@ test('la promesa de respuesta y los datos públicos tienen una fuente compartida
   }
 });
 
-test('el footer usa cuatro secciones desplegables nativas en móvil', async () => {
+test('el footer usa cuatro secciones desplegables sin JavaScript en móvil', async () => {
   const [footer, css] = await Promise.all([
     read('components/Footer.jsx'),
     read('app/globals.css'),
   ]);
 
-  assert.equal((footer.match(/<details className="footer-col footer-section">/g) || []).length, 4);
-  assert.match(css, /\.footer-section:not\(\[open\]\) > \.footer-section-content \{ display: none; \}/);
+  assert.equal((footer.match(/<section className="footer-col footer-section">/g) || []).length, 4);
+  assert.equal((footer.match(/className="footer-section-control"/g) || []).length, 4);
+  assert.match(css, /\.footer-section-control:not\(:checked\) ~ \.footer-section-content \{ display: none; \}/);
   assert.match(css, /@media \(max-width: 640px\)/);
 });
 

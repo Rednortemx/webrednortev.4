@@ -428,12 +428,15 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
 .footer-desc { font-size: 13.5px; line-height: 1.7; margin-bottom: 1.25rem; }
 .footer-address { font-size: 12.5px; line-height: 1.7; }
 .footer-col h4 { font-size: 12px; font-weight: 700; color: white; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 1rem; }
-.footer-section > summary {
+.footer-section { position: relative; }
+.footer-section-control {
+ position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden;
+}
+.footer-section-heading {
  list-style: none; cursor: default; display: flex; align-items: center; justify-content: space-between;
 }
-.footer-section > summary::-webkit-details-marker { display: none; }
+.footer-section-control:focus-visible + .footer-section-heading { outline: 2px solid var(--terracota); outline-offset: 4px; }
 .footer-section-toggle { display: none; }
-.footer-section:not([open]) > .footer-section-content { display: block; }
 .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
 .footer-links a, .footer-links button { font-size: 13px; color: rgba(255,255,255,0.6); text-decoration: none; cursor: pointer; transition: color 0.2s; }
 .footer-links a:hover, .footer-links button:hover { color: var(--terracota); }
@@ -460,14 +463,14 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
  .footer-brand { margin-bottom: 1.5rem; }
  .footer-section { border-top: 1px solid rgba(255,255,255,0.12); }
  .footer-section:last-child { border-bottom: 1px solid rgba(255,255,255,0.12); }
- .footer-section > summary { cursor: pointer; padding: 1rem 0; }
- .footer-section > summary h4 { margin: 0; }
+ .footer-section-heading { cursor: pointer; padding: 1rem 0; }
+ .footer-section-heading h4 { margin: 0; }
  .footer-section-toggle {
   display: block; color: var(--terracota); font-size: 1.4rem; line-height: 1;
   transition: transform 0.2s ease;
  }
- .footer-section[open] .footer-section-toggle { transform: rotate(45deg); }
- .footer-section:not([open]) > .footer-section-content { display: none; }
+ .footer-section-control:checked + .footer-section-heading .footer-section-toggle { transform: rotate(45deg); }
+ .footer-section-control:not(:checked) ~ .footer-section-content { display: none; }
  .footer-section-content { padding: 0 0 1.25rem; }
  .footer-bottom { align-items: flex-start; padding: 1.25rem; }
  .footer-bottom-links { gap: 0.65rem 1rem; }
