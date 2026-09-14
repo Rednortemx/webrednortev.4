@@ -7,12 +7,13 @@ const properties = ['uno', 'dos', 'tres'].map((slug) => `${origin}/propiedades/$
 
 function html({ canonical, social = false }) {
   return [
+    '<title>Página de prueba</title><h1>Encabezado principal</h1>',
     `<link rel="canonical" href="${canonical}">`,
     social ? `<meta property="og:image" content="${origin}/opengraph-image"><meta name="twitter:image" content="${origin}/twitter-image">` : '',
   ].join('');
 }
 
-function fetchFor({ brokenCanonical = false, leadsReady = true } = {}) {
+function fetchFor({ brokenCanonical = false, leadsReady = true, missingHeading = false } = {}) {
   return async (url) => {
     if (url === `${origin}/`) {
       return new Response(html({ canonical: `${origin}/`, social: true }), {
@@ -27,23 +28,37 @@ function fetchFor({ brokenCanonical = false, leadsReady = true } = {}) {
     if (url === `${origin}/api/leads`) {
       return new Response(
         JSON.stringify({ status: leadsReady ? 'ready' : 'unavailable' }),
-        { status: leadsReady ? 200 : 503 },
+        {
+          status: leadsReady ? 200 : 503,
+          headers: {
+            'cache-control': 'no-store, max-age=0',
+            'x-robots-tag': 'noindex, nofollow',
+          },
+        },
       );
     }
+    if (url === `${origin}/robots.txt`) {
+      return new Response(`User-agent: *\nDisallow: /api/\nSitemap: ${origin}/sitemap.xml`);
+    }
+    if (url === `${origin}/llms.txt`) return new Response(`# Rednorte Inmobiliaria\n${origin}/`);
     if (url === `${origin}/sitemap.xml`) {
-      return new Response(`<urlset>${properties.map((item) => `<url><loc>${item}</loc></url>`).join('')}</urlset>`);
+      const urls = [`${origin}/`, `${origin}/contacto`, ...properties];
+      return new Response(`<urlset>${urls.map((item) => `<url><loc>${item}</loc></url>`).join('')}</urlset>`);
     }
     if (url === `${origin}/opengraph-image` || url === `${origin}/twitter-image`) {
       return new Response('png', { headers: { 'content-type': 'image/png' } });
     }
-    if (properties.includes(url)) return new Response(html({ canonical: brokenCanonical ? `${origin}/propiedades/otra` : url }));
+    if (properties.includes(url)) {
+      const content = html({ canonical: brokenCanonical ? `${origin}/propiedades/otra` : url });
+      return new Response(missingHeading ? content.replace('<h1>Encabezado principal</h1>', '') : content);
+    }
     return new Response('', { status: 404 });
   };
 }
 
 test('confirma las rutas públicas, metadatos e inventario esperado', async () => {
   const result = await runProductionSmoke({ baseUrl: origin, minPropertyUrls: 3, fetchImpl: fetchFor(), log: () => {} });
-  assert.deepEqual(result, { urls: 3, properties: 3, samples: 3 });
+  assert.deepEqual(result, { urls: 5, pages: 2, properties: 3, samples: 3 });
 });
 
 test('falla cuando una ficha publicada deja de tener su canonical correcta', async () => {
@@ -57,5 +72,12 @@ test('falla sin enviar un prospecto cuando la recepción no está configurada', 
   await assert.rejects(
     runProductionSmoke({ baseUrl: origin, minPropertyUrls: 3, fetchImpl: fetchFor({ leadsReady: false }), log: () => {} }),
     /Recepción de formularios: respondió HTTP 503/,
+  );
+});
+
+test('falla cuando una página indexable pierde su encabezado principal', async () => {
+  await assert.rejects(
+    runProductionSmoke({ baseUrl: origin, minPropertyUrls: 3, fetchImpl: fetchFor({ missingHeading: true }), log: () => {} }),
+    /falta encabezado principal/,
   );
 });

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { validLeadWebhookUrl } from '../lib/leadWebhook.js';
+import { validLeadWebhookUrl } from '../lib/leadWebhook.mjs';
 
 test('accepts only a deployed HTTPS Google Apps Script URL', () => {
   const url = 'https://script.google.com/macros/s/AKfycb_example-123/exec';
