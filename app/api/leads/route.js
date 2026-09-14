@@ -3,7 +3,7 @@
 
 import { createHash, randomBytes, randomUUID } from 'node:crypto';
 import { NextResponse } from 'next/server';
-import { validLeadWebhookUrl } from '../../../lib/leadWebhook';
+import { validLeadWebhookUrl } from '../../../lib/leadWebhook.mjs';
 
 export const runtime = 'nodejs';
 

@@ -32,8 +32,20 @@ function sitemapUrls(xml) {
 }
 
 function propertySamples(urls) {
-  const indexes = [0, Math.floor(urls.length / 2), urls.length - 1];
+  const indexes = [
+    0,
+    Math.floor(urls.length / 4),
+    Math.floor(urls.length / 2),
+    Math.floor((urls.length * 3) / 4),
+    urls.length - 1,
+  ];
   return [...new Set(indexes.map((index) => urls[index]))];
+}
+
+function assertIndexablePage(html, url, label) {
+  if (!sameUrl(canonicalFrom(html), url)) fail(`${label}: URL canónica incorrecta`);
+  if (!/<title>[^<]+<\/title>/i.test(html)) fail(`${label}: falta título`);
+  if (!/<h1(?:\s[^>]*)?>[\s\S]*?<\/h1>/i.test(html)) fail(`${label}: falta encabezado principal`);
 }
 
 async function getText(fetchImpl, url, label) {
@@ -62,11 +74,23 @@ export async function runProductionSmoke({
   const sitemapUrl = `${origin}/sitemap.xml`;
   const leadsHealthUrl = `${origin}/api/leads`;
 
-  const [{ response: rootResponse, text: rootHtml }, { text: contactHtml }, { text: sitemapXml }, { text: leadsHealth }] = await Promise.all([
+  const robotsUrl = `${origin}/robots.txt`;
+  const llmsUrl = `${origin}/llms.txt`;
+
+  const [
+    { response: rootResponse, text: rootHtml },
+    { text: contactHtml },
+    { text: sitemapXml },
+    { response: leadsResponse, text: leadsHealth },
+    { text: robotsText },
+    { text: llmsText },
+  ] = await Promise.all([
     getText(fetchImpl, rootUrl, 'Inicio'),
     getText(fetchImpl, contactUrl, 'Contacto'),
     getText(fetchImpl, sitemapUrl, 'Sitemap'),
     getText(fetchImpl, leadsHealthUrl, 'Recepción de formularios'),
+    getText(fetchImpl, robotsUrl, 'Robots'),
+    getText(fetchImpl, llmsUrl, 'LLMs'),
   ]);
 
   let leadsStatus;
@@ -76,6 +100,19 @@ export async function runProductionSmoke({
     fail('Recepción de formularios: respuesta inválida');
   }
   if (leadsStatus !== 'ready') fail('Recepción de formularios: configuración no disponible');
+  if (!leadsResponse.headers.get('cache-control')?.includes('no-store')) {
+    fail('Recepción de formularios: falta protección de caché');
+  }
+  if (!leadsResponse.headers.get('x-robots-tag')?.includes('noindex')) {
+    fail('Recepción de formularios: falta protección de indexación');
+  }
+
+  if (!robotsText.includes(`Sitemap: ${sitemapUrl}`) || !robotsText.includes('Disallow: /api/')) {
+    fail('Robots: directivas incompletas');
+  }
+  if (!llmsText.includes(`${origin}/`) || !llmsText.includes('Rednorte Inmobiliaria')) {
+    fail('LLMs: contenido esencial incompleto');
+  }
 
   const requiredHeaders = {
     'x-content-type-options': 'nosniff',
@@ -88,8 +125,8 @@ export async function runProductionSmoke({
     fail('Inicio: falta la política de contenido esperada');
   }
 
-  if (!sameUrl(canonicalFrom(rootHtml), rootUrl)) fail('Inicio: URL canónica incorrecta');
-  if (!sameUrl(canonicalFrom(contactHtml), contactUrl)) fail('Contacto: URL canónica incorrecta');
+  assertIndexablePage(rootHtml, rootUrl, 'Inicio');
+  assertIndexablePage(contactHtml, contactUrl, 'Contacto');
 
   const openGraphImage = metaFrom(rootHtml, 'og:image');
   const twitterImage = metaFrom(rootHtml, 'twitter:image');
@@ -105,17 +142,32 @@ export async function runProductionSmoke({
   if (urls.some((url) => new URL(url).origin !== origin)) fail('Sitemap: contiene un dominio inesperado');
 
   const propertyUrls = urls.filter((url) => /^https:\/\/[^/]+\/propiedades\/[^/]+$/.test(url));
+  const indexablePageUrls = urls.filter((url) => !propertyUrls.includes(url));
   if (propertyUrls.length < minPropertyUrls) {
     fail(`Sitemap: solo contiene ${propertyUrls.length} propiedades; mínimo esperado ${minPropertyUrls}`);
   }
 
-  await Promise.all(propertySamples(propertyUrls).map(async (url) => {
-    const { text } = await getText(fetchImpl, url, `Ficha ${url}`);
-    if (!sameUrl(canonicalFrom(text), url)) fail(`Ficha ${url}: URL canónica incorrecta`);
+  const knownPages = new Map([
+    [rootUrl, rootHtml],
+    [contactUrl, contactHtml],
+  ]);
+  await Promise.all(indexablePageUrls.map(async (url) => {
+    const html = knownPages.get(url) || (await getText(fetchImpl, url, `Página ${url}`)).text;
+    assertIndexablePage(html, url, `Página ${url}`);
   }));
 
-  const result = { urls: urls.length, properties: propertyUrls.length, samples: propertySamples(propertyUrls).length };
-  log(`Producción correcta: ${result.urls} URLs, ${result.properties} propiedades y ${result.samples} fichas revisadas.`);
+  await Promise.all(propertySamples(propertyUrls).map(async (url) => {
+    const { text } = await getText(fetchImpl, url, `Ficha ${url}`);
+    assertIndexablePage(text, url, `Ficha ${url}`);
+  }));
+
+  const result = {
+    urls: urls.length,
+    pages: indexablePageUrls.length,
+    properties: propertyUrls.length,
+    samples: propertySamples(propertyUrls).length,
+  };
+  log(`Producción correcta: ${result.urls} URLs, ${result.pages} páginas, ${result.properties} propiedades y ${result.samples} fichas revisadas.`);
   return result;
 }
 

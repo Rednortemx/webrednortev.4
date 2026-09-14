@@ -3,7 +3,7 @@ name: Production smoke check
 on:
   schedule:
     # 08:00 Monterrey when UTC-6. GitHub may run scheduled jobs with a short delay.
-    - cron: '0 14 * * *'
+    - cron: "0 14 * * *"
   workflow_dispatch:
 
 permissions:
@@ -20,10 +20,10 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
 
       - name: Check public production routes
         env:
           BASE_URL: https://www.rednorte.mx
-          MIN_PROPERTY_URLS: '350'
+          MIN_PROPERTY_URLS: "350"
         run: node scripts/production-smoke-check.mjs
