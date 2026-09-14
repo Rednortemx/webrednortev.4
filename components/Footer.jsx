@@ -94,6 +94,7 @@ export default function Footer() {
             <li><Link href="/reportes">Reportes</Link></li>
             <li><Link href="/preguntas-frecuentes">Preguntas frecuentes</Link></li>
             <li><Link href="/trabaja-con-nosotros">Trabaja con nosotros</Link></li>
+            <li className="footer-advisor-access"><a href="https://asesores.rednorte.mx">Acceso para asesores</a></li>
           </ul></div>
         </section>
         <section className="footer-col footer-section">

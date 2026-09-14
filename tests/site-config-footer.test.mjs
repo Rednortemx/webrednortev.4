@@ -32,6 +32,17 @@ test('el footer usa cuatro secciones desplegables sin JavaScript en móvil', asy
   assert.match(css, /@media \(max-width: 640px\)/);
 });
 
+test('el footer ofrece un acceso discreto al portal de asesores', async () => {
+  const [footer, css] = await Promise.all([
+    read('components/Footer.jsx'),
+    read('app/globals.css'),
+  ]);
+
+  assert.match(footer, /href="https:\/\/asesores\.rednorte\.mx">Acceso para asesores<\/a>/);
+  assert.match(footer, /className="footer-advisor-access"/);
+  assert.match(css, /\.footer-advisor-access/);
+});
+
 test('los estilos globales están separados por responsabilidad y conservan el orden', async () => {
   const [layout, core, services, institutional] = await Promise.all([
     read('app/layout.jsx'),
