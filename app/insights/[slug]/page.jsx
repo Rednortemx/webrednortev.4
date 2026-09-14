@@ -140,23 +140,23 @@ export default async function InsightPage({ params }) {
         </header>
 
         <main className="insights-shell insight-main-grid">
-          <div className="insight-main-column">
-            <InsightArticle insight={insight} />
-            <InsightSources sources={insight.sources} />
-            <InsightAuthor author={author} />
-            <InsightRelated insights={related} />
-          </div>
-
           <aside className="insight-sticky-aside">
             <div>
               <p className="insight-small-label">EN ESTA GUÍA</p>
-              <nav>
+              <nav aria-label="Secciones de esta guía">
                 {insight.sections.map((section) => (
                   <a href={`#${section.id}`} key={section.id}>{section.title}</a>
                 ))}
               </nav>
             </div>
           </aside>
+
+          <div className="insight-main-column">
+            <InsightArticle insight={insight} />
+            <InsightSources sources={insight.sources} />
+            <InsightAuthor author={author} />
+            <InsightRelated insights={related} />
+          </div>
         </main>
       </article>
 
