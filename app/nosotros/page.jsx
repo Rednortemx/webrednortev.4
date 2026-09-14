@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
+import { serializeJsonLd } from '@/lib/security';
 
 export const metadata = {
   title: 'Nosotros | Rednorte Inmobiliaria en Monterrey',
@@ -148,6 +149,7 @@ const ecosystem = [
     category: 'Vinculación empresarial',
     description:
       'Rednorte es socio de CANACO Monterrey desde 2026, fortaleciendo su vinculación con la comunidad empresarial de Nuevo León.',
+    href: '/nosotros/canaco-monterrey',
   },
   {
     name: 'Especialistas por operación',
@@ -263,6 +265,14 @@ function EcosystemCard({ item }) {
     );
   }
 
+  if (item.href) {
+    return (
+      <Link className="about-ecosystem-card" href={item.href}>
+        {content}
+      </Link>
+    );
+  }
+
   return <div className="about-ecosystem-card">{content}</div>;
 }
 
@@ -273,7 +283,7 @@ export default function NosotrosPage() {
 
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema) }}
       />
 
       <section className="about-hero">

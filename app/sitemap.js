@@ -29,6 +29,7 @@ const STATIC_ROUTES = [
   '/reportes',
   '/reportes/mercado-inmobiliario-monterrey-nuevo-leon-2026',
   '/nosotros',
+  '/nosotros/canaco-monterrey',
   '/equipo',
   '/contacto',
   '/preguntas-frecuentes',
