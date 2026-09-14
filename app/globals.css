@@ -440,6 +440,8 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
 .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
 .footer-links a, .footer-links button { font-size: 13px; color: rgba(255,255,255,0.6); text-decoration: none; cursor: pointer; transition: color 0.2s; }
 .footer-links a:hover, .footer-links button:hover { color: var(--terracota); }
+.footer-advisor-access { margin-top: 0.35rem; padding-top: 0.65rem; border-top: 1px solid rgba(255,255,255,0.1); }
+.footer-links .footer-advisor-access a { font-size: 12px; color: rgba(255,255,255,0.48); }
 .footer-social { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem; }
 .social-btn {
  width: 36px; height: 36px; border-radius: 8px;
