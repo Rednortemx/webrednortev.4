@@ -12,7 +12,7 @@ function html({ canonical, social = false }) {
   ].join('');
 }
 
-function fetchFor({ brokenCanonical = false } = {}) {
+function fetchFor({ brokenCanonical = false, leadsReady = true } = {}) {
   return async (url) => {
     if (url === `${origin}/`) {
       return new Response(html({ canonical: `${origin}/`, social: true }), {
@@ -24,6 +24,12 @@ function fetchFor({ brokenCanonical = false } = {}) {
       });
     }
     if (url === `${origin}/contacto`) return new Response(html({ canonical: url }));
+    if (url === `${origin}/api/leads`) {
+      return new Response(
+        JSON.stringify({ status: leadsReady ? 'ready' : 'unavailable' }),
+        { status: leadsReady ? 200 : 503 },
+      );
+    }
     if (url === `${origin}/sitemap.xml`) {
       return new Response(`<urlset>${properties.map((item) => `<url><loc>${item}</loc></url>`).join('')}</urlset>`);
     }
@@ -44,5 +50,12 @@ test('falla cuando una ficha publicada deja de tener su canonical correcta', asy
   await assert.rejects(
     runProductionSmoke({ baseUrl: origin, minPropertyUrls: 3, fetchImpl: fetchFor({ brokenCanonical: true }), log: () => {} }),
     /URL canónica incorrecta/,
+  );
+});
+
+test('falla sin enviar un prospecto cuando la recepción no está configurada', async () => {
+  await assert.rejects(
+    runProductionSmoke({ baseUrl: origin, minPropertyUrls: 3, fetchImpl: fetchFor({ leadsReady: false }), log: () => {} }),
+    /Recepción de formularios: respondió HTTP 503/,
   );
 });

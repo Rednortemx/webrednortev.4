@@ -60,12 +60,22 @@ export async function runProductionSmoke({
   const rootUrl = `${origin}/`;
   const contactUrl = `${origin}/contacto`;
   const sitemapUrl = `${origin}/sitemap.xml`;
+  const leadsHealthUrl = `${origin}/api/leads`;
 
-  const [{ response: rootResponse, text: rootHtml }, { text: contactHtml }, { text: sitemapXml }] = await Promise.all([
+  const [{ response: rootResponse, text: rootHtml }, { text: contactHtml }, { text: sitemapXml }, { text: leadsHealth }] = await Promise.all([
     getText(fetchImpl, rootUrl, 'Inicio'),
     getText(fetchImpl, contactUrl, 'Contacto'),
     getText(fetchImpl, sitemapUrl, 'Sitemap'),
+    getText(fetchImpl, leadsHealthUrl, 'Recepción de formularios'),
   ]);
+
+  let leadsStatus;
+  try {
+    leadsStatus = JSON.parse(leadsHealth)?.status;
+  } catch {
+    fail('Recepción de formularios: respuesta inválida');
+  }
+  if (leadsStatus !== 'ready') fail('Recepción de formularios: configuración no disponible');
 
   const requiredHeaders = {
     'x-content-type-options': 'nosniff',
