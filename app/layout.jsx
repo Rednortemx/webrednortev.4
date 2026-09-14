@@ -1,6 +1,7 @@
 import './globals.css';
 import './globals.insights.css';
 import './globals.reportes.css';
+import './globals.canaco.css';
 import { Poppins } from 'next/font/google';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
