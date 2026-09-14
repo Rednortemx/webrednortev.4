@@ -595,6 +595,14 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
 .breadcrumb-current { color: var(--cafe); font-weight: 500; }
 
 /* Propiedades page */
+.propiedades-heading {
+ max-width: 1200px; margin: 0 auto; padding: 1.5rem 2rem 0;
+ text-align: center;
+}
+.propiedades-heading h1 {
+ margin: 0; color: var(--negro); font-size: 1.6rem; line-height: 1.25;
+}
+.propiedades-heading .crm-indicator { margin-bottom: 0.75rem; }
 .propiedades-layout {
  display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 2rem;
  max-width: 1200px; margin: 0 auto; padding: 2rem 2rem 4rem;
