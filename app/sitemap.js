@@ -1,13 +1,10 @@
 // app/sitemap.js
-// Generates /sitemap.xml. Only lists indexable routes — the noindex
-// sections (insights, trabaja-con-nosotros) and their [slug] children are
-// intentionally excluded, since they carry robots: { index: false } in
-// their own metadata. /equipo lost its noindex once it got real content
-// (see app/equipo/page.jsx and lib/teamMembers.js), so its profile URLs
-// are generated here from the same teamMembers list.
+// Generates /sitemap.xml. Only lists indexable routes. Dynamic team,
+// Insight and property URLs are generated from their canonical data sources.
 import { fetchAllProperties } from '@/lib/properties';
 import { buildPropertySlug } from '@/lib/slug';
 import { teamMembers } from '@/lib/teamMembers';
+import { getPublishedInsights } from '@/lib/insights';
 import { getCanonicalSiteUrl } from '@/lib/security';
 
 const SITE_URL = getCanonicalSiteUrl();
@@ -28,6 +25,7 @@ const STATIC_ROUTES = [
   '/herramientas',
   '/herramientas/estimacion-de-valor',
   '/herramientas/reporte-de-vendibilidad',
+  '/insights',
   '/nosotros',
   '/equipo',
   '/contacto',
@@ -49,6 +47,11 @@ export default async function sitemap() {
     url: `${SITE_URL}/equipo/${member.slug}`,
   }));
 
+  const insightEntries = getPublishedInsights().map((insight) => ({
+    url: `${SITE_URL}/insights/${insight.slug}`,
+    lastModified: insight.updatedAt,
+  }));
+
   let propertyEntries = [];
   try {
     const { properties, source } = await fetchAllProperties();
@@ -61,5 +64,5 @@ export default async function sitemap() {
     // sin inventario en vivo disponible, el sitemap solo incluye las rutas estáticas
   }
 
-  return [...staticEntries, ...teamEntries, ...propertyEntries];
+  return [...staticEntries, ...teamEntries, ...insightEntries, ...propertyEntries];
 }
