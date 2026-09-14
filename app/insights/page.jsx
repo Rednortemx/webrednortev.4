@@ -1,31 +1,106 @@
+import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
+import InsightCard from '@/components/InsightCard';
+import InsightFilters from '@/components/InsightFilters';
+import { getPublishedInsights, insightCategories } from '@/lib/insights';
+import { serializeJsonLd } from '@/lib/security';
 
-// Not linked from the main navigation and marked noindex — the original
-// site's Insides section was an empty container with a comment noting
-// articles are edited via a JS array, no real posts exist yet. Kept as a
-// real, ready route with the original design for when content is added.
 export const metadata = {
-  title: 'Insights Rednorte',
-  robots: { index: false, follow: false },
+  title: 'Insights inmobiliarios de Monterrey y Nuevo León',
+  description:
+    'Análisis, guías, datos y perspectivas de Rednorte sobre compra, venta, renta, inversión y mercado inmobiliario en Monterrey y Nuevo León.',
   alternates: { canonical: '/insights' },
+  openGraph: {
+    title: 'Insights inmobiliarios | Rednorte',
+    description:
+      'Guías, análisis y datos del mercado inmobiliario de Monterrey y Nuevo León.',
+    url: '/insights',
+    type: 'website',
+  },
+};
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'CollectionPage',
+      '@id': 'https://www.rednorte.mx/insights#webpage',
+      url: 'https://www.rednorte.mx/insights',
+      name: 'Insights inmobiliarios de Monterrey y Nuevo León',
+      description: 'Análisis, guías y datos publicados por Rednorte Inmobiliaria.',
+      about: { '@id': 'https://www.rednorte.mx/#organization' },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://www.rednorte.mx/' },
+        { '@type': 'ListItem', position: 2, name: 'Insights', item: 'https://www.rednorte.mx/insights' },
+      ],
+    },
+  ],
 };
 
 export default function InsightsPage() {
+  const insights = getPublishedInsights();
+  const featured = insights.find((item) => item.featured) || insights[0];
+  const rest = insights.filter((item) => item.slug !== featured?.slug);
+
   return (
-    <div className="page-content">
+    <div className="insights-page">
       <Breadcrumb items={[{ label: 'Insights' }]} />
-      <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '3rem 2rem 5rem' }}>
-        <div className="section-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1rem', marginBottom: '2.5rem' }}>
-          <div>
-            <p className="section-label">Actualizado constantemente</p>
-            <h1 className="section-title">Insights Rednorte</h1>
-            <p className="section-sub">Tips, tendencias y análisis del mercado inmobiliario de Nuevo León.</p>
+
+      <section className="insights-hero">
+        <div className="insights-shell">
+          <p className="insight-small-label">REDNORTE INSIGHTS</p>
+          <h1>Insights inmobiliarios de Monterrey y Nuevo León</h1>
+          <p>
+            Análisis, guías, datos y perspectivas sobre compra, venta, renta, inversión y mercado
+            inmobiliario.
+          </p>
+        </div>
+      </section>
+
+      {featured && (
+        <section className="insights-featured">
+          <div className="insights-shell">
+            <p className="insight-small-label">DESTACADO</p>
+            <InsightCard insight={featured} featured />
           </div>
+        </section>
+      )}
+
+      <section className="insights-library">
+        <div className="insights-shell">
+          <div className="insights-section-heading">
+            <p className="insight-small-label">BIBLIOTECA</p>
+            <h2>Explora nuestros Insights</h2>
+            <p>
+              Filtra por tema y consulta contenido preparado para propietarios, compradores,
+              inversionistas y profesionales del sector.
+            </p>
+          </div>
+          <InsightFilters
+            insights={rest.length ? rest : insights}
+            categories={insightCategories}
+          />
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(320px,1fr))', gap: '1.5rem' }}>
-          <p className="text-muted">Muy pronto encontrarás aquí artículos y análisis del mercado inmobiliario de Nuevo León.</p>
+      </section>
+
+      <section className="insights-data-cta">
+        <div className="insights-shell insights-data-cta-card">
+          <div>
+            <p className="insight-small-label">DATOS Y REPORTES</p>
+            <h2>Estamos construyendo reportes propios de mercado</h2>
+            <p>
+              Además de guías y análisis, Rednorte irá publicando información basada en inventario,
+              operaciones cerradas y datos internos con metodología y fecha de corte.
+            </p>
+          </div>
+          <Link href="/contacto">Hablar con Rednorte</Link>
         </div>
-      </div>
+      </section>
+
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema) }} />
     </div>
   );
 }

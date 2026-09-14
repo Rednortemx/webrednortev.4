@@ -1,4 +1,5 @@
 import './globals.css';
+import './globals.insights.css';
 import { Poppins } from 'next/font/google';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
