@@ -24,7 +24,7 @@ export default function Header() {
 
   return (
     <>
-      <header>
+      <header className="site-header">
         <div className="header-inner">
           <Link className="logo" href="/">
             <div className="logo-mark">
