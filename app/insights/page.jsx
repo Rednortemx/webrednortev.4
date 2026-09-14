@@ -90,13 +90,13 @@ export default function InsightsPage() {
         <div className="insights-shell insights-data-cta-card">
           <div>
             <p className="insight-small-label">DATOS Y REPORTES</p>
-            <h2>Estamos construyendo reportes propios de mercado</h2>
+            <h2>Consulta nuestros reportes propios de mercado</h2>
             <p>
-              Además de guías y análisis, Rednorte irá publicando información basada en inventario,
-              operaciones cerradas y datos internos con metodología y fecha de corte.
+              Además de guías y análisis, Rednorte publica información agregada basada en inventario,
+              actividad observada y datos internos con metodología y fecha de corte.
             </p>
           </div>
-          <Link href="/contacto">Hablar con Rednorte</Link>
+          <Link href="/reportes">Ver reportes</Link>
         </div>
       </section>
 

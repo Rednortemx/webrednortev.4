@@ -26,6 +26,8 @@ const STATIC_ROUTES = [
   '/herramientas/estimacion-de-valor',
   '/herramientas/reporte-de-vendibilidad',
   '/insights',
+  '/reportes',
+  '/reportes/mercado-inmobiliario-monterrey-nuevo-leon-2026',
   '/nosotros',
   '/equipo',
   '/contacto',
