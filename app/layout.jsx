@@ -25,6 +25,30 @@ export const metadata = {
     template: '%s | Rednorte Inmobiliaria',
   },
   description: 'Compra, vende, renta o valúa propiedades residenciales, comerciales e industriales con Rednorte Inmobiliaria en Monterrey y Nuevo León.',
+  openGraph: {
+    type: 'website',
+    locale: 'es_MX',
+    url: SITE_URL,
+    siteName: 'Rednorte Inmobiliaria',
+    title: 'Rednorte Inmobiliaria | Propiedades en Monterrey y su Área Metropolitana',
+    description: 'Compra, vende, renta o valúa propiedades residenciales, comerciales e industriales con Rednorte Inmobiliaria en Monterrey y Nuevo León.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Rednorte Inmobiliaria | Propiedades en Monterrey',
+    description: 'Compra, vende, renta o valúa propiedades con Rednorte Inmobiliaria en Monterrey y Nuevo León.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
 };
 
 export default function RootLayout({ children }) {
