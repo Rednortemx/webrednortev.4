@@ -2,6 +2,7 @@ import Breadcrumb from '@/components/Breadcrumb';
 import ContactForm from '@/components/ContactForm';
 import WhatsAppGateButton from '@/components/WhatsAppGateButton';
 import ExternalContentGate from '@/components/ExternalContentGate';
+import { SOCIAL_LINKS } from '@/lib/socialLinks';
 
 export const metadata = {
   title: 'Contacto',
@@ -46,8 +47,19 @@ export default function ContactoPage() {
             <div className="info-card">
               <h4>Redes sociales</h4>
               <div className="redes-row">
-                <a className="red-btn" href="https://www.facebook.com/rednorteinmobiliaria/" target="_blank" rel="noopener noreferrer" style={{ borderColor: '#3b5998', color: '#3b5998', background: '#f0f4ff', textDecoration: 'none' }}>Facebook</a>
-                <a className="red-btn" href="https://www.instagram.com/rednortemx/" target="_blank" rel="noopener noreferrer" style={{ borderColor: '#e1306c', color: '#e1306c', background: '#fff0f5', textDecoration: 'none' }}>Instagram</a>
+                {SOCIAL_LINKS.map((network) => (
+                  <a
+                    className="red-btn"
+                    href={network.href}
+                    key={network.label}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Visitar Rednorte en ${network.label}`}
+                  >
+                    {network.label}
+                    <span aria-hidden="true">↗</span>
+                  </a>
+                ))}
               </div>
             </div>
           </div>

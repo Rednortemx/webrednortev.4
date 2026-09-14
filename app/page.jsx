@@ -6,9 +6,10 @@ import GoogleReviews from '@/components/GoogleReviews';
 import FaqHome from '@/components/FaqHome';
 import { faqSchema } from '@/lib/schema';
 import { fetchAllProperties, toPropertyCardData } from '@/lib/properties';
+import { serializeJsonLd } from '@/lib/security';
 
 export const metadata = {
-  title: 'Rednorte Inmobiliaria | Propiedades en Monterrey y su Área Metropolitana',
+  title: 'Propiedades en Monterrey y su Área Metropolitana',
   description: 'Compra, vende, renta o valúa propiedades residenciales, comerciales e industriales con Rednorte Inmobiliaria en Monterrey y Nuevo León.',
   alternates: { canonical: '/' },
 };
@@ -42,7 +43,7 @@ export default async function HomePage() {
                 <div className="hero-stat-label">Propiedades activas</div>
               </div>
               <div className="hero-stat">
-                <div className="hero-stat-num">35</div>
+                <div className="hero-stat-num">+30</div>
                 <div className="hero-stat-label">Integrantes en el equipo</div>
               </div>
               <div className="hero-stat">
@@ -156,7 +157,7 @@ export default async function HomePage() {
             </div>
             <div className="nosotros-text">
               <p className="section-label">Quiénes somos</p>
-              <h2 className="section-title">Desde el 2018 conectando personas con propiedades</h2>
+              <h2 className="section-title">Desde 2018 conectando personas con propiedades</h2>
               <p style={{ fontSize: '14.5px', color: 'var(--cafe)', lineHeight: 1.7, marginBottom: '1rem' }}>En Rednorte Inmobiliaria somos un equipo de asesores profesionales con profundo conocimiento del mercado de Nuevo León. Trabajamos con integridad, transparencia y resultados.</p>
               <ul className="nosotros-list">
                 <li>Especialistas en residencial, comercial e industrial</li>
@@ -164,7 +165,7 @@ export default async function HomePage() {
                 <li>Red de más de 500 propiedades en inventario activo</li>
                 <li>Proceso ágil y acompañamiento hasta el cierre</li>
               </ul>
-              <Link className="btn-primary" href="/nosotros" style={{ marginTop: '0.5rem', display: 'inline-block', textDecoration: 'none' }}>Conoce al equipo →</Link>
+              <Link className="btn-primary" href="/nosotros" style={{ marginTop: '0.5rem', display: 'inline-block', textDecoration: 'none' }}>Conoce Rednorte →</Link>
             </div>
           </div>
         </div>
@@ -176,7 +177,7 @@ export default async function HomePage() {
       {/* PREGUNTAS FRECUENTES */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema()) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqSchema()) }}
       />
       <FaqHome />
     </div>

@@ -15,7 +15,8 @@ export default function HeroSearch() {
   const precioRef = useRef(null);
   const recamarasRef = useRef(null);
 
-  const submit = () => {
+  const submit = (event) => {
+    event?.preventDefault();
     trackConversion('busqueda_realizada', 'inicio');
     const params = new URLSearchParams();
     if (op) params.set('operacion', op);
@@ -27,8 +28,8 @@ export default function HeroSearch() {
   };
 
   return (
-    <div className="hero-search">
-      <h3> Encuentra propiedades en Monterrey y Nuevo León</h3>
+    <form className="hero-search" onSubmit={submit}>
+      <h3>Encuentra propiedades en Monterrey y Nuevo León</h3>
       <p style={{ fontSize: '13px', color: 'var(--gris-medio)', lineHeight: 1.5, margin: '0 0 1.5rem' }}>Consulta nuestro inventario residencial, comercial e industrial en venta y renta.</p>
       <div className="search-tabs">
         <button type="button" className={`search-tab${op === 'Venta' ? ' active' : ''}`} onClick={() => setOp('Venta')}>Comprar</button>
@@ -124,7 +125,7 @@ export default function HeroSearch() {
           </select>
         </div>
       </div>
-      <button className="btn-search" type="button" onClick={submit}>Ver propiedades disponibles</button>
-    </div>
+      <button className="btn-search" type="submit">Ver propiedades disponibles</button>
+    </form>
   );
 }
