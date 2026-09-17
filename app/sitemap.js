@@ -6,6 +6,7 @@ import { buildPropertySlug } from '@/lib/slug';
 import { teamMembers } from '@/lib/teamMembers';
 import { getPublishedInsights } from '@/lib/insights';
 import { getCanonicalSiteUrl } from '@/lib/security';
+import { PROPERTY_LANDING_PAGES } from '@/lib/propertyLandingPages';
 
 const SITE_URL = getCanonicalSiteUrl();
 
@@ -50,6 +51,10 @@ export default async function sitemap() {
     url: `${SITE_URL}/equipo/${member.slug}`,
   }));
 
+  const propertyLandingEntries = PROPERTY_LANDING_PAGES.map((landing) => ({
+    url: `${SITE_URL}${landing.path}`,
+  }));
+
   const insightEntries = getPublishedInsights().map((insight) => ({
     url: `${SITE_URL}/insights/${insight.slug}`,
     lastModified: insight.updatedAt,
@@ -67,5 +72,5 @@ export default async function sitemap() {
     // sin inventario en vivo disponible, el sitemap solo incluye las rutas estáticas
   }
 
-  return [...staticEntries, ...teamEntries, ...insightEntries, ...propertyEntries];
+  return [...staticEntries, ...propertyLandingEntries, ...teamEntries, ...insightEntries, ...propertyEntries];
 }
