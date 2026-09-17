@@ -7,6 +7,7 @@ import PropertyMap from '@/components/PropertyMap';
 import { fetchAllProperties, findPropertyById } from '@/lib/properties';
 import { getAdvisorForProperty, defaultAdvisor } from '@/lib/advisor';
 import { buildPropertySlug, extractCodeFromSlug } from '@/lib/slug';
+import { buildPropertyMetaDescription, buildPropertySeoTitle } from '@/lib/propertySeo';
 import { propertyListingSchema, breadcrumbSchema } from '@/lib/schema';
 import { getCanonicalSiteUrl, serializeJsonLd } from '@/lib/security';
 
@@ -29,12 +30,14 @@ export async function generateMetadata({ params }) {
     return { title: 'Propiedad no encontrada' };
   }
 
-  const title = `${property.title} en ${property.op} · ${property.zone}`;
-  const description = (property.description || `${property.title} en ${property.op.toLowerCase()} en ${property.zone}. ${property.price}.`).slice(0, 160);
+  const title = buildPropertySeoTitle(property);
+  const description = buildPropertyMetaDescription(property);
   const ogImage = property.imgs && property.imgs[0];
 
   return {
-    title,
+    // Evita añadir el sufijo global largo en las fichas del inventario.
+    // El código del CRM hace inequívocas las propiedades similares.
+    title: { absolute: title },
     description,
     alternates: { canonical: `/propiedades/${buildPropertySlug(property)}` },
     openGraph: {
