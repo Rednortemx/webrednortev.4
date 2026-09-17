@@ -1,5 +1,6 @@
 import Breadcrumb from '@/components/Breadcrumb';
 import PropertyFilters from '@/components/PropertyFilters';
+import PropertyLandingDirectory from '@/components/PropertyLandingDirectory';
 import { fetchAllProperties, toPropertyCardData } from '@/lib/properties';
 
 // Canonical is self-referencing per page (page 1 -> /propiedades, page N ->
@@ -54,6 +55,7 @@ export default async function PropiedadesPage({ searchParams }) {
         )}
         <h1>Propiedades en venta y renta en Monterrey y Nuevo León</h1>
       </div>
+      <PropertyLandingDirectory />
       <PropertyFilters properties={propertyCards} initialFilters={initialFilters} />
     </div>
   );

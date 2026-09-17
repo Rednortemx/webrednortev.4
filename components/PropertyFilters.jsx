@@ -32,7 +32,7 @@ function getPaginationItems(current, total, siblings = 4, boundaries = 1) {
 // Ported from the legacy applyPropFilters()/renderPropsPage()/clearPropFilters().
 // Initial filter values can come from the URL (?operacion=&tipo=&categoria=&zona=...)
 // so links from the footer/homepage categories land on a pre-filtered, shareable URL.
-export default function PropertyFilters({ properties, initialFilters }) {
+export default function PropertyFilters({ properties, initialFilters, basePath = '/propiedades', baseFilters = {} }) {
   const [operacion, setOperacion] = useState(initialFilters.operacion || '');
   const [tipo, setTipo] = useState(initialFilters.tipo || '');
   const [categoria, setCategoria] = useState(initialFilters.categoria || '');
@@ -91,10 +91,15 @@ export default function PropertyFilters({ properties, initialFilters }) {
   };
 
   const clearFilters = () => {
-    setOperacion(''); setTipo(''); setCategoria(''); setZona('');
+    const defaults = {
+      operacion: baseFilters.operacion || '', tipo: baseFilters.tipo || '',
+      categoria: baseFilters.categoria || '', zona: baseFilters.zona || '',
+      precioMin: '', precioMax: '', recamaras: '0', banos: '0', m2Min: '', m2Max: '',
+    };
+    setOperacion(defaults.operacion); setTipo(defaults.tipo); setCategoria(defaults.categoria); setZona(defaults.zona);
     setPrecioMin(''); setPrecioMax(''); setRecamaras('0'); setBanos('0');
     setM2Min(''); setM2Max('');
-    setAppliedFilters({ operacion: '', tipo: '', categoria: '', zona: '', precioMin: '', precioMax: '', recamaras: '0', banos: '0', m2Min: '', m2Max: '' });
+    setAppliedFilters(defaults);
     setPage(1);
   };
 
@@ -106,17 +111,17 @@ export default function PropertyFilters({ properties, initialFilters }) {
   const buildPageHref = (targetPage) => {
     const params = new URLSearchParams();
     const f = appliedFilters;
-    if (f.operacion) params.set('operacion', f.operacion);
-    if (f.tipo) params.set('tipo', f.tipo);
-    if (f.categoria) params.set('categoria', f.categoria);
-    if (f.zona) params.set('zona', f.zona);
+    if (f.operacion !== (baseFilters.operacion || '')) params.set('operacion', f.operacion);
+    if (f.tipo !== (baseFilters.tipo || '')) params.set('tipo', f.tipo);
+    if (f.categoria !== (baseFilters.categoria || '')) params.set('categoria', f.categoria);
+    if (f.zona !== (baseFilters.zona || '')) params.set('zona', f.zona);
     if (f.precioMin) params.set('precioMin', f.precioMin);
     if (f.precioMax) params.set('precioMax', f.precioMax);
     if (f.recamaras && f.recamaras !== '0') params.set('recamaras', f.recamaras);
     if (f.banos && f.banos !== '0') params.set('banos', f.banos);
     if (targetPage > 1) params.set('page', String(targetPage));
     const qs = params.toString();
-    return qs ? `/propiedades?${qs}` : '/propiedades';
+    return qs ? `${basePath}?${qs}` : basePath;
   };
 
   return (
