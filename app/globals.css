@@ -816,6 +816,14 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
 }
 .prop-map iframe { width: 100%; height: 100%; border: 0; display: block; }
 .prop-map-caption { font-size: 12px; color: var(--gris-medio); margin-top: 0.5rem; }
+.property-context-link {
+ display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+ margin-top: 1rem; padding: 0.9rem 1rem; border: 1px solid var(--gris-claro);
+ border-radius: 10px; background: var(--crema-dark); font-size: 13px;
+}
+.property-context-link span { color: var(--gris-medio); }
+.property-context-link a { color: var(--terracota); font-weight: 700; text-decoration: none; }
+.property-context-link a:hover { text-decoration: underline; }
 
 /* Sidebar sticky */
 .prop-sidebar {
@@ -1173,6 +1181,7 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
  .property-landing-directory { padding: 1rem 1.25rem; }
  .property-landing-hero { padding: 2rem 1.25rem 0; }
  .property-landing-support { padding: 0 1.25rem 3rem; }
+ .property-context-link { align-items: flex-start; flex-direction: column; gap: 0.35rem; }
  .quick-links-grid { grid-template-columns: 1fr; }
  .hero h1 { font-size: 1.65rem; }
  section { padding: 3rem 0; }

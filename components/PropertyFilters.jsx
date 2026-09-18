@@ -41,8 +41,8 @@ export default function PropertyFilters({ properties, initialFilters, basePath =
   const [precioMax, setPrecioMax] = useState(initialFilters.precioMax || '');
   const [recamaras, setRecamaras] = useState(initialFilters.recamaras || '0');
   const [banos, setBanos] = useState(initialFilters.banos || '0');
-  const [m2Min, setM2Min] = useState('');
-  const [m2Max, setM2Max] = useState('');
+  const [m2Min, setM2Min] = useState(initialFilters.m2Min || '');
+  const [m2Max, setM2Max] = useState(initialFilters.m2Max || '');
 
   const [appliedFilters, setAppliedFilters] = useState({
     operacion: operacion, tipo, categoria, zona, precioMin, precioMax, recamaras, banos, m2Min, m2Max,

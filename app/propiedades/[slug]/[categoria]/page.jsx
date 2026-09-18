@@ -4,6 +4,7 @@ import Breadcrumb from '@/components/Breadcrumb';
 import PropertyFilters from '@/components/PropertyFilters';
 import { fetchAllProperties, toPropertyCardData } from '@/lib/properties';
 import { buildPropertySlug } from '@/lib/slug';
+import { buildPropertySeoTitle } from '@/lib/propertySeo';
 import {
   PROPERTY_LANDING_PAGES,
   findPropertyLandingPage,
@@ -35,17 +36,30 @@ export async function generateMetadata({ params, searchParams }) {
   }
 
   const sp = await searchParams;
-  const page = Number(sp?.page) || 1;
+  const parsedPage = Number.parseInt(String(sp?.page || '1'), 10);
+  const page = Number.isFinite(parsedPage) && parsedPage > 1 ? parsedPage : 1;
   const suffix = page > 1 ? ` — página ${page}` : '';
   const canonical = page > 1 ? `${landing.path}?page=${page}` : landing.path;
+  const filterKeys = [
+    'operacion', 'tipo', 'categoria', 'zona', 'precioMin', 'precioMax',
+    'recamaras', 'banos', 'm2Min', 'm2Max',
+  ];
+  const hasActiveFilters = filterKeys.some((key) => {
+    const value = sp?.[key];
+    return Array.isArray(value) ? value.some(Boolean) : Boolean(value);
+  });
+  const description = page > 1
+    ? `Explora la página ${page} de ${landing.typePlural} en ${landing.operationLower} en ${landing.municipality}, Nuevo León. Compara ubicación, precio y características.`
+    : landing.description;
 
   return {
     title: `${landing.heading}${suffix}`,
-    description: landing.description,
+    description,
     alternates: { canonical },
+    robots: hasActiveFilters ? { index: false, follow: true } : undefined,
     openGraph: {
-      title: landing.heading,
-      description: landing.description,
+      title: `${landing.heading}${suffix}`,
+      description,
       url: canonical,
       type: 'website',
     },
@@ -67,7 +81,7 @@ function buildItemList(properties, page) {
     itemListElement: properties.slice(start, start + PROPS_PER_PAGE).map((property, index) => ({
       '@type': 'ListItem',
       position: start + index + 1,
-      name: property.title,
+      name: buildPropertySeoTitle(property),
       url: `${SITE_URL}/propiedades/${buildPropertySlug(property)}`,
     })),
   };
@@ -82,6 +96,8 @@ export default async function PropertyLandingPage({ params, searchParams }) {
   const page = Math.max(1, Number(sp?.page) || 1);
   const { properties, source } = await fetchAllProperties();
   const matchingProperties = properties.filter((property) => propertyMatchesLanding(property, landing));
+  const totalPages = Math.max(1, Math.ceil(matchingProperties.length / PROPS_PER_PAGE));
+  if (source === 'live' && page > totalPages) notFound();
   const propertyCards = properties.map((property) => toPropertyCardData(property));
   const neighborhoods = getLandingNeighborhoods(properties, landing);
   const related = getRelatedPropertyLandings(landing);
@@ -103,6 +119,8 @@ export default async function PropertyLandingPage({ params, searchParams }) {
     precioMax: sp?.precioMax || '',
     recamaras: sp?.recamaras || '0',
     banos: sp?.banos || '0',
+    m2Min: sp?.m2Min || '',
+    m2Max: sp?.m2Max || '',
     page: sp?.page || '1',
   };
   const breadcrumbItems = [

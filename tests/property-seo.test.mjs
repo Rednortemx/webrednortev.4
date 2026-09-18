@@ -79,3 +79,15 @@ test('limita descripciones largas sin perder la referencia CRM', () => {
   assert.ok(description.length <= 160);
   assert.match(description, /Referencia NN-CODIGOEXTENSO123\.$/);
 });
+
+test('limita títulos largos sin perder municipio ni código CRM', () => {
+  const title = buildPropertySeoTitle({
+    ...monterreyCentro,
+    id: 'NN-CODIGO123',
+    zone: 'Fraccionamiento Residencial Extraordinariamente Largo, San Pedro Garza García, Nuevo León',
+    municipio: 'San Pedro Garza García',
+  });
+
+  assert.ok(title.length <= 70);
+  assert.match(title, /San Pedro Garza García \| NN-CODIGO123$/);
+});

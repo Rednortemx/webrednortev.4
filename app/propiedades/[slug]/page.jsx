@@ -4,10 +4,13 @@ import PropertyGallery from '@/components/PropertyGallery';
 import PropertySidebar from '@/components/PropertySidebar';
 import PropertyCard from '@/components/PropertyCard';
 import PropertyMap from '@/components/PropertyMap';
+import Link from 'next/link';
 import { fetchAllProperties, findPropertyById } from '@/lib/properties';
 import { getAdvisorForProperty, defaultAdvisor } from '@/lib/advisor';
 import { buildPropertySlug, extractCodeFromSlug } from '@/lib/slug';
 import { buildPropertyMetaDescription, buildPropertySeoTitle } from '@/lib/propertySeo';
+import { getRelatedProperties } from '@/lib/propertyRelations';
+import { findLandingForProperty } from '@/lib/propertyLandingPages';
 import { propertyListingSchema, breadcrumbSchema } from '@/lib/schema';
 import { getCanonicalSiteUrl, serializeJsonLd } from '@/lib/security';
 
@@ -59,7 +62,8 @@ export default async function PropiedadPage({ params }) {
   }
 
   const advisor = (await getAdvisorForProperty(property.id)) || defaultAdvisor();
-  const similar = properties.filter((p) => p.id !== property.id && p.category === property.category).slice(0, 3);
+  const similar = getRelatedProperties(property, properties);
+  const inventoryLanding = findLandingForProperty(property);
   const isRenta = property.op === 'Renta';
 
   const feats = [
@@ -114,6 +118,12 @@ export default async function PropiedadPage({ params }) {
                 )}
               </div>
               <PropertyMap property={property} />
+              {inventoryLanding && (
+                <nav className="property-context-link" aria-label="Más inventario relacionado">
+                  <span>Explora más opciones</span>
+                  <Link href={inventoryLanding.path}>{inventoryLanding.heading} →</Link>
+                </nav>
+              )}
               {similar.length > 0 && (
                 <>
                   <p className="prop-section-title">Propiedades similares</p>
