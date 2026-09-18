@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
 import InsightCard from '@/components/InsightCard';
 import InsightFilters from '@/components/InsightFilters';
+import PreferredSourceBadge from '@/components/PreferredSourceBadge';
 import { getPublishedInsights, insightCategories } from '@/lib/insights';
 import { serializeJsonLd } from '@/lib/security';
 
@@ -97,6 +98,12 @@ export default function InsightsPage() {
             </p>
           </div>
           <Link href="/reportes">Ver reportes</Link>
+        </div>
+      </section>
+
+      <section className="insights-preferred-source">
+        <div className="insights-shell">
+          <PreferredSourceBadge />
         </div>
       </section>
 
