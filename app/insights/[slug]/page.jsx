@@ -4,6 +4,7 @@ import InsightArticle from '@/components/InsightArticle';
 import InsightAuthor from '@/components/InsightAuthor';
 import InsightSources from '@/components/InsightSources';
 import InsightRelated from '@/components/InsightRelated';
+import PreferredSourceBadge from '@/components/PreferredSourceBadge';
 import { getAuthor, getInsight, getPublishedInsights, getRelatedInsights } from '@/lib/insights';
 import { serializeJsonLd } from '@/lib/security';
 
@@ -155,6 +156,7 @@ export default async function InsightPage({ params }) {
             <InsightArticle insight={insight} />
             <InsightSources sources={insight.sources} />
             <InsightAuthor author={author} />
+            <PreferredSourceBadge />
             <InsightRelated insights={related} />
           </div>
         </main>
