@@ -4,6 +4,7 @@
   --rp-line:#e2dbd2;--rp-accent:#c4622d;--rp-wine:#48171b;--rp-yellow:#f2ed99;
   padding-top:72px;color:var(--rp-ink);background:#fff
 }
+.report-preferred-source{padding:0 0 1.5rem;background:#fff}
 :where(.report-page,.report-hub) section{padding:0}
 :where(.report-page,.report-hub) [id]{scroll-margin-top:96px}
 .report-page a:focus-visible,.report-hub a:focus-visible,.report-page summary:focus-visible{outline:3px solid var(--rp-accent);outline-offset:3px}

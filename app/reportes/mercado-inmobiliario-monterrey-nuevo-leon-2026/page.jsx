@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import PreferredSourceBadge from '@/components/PreferredSourceBadge';
 import Breadcrumb from '@/components/Breadcrumb';
 import { rednorteReport2026V2 as report } from '@/lib/rednorteReport2026V2';
 import { serializeJsonLd } from '@/lib/security';
@@ -527,6 +528,12 @@ export default function ReporteRednorte2026V2() {
             <Link href="/insights">Explorar Insights</Link>
             <Link href="/contacto">Hablar con Rednorte</Link>
           </div>
+        </div>
+      </section>
+
+      <section className="report-preferred-source">
+        <div className="report-shell">
+          <PreferredSourceBadge />
         </div>
       </section>
 

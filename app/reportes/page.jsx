@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
+import PreferredSourceBadge from '@/components/PreferredSourceBadge';
 import { serializeJsonLd } from '@/lib/security';
 
 export const metadata = {
@@ -54,6 +55,7 @@ export default function ReportesPage() {
             <p>Inventario, concentración de interés, municipios, tipos de propiedad, canales, colaboración y contexto externo.</p>
             <strong>Ver reporte →</strong>
           </Link>
+          <PreferredSourceBadge />
         </div>
       </section>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema) }} />
