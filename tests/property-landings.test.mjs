@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 
 import {
   PROPERTY_LANDING_PAGES,
+  findLandingForProperty,
   findPropertyLandingPage,
   getRelatedPropertyLandings,
   propertyMatchesLanding,
@@ -34,6 +35,17 @@ test('el inventario de una landing exige tipo, operación y municipio exactos', 
   assert.equal(propertyMatchesLanding({ type: 'Casa', op: 'Venta', municipio: 'San Pedro Garza García' }, landing), false);
 });
 
+test('una ficha enlaza solo a la landing editorial que coincide exactamente', () => {
+  assert.equal(
+    findLandingForProperty({ type: 'Casa', op: 'Venta', municipio: 'Monterrey' })?.path,
+    '/propiedades/monterrey/casas-en-venta',
+  );
+  assert.equal(
+    findLandingForProperty({ type: 'Bodega', op: 'Venta', municipio: 'Monterrey' }),
+    undefined,
+  );
+});
+
 test('las páginas relacionadas priorizan el mismo municipio', () => {
   const landing = findPropertyLandingPage('monterrey', 'departamentos-en-renta');
   const related = getRelatedPropertyLandings(landing);
@@ -47,7 +59,11 @@ test('la plantilla usa canonical paginado, JSON-LD e inventario dinámico sin ci
 
   assert.match(page, /generateStaticParams/);
   assert.match(page, /alternates: \{ canonical \}/);
+  assert.match(page, /Explora la página \$\{page\} de \$\{landing\.typePlural\}/);
+  assert.match(page, /robots: hasActiveFilters \? \{ index: false, follow: true \} : undefined/);
   assert.match(page, /serializeJsonLd\(buildItemList/);
+  assert.match(page, /if \(source === 'live' && page > totalPages\) notFound\(\)/);
+  assert.match(page, /name: buildPropertySeoTitle\(property\)/);
   assert.match(page, /El inventario se actualiza/);
   assert.match(page, /basePath=\{landing\.path\}/);
   assert.match(page, /baseFilters=\{baseFilters\}/);
