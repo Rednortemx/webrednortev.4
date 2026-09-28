@@ -83,9 +83,12 @@ test('el sitemap y la página general enlazan todas las landings permitidas', as
 
 test('la paginación admite una ruta base y conserva los filtros editoriales', async () => {
   const filters = await readFile(new URL('../components/PropertyFilters.jsx', import.meta.url), 'utf8');
+  const page = await readFile(new URL('../app/propiedades/[slug]/[categoria]/page.jsx', import.meta.url), 'utf8');
 
   assert.match(filters, /basePath = '\/propiedades'/);
   assert.match(filters, /baseFilters = \{\}/);
   assert.match(filters, /return qs \? `\$\{basePath\}\?\$\{qs\}` : basePath/);
   assert.match(filters, /setAppliedFilters\(defaults\)/);
+  assert.match(page, /Math\.ceil\(matchingProperties\.length \/ PROPERTIES_PER_PAGE\)/);
+  assert.match(page, /properties\.slice\(start, start \+ PROPERTIES_PER_PAGE\)/);
 });
