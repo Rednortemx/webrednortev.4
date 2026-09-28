@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import PropertyCard from './PropertyCard';
 import { trackConversion } from '@/lib/conversions';
@@ -49,6 +49,53 @@ export default function PropertyFilters({ properties, initialFilters, basePath =
   });
   const [sort, setSort] = useState('recientes');
   const [page, setPage] = useState(Number(initialFilters.page) || 1);
+
+  // Next.js preserves this client component while navigating between query
+  // strings on the same route. useState only reads initialFilters on the first
+  // mount, so without this synchronization the URL could move to ?page=2 while
+  // the grid kept slicing page 1. Keep every URL-driven value aligned so page
+  // links, browser history and editorial landing pagination render the state
+  // represented by the current URL. Sort remains local and is intentionally
+  // preserved while moving between pages.
+  useEffect(() => {
+    const nextFilters = {
+      operacion: initialFilters.operacion || '',
+      tipo: initialFilters.tipo || '',
+      categoria: initialFilters.categoria || '',
+      zona: initialFilters.zona || '',
+      precioMin: initialFilters.precioMin || '',
+      precioMax: initialFilters.precioMax || '',
+      recamaras: initialFilters.recamaras || '0',
+      banos: initialFilters.banos || '0',
+      m2Min: initialFilters.m2Min || '',
+      m2Max: initialFilters.m2Max || '',
+    };
+
+    setOperacion(nextFilters.operacion);
+    setTipo(nextFilters.tipo);
+    setCategoria(nextFilters.categoria);
+    setZona(nextFilters.zona);
+    setPrecioMin(nextFilters.precioMin);
+    setPrecioMax(nextFilters.precioMax);
+    setRecamaras(nextFilters.recamaras);
+    setBanos(nextFilters.banos);
+    setM2Min(nextFilters.m2Min);
+    setM2Max(nextFilters.m2Max);
+    setAppliedFilters(nextFilters);
+    setPage(Math.max(1, Number(initialFilters.page) || 1));
+  }, [
+    initialFilters.operacion,
+    initialFilters.tipo,
+    initialFilters.categoria,
+    initialFilters.zona,
+    initialFilters.precioMin,
+    initialFilters.precioMax,
+    initialFilters.recamaras,
+    initialFilters.banos,
+    initialFilters.m2Min,
+    initialFilters.m2Max,
+    initialFilters.page,
+  ]);
 
   const filtered = useMemo(() => {
     const f = appliedFilters;
