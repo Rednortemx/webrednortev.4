@@ -2,9 +2,8 @@ import Breadcrumb from '@/components/Breadcrumb';
 import PropertyFilters from '@/components/PropertyFilters';
 import PropertyLandingDirectory from '@/components/PropertyLandingDirectory';
 import { fetchAllProperties, toPropertyCardData } from '@/lib/properties';
+import { PROPERTIES_PER_PAGE } from '@/lib/propertyPagination';
 import { notFound } from 'next/navigation';
-
-const PROPS_PER_PAGE = 12;
 
 // Canonical is self-referencing per page (page 1 -> /propiedades, page N ->
 // /propiedades?page=N) instead of always pointing back at page 1. A fixed
@@ -49,7 +48,7 @@ export default async function PropiedadesPage({ searchParams }) {
   const sp = await searchParams;
   const { properties, source } = await fetchAllProperties();
   const requestedPage = Math.max(1, Number.parseInt(String(sp?.page || '1'), 10) || 1);
-  const totalPages = Math.max(1, Math.ceil(properties.length / PROPS_PER_PAGE));
+  const totalPages = Math.max(1, Math.ceil(properties.length / PROPERTIES_PER_PAGE));
   if (source === 'live' && requestedPage > totalPages) notFound();
   const propertyCards = properties.map((property) => toPropertyCardData(property));
 
