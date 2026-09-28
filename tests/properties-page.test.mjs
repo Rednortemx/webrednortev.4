@@ -31,3 +31,13 @@ test('la paginación tiene metadatos únicos y los filtros libres no se indexan'
   assert.match(filters, /useState\(initialFilters\.m2Min \|\| ''\)/);
   assert.match(filters, /useState\(initialFilters\.m2Max \|\| ''\)/);
 });
+
+test('la navegación cliente sincroniza la página y los filtros con la URL', async () => {
+  const filters = await readFile(new URL('../components/PropertyFilters.jsx', import.meta.url), 'utf8');
+
+  assert.match(filters, /import \{ useEffect, useMemo, useState \} from 'react'/);
+  assert.match(filters, /useEffect\(\(\) => \{/);
+  assert.match(filters, /setAppliedFilters\(nextFilters\)/);
+  assert.match(filters, /setPage\(Math\.max\(1, Number\(initialFilters\.page\) \|\| 1\)\)/);
+  assert.match(filters, /initialFilters\.page,[\s\S]*\]\);/);
+});
