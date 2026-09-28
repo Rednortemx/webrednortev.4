@@ -4,8 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import PropertyCard from './PropertyCard';
 import { trackConversion } from '@/lib/conversions';
-
-const PROPS_PER_PAGE = 12;
+import { PROPERTIES_PER_PAGE } from '@/lib/propertyPagination';
 
 function getPaginationItems(current, total, siblings = 4, boundaries = 1) {
   const range = (start, end) => {
@@ -49,6 +48,7 @@ export default function PropertyFilters({ properties, initialFilters, basePath =
   });
   const [sort, setSort] = useState('recientes');
   const [page, setPage] = useState(Number(initialFilters.page) || 1);
+  const [visiblePageCount, setVisiblePageCount] = useState(1);
 
   // Next.js preserves this client component while navigating between query
   // strings on the same route. useState only reads initialFilters on the first
@@ -83,6 +83,7 @@ export default function PropertyFilters({ properties, initialFilters, basePath =
     setM2Max(nextFilters.m2Max);
     setAppliedFilters(nextFilters);
     setPage(Math.max(1, Number(initialFilters.page) || 1));
+    setVisiblePageCount(1);
   }, [
     initialFilters.operacion,
     initialFilters.tipo,
@@ -126,15 +127,20 @@ export default function PropertyFilters({ properties, initialFilters, basePath =
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [properties, appliedFilters, sort]);
 
-  const totalPages = Math.max(1, Math.ceil(filtered.length / PROPS_PER_PAGE));
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PROPERTIES_PER_PAGE));
   const currentPage = Math.min(Math.max(1, page), totalPages);
-  const start = (currentPage - 1) * PROPS_PER_PAGE;
-  const pageItems = filtered.slice(start, start + PROPS_PER_PAGE);
+  const start = (currentPage - 1) * PROPERTIES_PER_PAGE;
+  const visibleEnd = Math.min(filtered.length, start + (visiblePageCount * PROPERTIES_PER_PAGE));
+  const pageItems = filtered.slice(start, visibleEnd);
+  const remainingProperties = Math.max(0, filtered.length - visibleEnd);
+  const nextBatchSize = Math.min(PROPERTIES_PER_PAGE, remainingProperties);
+  const nextPage = currentPage + visiblePageCount;
 
   const applyFilters = () => {
     trackConversion('filtros_aplicados', 'inventario');
     setAppliedFilters({ operacion, tipo, categoria, zona, precioMin, precioMax, recamaras, banos, m2Min, m2Max });
     setPage(1);
+    setVisiblePageCount(1);
   };
 
   const clearFilters = () => {
@@ -148,6 +154,7 @@ export default function PropertyFilters({ properties, initialFilters, basePath =
     setM2Min(''); setM2Max('');
     setAppliedFilters(defaults);
     setPage(1);
+    setVisiblePageCount(1);
   };
 
   // Real, crawlable <a href> per page (see app/propiedades/page.jsx) instead
@@ -303,7 +310,7 @@ export default function PropertyFilters({ properties, initialFilters, basePath =
           <div className="props-count"><strong>{filtered.length} propiedades</strong> encontradas</div>
           <div className="props-sort">
             <label htmlFor="orden-propiedades">Ordenar:</label>
-            <select id="orden-propiedades" value={sort} onChange={(e) => { setSort(e.target.value); setPage(1); }}>
+            <select id="orden-propiedades" value={sort} onChange={(e) => { setSort(e.target.value); setPage(1); setVisiblePageCount(1); }}>
               <option value="recientes">Más recientes</option>
               <option value="precio-asc">Precio: menor a mayor</option>
               <option value="precio-desc">Precio: mayor a menor</option>
@@ -320,8 +327,27 @@ export default function PropertyFilters({ properties, initialFilters, basePath =
             </div>
           )}
         </div>
+        {pageItems.length > 0 && (
+          <div className="load-more-properties">
+            <p className="load-more-count" aria-live="polite">
+              Mostrando <strong>{pageItems.length}</strong> de <strong>{filtered.length}</strong> propiedades
+            </p>
+            {remainingProperties > 0 && (
+              <Link
+                className="btn-load-more-properties"
+                href={buildPageHref(nextPage)}
+                onClick={(event) => {
+                  event.preventDefault();
+                  setVisiblePageCount((count) => count + 1);
+                }}
+              >
+                Ver {nextBatchSize} {nextBatchSize === 1 ? 'propiedad' : 'propiedades'} más
+              </Link>
+            )}
+          </div>
+        )}
         {totalPages > 1 && (
-          <div className="pagination">
+          <nav className="pagination pagination-secondary" aria-label="Navegación por páginas de propiedades">
             {currentPage <= 1 ? (
               <span className="pag-btn" aria-disabled="true" title="Retroceder 10 páginas">«</span>
             ) : (
@@ -349,7 +375,7 @@ export default function PropertyFilters({ properties, initialFilters, basePath =
             ) : (
               <Link className="pag-btn" href={buildPageHref(Math.min(totalPages, currentPage + 10))} title="Adelantar 10 páginas">»</Link>
             )}
-          </div>
+          </nav>
         )}
       </div>
     </div>

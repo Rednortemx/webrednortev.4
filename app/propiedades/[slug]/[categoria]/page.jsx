@@ -14,9 +14,9 @@ import {
 } from '@/lib/propertyLandingPages';
 import { breadcrumbSchema } from '@/lib/schema';
 import { getCanonicalSiteUrl, serializeJsonLd } from '@/lib/security';
+import { PROPERTIES_PER_PAGE } from '@/lib/propertyPagination';
 
 const SITE_URL = getCanonicalSiteUrl();
-const PROPS_PER_PAGE = 12;
 
 export const revalidate = 120;
 
@@ -73,12 +73,12 @@ function readFilter(searchParams, name, fallback) {
 }
 
 function buildItemList(properties, page) {
-  const start = (page - 1) * PROPS_PER_PAGE;
+  const start = (page - 1) * PROPERTIES_PER_PAGE;
   return {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     numberOfItems: properties.length,
-    itemListElement: properties.slice(start, start + PROPS_PER_PAGE).map((property, index) => ({
+    itemListElement: properties.slice(start, start + PROPERTIES_PER_PAGE).map((property, index) => ({
       '@type': 'ListItem',
       position: start + index + 1,
       name: buildPropertySeoTitle(property),
@@ -96,7 +96,7 @@ export default async function PropertyLandingPage({ params, searchParams }) {
   const page = Math.max(1, Number(sp?.page) || 1);
   const { properties, source } = await fetchAllProperties();
   const matchingProperties = properties.filter((property) => propertyMatchesLanding(property, landing));
-  const totalPages = Math.max(1, Math.ceil(matchingProperties.length / PROPS_PER_PAGE));
+  const totalPages = Math.max(1, Math.ceil(matchingProperties.length / PROPERTIES_PER_PAGE));
   if (source === 'live' && page > totalPages) notFound();
   const propertyCards = properties.map((property) => toPropertyCardData(property));
   const neighborhoods = getLandingNeighborhoods(properties, landing);
