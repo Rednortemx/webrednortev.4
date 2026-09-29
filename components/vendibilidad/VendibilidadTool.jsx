@@ -4,12 +4,12 @@ import { useEffect, useRef } from 'react';
 import './vendibilidad.css';
 import { vendibilidadShellHtml } from './vendibilidadShell';
 import { vendibilidadScriptSrc } from './vendibilidadScript';
+import { buildVendibilidadScript, buildVendibilidadShell } from './vendibilidadIntegration';
 import { bindToolConversions } from '@/lib/toolConversions';
 
-// Client Component wrapper for the "Reporte de Vendibilidad" diagnostic
-// tool (light version). Same approach as ValuacionTool: ported HTML shell
-// via dangerouslySetInnerHTML + the ported script injected as a real
-// classic <script> so it keeps driving the DOM via plain ids/listeners.
+const integratedShellHtml = buildVendibilidadShell(vendibilidadShellHtml);
+const integratedScriptSrc = buildVendibilidadScript(vendibilidadScriptSrc);
+
 export default function VendibilidadTool() {
   const containerRef = useRef(null);
   const scriptRef = useRef(null);
@@ -17,7 +17,7 @@ export default function VendibilidadTool() {
   useEffect(() => {
     const unbind = bindToolConversions(containerRef.current, 'vendibilidad');
     const script = document.createElement('script');
-    script.textContent = vendibilidadScriptSrc;
+    script.textContent = integratedScriptSrc;
     document.body.appendChild(script);
     scriptRef.current = script;
 
@@ -30,5 +30,11 @@ export default function VendibilidadTool() {
     };
   }, []);
 
-  return <div ref={containerRef} dangerouslySetInnerHTML={{ __html: vendibilidadShellHtml }} />;
+  return (
+    <div
+      ref={containerRef}
+      data-vendibilidad-root
+      dangerouslySetInnerHTML={{ __html: integratedShellHtml }}
+    />
+  );
 }
