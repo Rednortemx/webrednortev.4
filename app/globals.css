@@ -930,6 +930,8 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
  transition: background 0.2s;
 }
 .btn-primary-full:hover { background: var(--terracota-dark); }
+.btn-primary-full.btn-appointment-whatsapp { background: #128c4a; }
+.btn-primary-full.btn-appointment-whatsapp:hover { background: #0e703b; }
 .btn-wa-full {
  width: 100%; padding: 0.85rem; background: var(--whatsapp); color: white;
  border: none; border-radius: 10px; font-size: 14px; font-weight: 600;
