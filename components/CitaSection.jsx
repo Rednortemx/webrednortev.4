@@ -107,7 +107,7 @@ export default function CitaSection({ property, advisor }) {
             <input type="checkbox" id="cita-priv" checked={priv} onChange={(e) => setPriv(e.target.checked)} />
             <label htmlFor="cita-priv">Acepto el <Link href="/aviso-de-privacidad" style={{ color: 'var(--terracota)' }}>Aviso de Privacidad</Link>.</label>
           </div>
-          <button className="btn-primary-full" type="button" onClick={enviar}>Confirmar cita por WhatsApp</button>
+          <button className="btn-primary-full btn-appointment-whatsapp" type="button" onClick={enviar}>Confirmar cita por WhatsApp</button>
           <p style={{ fontSize: '11px', color: 'var(--gris-medio)', textAlign: 'center', marginTop: '.5rem' }}>Se abrirá WhatsApp con los datos de tu cita. El asesor confirmará disponibilidad.</p>
         </div>
         <div>
