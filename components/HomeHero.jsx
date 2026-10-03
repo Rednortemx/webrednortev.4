@@ -27,7 +27,7 @@ export default function HomeHero({ metrics }) {
       hero.style.cssText = [
         `--hero-progress:${progress.toFixed(4)}`,
         `--hero-panel-shift:${(-104 * progress).toFixed(2)}%`,
-        `--hero-image-inset:${(42 * (1 - progress)).toFixed(2)}%`,
+        `--hero-image-inset:${(48 * (1 - progress)).toFixed(2)}%`,
         `--hero-image-scale:${(1.08 - (0.08 * progress)).toFixed(4)}`,
         `--hero-opening-opacity:${Math.max(0, 1 - (progress * 2.6)).toFixed(4)}`,
         `--hero-content-opacity:${reveal.toFixed(4)}`,
