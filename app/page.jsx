@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import HeroSearch from '@/components/HeroSearch';
+import HomeHero from '@/components/HomeHero';
 import FeaturedCarousel from '@/components/FeaturedCarousel';
 import GoogleReviews from '@/components/GoogleReviews';
 import FaqHome from '@/components/FaqHome';
@@ -29,36 +29,12 @@ export default async function HomePage() {
   const featured = properties.slice(0, 10).map((property) => toPropertyCardData(property));
 
   return (
-    <div className="page-content">
+    <div className="page-content home-refresh">
       {/* HERO */}
-      <section className="hero">
-        <div className="hero-inner">
-          <div>
-            <div className="hero-badge"> Especialistas inmobiliarios en Monterrey</div>
-            <h1>Compra, vende, renta e invierte en Monterrey</h1>
-            <p className="hero-highlight" style={{ color: '#f0a882', fontWeight: 600, marginTop: '0.25rem' }}>Residencial, comercial e industrial en Nuevo León.</p>
-            <p>Rednorte Inmobiliaria combina asesoría, datos y marketing para ayudarte a tomar mejores decisiones inmobiliarias.</p>
-            <div className="hero-stats">
-              <div className="hero-stat">
-                <div className="hero-stat-num">{SITE_METRICS.activeProperties}</div>
-                <div className="hero-stat-label">Propiedades activas</div>
-              </div>
-              <div className="hero-stat">
-                <div className="hero-stat-num">{SITE_METRICS.teamMembers}</div>
-                <div className="hero-stat-label">Integrantes en el equipo</div>
-              </div>
-              <div className="hero-stat">
-                <div className="hero-stat-num">Desde {SITE_METRICS.since}</div>
-                <div className="hero-stat-label">Operando en Nuevo León</div>
-              </div>
-            </div>
-          </div>
-          <HeroSearch />
-        </div>
-      </section>
+      <HomeHero metrics={SITE_METRICS} />
 
       {/* PROPIEDADES DESTACADAS */}
-      <section>
+      <section className="home-featured">
         <div className="container">
           <div className="section-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1rem' }}>
             <div>
@@ -71,7 +47,7 @@ export default async function HomePage() {
       </section>
 
       {/* CATEGORÍAS */}
-      <section style={{ background: 'var(--crema-dark)', padding: '3.5rem 0' }}>
+      <section className="home-categories" style={{ background: 'var(--crema-dark)', padding: '3.5rem 0' }}>
         <div className="container">
           <div className="section-header center">
             <p className="section-label">Nuestro inventario</p>
