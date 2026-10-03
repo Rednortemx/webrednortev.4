@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import HomeHero from '@/components/HomeHero';
-import FeaturedCarousel from '@/components/FeaturedCarousel';
+import CuratedProperties from '@/components/CuratedProperties';
 import GoogleReviews from '@/components/GoogleReviews';
 import FaqHome from '@/components/FaqHome';
 import { faqSchema } from '@/lib/schema';
 import { fetchAllProperties, toPropertyCardData } from '@/lib/properties';
 import { serializeJsonLd } from '@/lib/security';
-import { SITE_METRICS } from '@/lib/siteConfig';
+import { HOME_CURATED_PROPERTY_IDS, SITE_METRICS } from '@/lib/siteConfig';
 
 export const metadata = {
   title: 'Rednorte Inmobiliaria | Propiedades en Monterrey y su Área Metropolitana',
@@ -25,33 +25,51 @@ function propsFilterHref(operacion, tipo, categoria) {
 }
 
 export default async function HomePage() {
-  const { properties } = await fetchAllProperties();
-  const featured = properties.slice(0, 10).map((property) => toPropertyCardData(property));
+  let featured = [];
+  if (HOME_CURATED_PROPERTY_IDS.length === 3) {
+    const { properties } = await fetchAllProperties();
+    const propertyMap = new Map(properties.map((property) => [String(property.id).toUpperCase(), property]));
+    featured = HOME_CURATED_PROPERTY_IDS
+      .map((id) => propertyMap.get(String(id).toUpperCase()))
+      .filter((property) => property?.imgs?.length)
+      .map((property) => toPropertyCardData(property, 1));
+  }
 
   return (
     <div className="page-content home-refresh">
       {/* HERO */}
       <HomeHero metrics={SITE_METRICS} />
 
-      {/* PROPIEDADES DESTACADAS */}
-      <section className="home-featured">
-        <div className="container">
-          <div className="section-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1rem' }}>
-            <div>
-              <h2 className="section-title">Propiedades destacadas</h2>
+      {featured.length === 3 && (
+        <section className="home-featured" aria-labelledby="home-curated-title">
+          <div className="container">
+            <div className="home-section-intro">
+              <div>
+                <p className="section-label">Curaduría inmobiliaria</p>
+                <h2 className="section-title" id="home-curated-title">Selección Rednorte</h2>
+              </div>
+              <div className="home-section-intro-copy">
+                <p>Propiedades elegidas por su arquitectura, ubicación y carácter.</p>
+                <Link className="home-text-link" href="/propiedades">Explorar todo el inventario ↗</Link>
+              </div>
             </div>
-            <Link style={{ fontSize: '14px', fontWeight: 600, color: 'var(--terracota)', textDecoration: 'none' }} href="/propiedades">Ver todo el inventario →</Link>
+            <CuratedProperties properties={featured} />
           </div>
-          <FeaturedCarousel properties={featured} />
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* CATEGORÍAS */}
       <section className="home-categories" style={{ background: 'var(--crema-dark)', padding: '3.5rem 0' }}>
         <div className="container">
-          <div className="section-header center">
-            <p className="section-label">Nuestro inventario</p>
-            <h2 className="section-title">¿Qué tipo de propiedad buscas?</h2>
+          <div className="home-section-intro">
+            <div>
+              <p className="section-label">Nuestro inventario</p>
+              <h2 className="section-title">¿Qué tipo de propiedad buscas?</h2>
+            </div>
+            <div className="home-section-intro-copy">
+              <p>Explora propiedades residenciales, comerciales e industriales en Monterrey y Nuevo León.</p>
+              <Link className="home-text-link" href="/propiedades">Ver todas las propiedades ↗</Link>
+            </div>
           </div>
           <div className="cats-grid">
             <Link className="cat-card" href={propsFilterHref('', '', 'Residencial')}>
@@ -79,48 +97,50 @@ export default async function HomePage() {
       {/* SERVICIOS */}
       <section className="services-mini">
         <div className="container">
-          <div className="section-header center">
-            <p className="section-label" style={{ color: '#e07a4a' }}>Servicios inmobiliarios</p>
-            <h2 className="section-title">¿Cómo podemos ayudarte?</h2>
-            <p className="section-sub" style={{ margin: '0 auto' }}>Soluciones para comprar, vender, rentar e invertir en bienes raíces en Monterrey y Nuevo León.</p>
+          <div className="home-section-intro home-section-intro--dark">
+            <div>
+              <p className="section-label">Servicios inmobiliarios</p>
+              <h2 className="section-title">¿Cómo podemos ayudarte?</h2>
+            </div>
+            <div className="home-section-intro-copy">
+              <p>Soluciones para comprar, vender, rentar e invertir en bienes raíces en Monterrey y Nuevo León.</p>
+              <Link className="home-text-link" href="/servicios">Conocer todos los servicios ↗</Link>
+            </div>
           </div>
           {/* Seis tarjetas. Comercial e industrial todavía no tienen página
               propia: mientras llegan apuntan a una página real y relacionada,
               para no dejar el enlace en 404. */}
           <div className="services-grid">
             <Link className="service-block" href="/servicios/vender-propiedad">
-              <div className="service-name">Vender una propiedad</div>
+              <h3 className="service-name">Vender una propiedad</h3>
               <div className="service-desc">Analizamos el valor, la competencia y las condiciones del inmueble para definir una estrategia de posicionamiento, promoción y negociación hasta el cierre.</div>
               <span className="service-link">Quiero vender mi propiedad →</span>
             </Link>
             <Link className="service-block" href="/servicios/rentar-propiedad">
-              <div className="service-name">Rentar una propiedad</div>
+              <h3 className="service-name">Rentar una propiedad</h3>
               <div className="service-desc">Estimamos la renta, promovemos el inmueble, perfilamos e investigamos prospectos y coordinamos contrato, negociación y entrega.</div>
               <span className="service-link">Quiero rentar mi propiedad →</span>
             </Link>
             <Link className="service-block" href="/servicios/comprar-propiedad">
-              <div className="service-name">Comprar una propiedad</div>
+              <h3 className="service-name">Comprar una propiedad</h3>
               <div className="service-desc">Buscamos en nuestro inventario y en la red inmobiliaria para comparar opciones, negociar condiciones y acompañarte hasta la entrega.</div>
               <span className="service-link">Quiero comprar una propiedad →</span>
             </Link>
             <Link className="service-block" href="/servicios/inversion-inmobiliaria">
-              <div className="service-name">Inversión inmobiliaria y preventas</div>
+              <h3 className="service-name">Inversión inmobiliaria y preventas</h3>
               <div className="service-desc">Primero entendemos qué quieres lograr con tu inversión y después analizamos alternativas según flujo, plusvalía, patrimonio, preventa u otras estrategias.</div>
               <span className="service-link">Quiero analizar una inversión →</span>
             </Link>
             <Link className="service-block" href="/servicios/inmobiliaria-comercial">
-              <div className="service-name">Inmobiliaria comercial</div>
+              <h3 className="service-name">Inmobiliaria comercial</h3>
               <div className="service-desc">Asesoría para comprar, vender o rentar locales, oficinas, consultorios, edificios y otros espacios comerciales en Nuevo León.</div>
               <span className="service-link">Ver servicio comercial →</span>
             </Link>
             <Link className="service-block" href="/servicios/inmobiliaria-industrial">
-              <div className="service-name">Inmobiliaria industrial</div>
+              <h3 className="service-name">Inmobiliaria industrial</h3>
               <div className="service-desc">Búsqueda y comercialización de naves, bodegas, terrenos, patios, parques industriales y proyectos build-to-suit.</div>
               <span className="service-link">Ver servicio industrial →</span>
             </Link>
-          </div>
-          <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-            <Link className="btn-ver-servicios" href="/servicios">Ver todos los servicios →</Link>
           </div>
         </div>
       </section>
@@ -130,19 +150,21 @@ export default async function HomePage() {
         <div className="container">
           <div className="nosotros-grid">
             <div className="nosotros-img">
-              <Image src="/equipo.jpg" alt="Equipo Rednorte Inmobiliaria" width={800} height={600} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '16px' }} />
+              <Image src="/equipo.jpg" alt="Equipo Rednorte Inmobiliaria" width={1000} height={760} />
+              <span className="nosotros-image-caption">Monterrey · Nuevo León</span>
             </div>
             <div className="nosotros-text">
               <p className="section-label">Quiénes somos</p>
-              <h2 className="section-title">Desde {SITE_METRICS.since} conectando personas con propiedades</h2>
-              <p style={{ fontSize: '14.5px', color: 'var(--cafe)', lineHeight: 1.7, marginBottom: '1rem' }}>En Rednorte Inmobiliaria somos un equipo de asesores profesionales con profundo conocimiento del mercado de Nuevo León. Trabajamos con integridad, transparencia y resultados.</p>
+              <p className="nosotros-since">Desde {SITE_METRICS.since}</p>
+              <h2 className="section-title">Conectando personas con propiedades</h2>
+              <p className="nosotros-lead">En Rednorte Inmobiliaria somos un equipo de asesores profesionales con profundo conocimiento del mercado de Nuevo León. Trabajamos con integridad, transparencia y resultados.</p>
               <ul className="nosotros-list">
                 <li>Especialistas en residencial, comercial e industrial</li>
                 <li>Cobertura en los 12 municipios principales de NL</li>
                 <li>Red de más de 500 propiedades en inventario activo</li>
                 <li>Proceso ágil y acompañamiento hasta el cierre</li>
               </ul>
-              <Link className="btn-primary" href="/nosotros" style={{ marginTop: '0.5rem', display: 'inline-block', textDecoration: 'none' }}>Conoce Rednorte →</Link>
+              <Link className="home-editorial-button" href="/nosotros">Conoce Rednorte ↗</Link>
             </div>
           </div>
         </div>

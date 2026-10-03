@@ -16,14 +16,14 @@ test('contacto comparte todas las redes declaradas para el sitio', async () => {
   assert.match(contacto, /SOCIAL_LINKS\.map/);
 });
 
-test('Inicio conserva la marca en metadata, JSON-LD seguro y buscador semántico', async () => {
-  const [home, search] = await Promise.all([
+test('Inicio conserva la marca, JSON-LD seguro y acceso semántico al inventario', async () => {
+  const [home, hero] = await Promise.all([
     readFile(new URL('../app/page.jsx', import.meta.url), 'utf8'),
-    readFile(new URL('../components/HeroSearch.jsx', import.meta.url), 'utf8'),
+    readFile(new URL('../components/HomeHero.jsx', import.meta.url), 'utf8'),
   ]);
 
   assert.match(home, /title: 'Rednorte Inmobiliaria \| Propiedades en Monterrey y su Área Metropolitana'/);
   assert.match(home, /serializeJsonLd\(faqSchema\(\)\)/);
-  assert.match(search, /<form className="hero-search" onSubmit=\{submit\}>/);
-  assert.match(search, /type="submit"/);
+  assert.match(hero, /href="\/propiedades"/);
+  assert.match(hero, /Explorar todas las propiedades/);
 });

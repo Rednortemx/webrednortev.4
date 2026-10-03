@@ -23,7 +23,9 @@ export default function CookieBanner() {
     }
     const banner = document.getElementById('cookieBanner');
     const adjust = () => {
-      if (banner) document.body.style.paddingBottom = banner.offsetHeight + 'px';
+      if (!banner) return;
+      const isEditorialHome = Boolean(document.querySelector('.home-refresh'));
+      document.body.style.paddingBottom = isEditorialHome ? '' : banner.offsetHeight + 'px';
     };
     adjust();
     window.addEventListener('resize', adjust);

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
-import HeroSearch from '@/components/HeroSearch';
+import Link from 'next/link';
 
 export default function HomeHero({ metrics }) {
   const heroRef = useRef(null);
@@ -91,6 +91,13 @@ export default function HomeHero({ metrics }) {
             <h1 id="home-hero-title">Compra, vende, renta e invierte en Monterrey</h1>
             <p className="hero-highlight">Residencial, comercial e industrial en Nuevo León.</p>
             <p>Rednorte Inmobiliaria combina asesoría, datos y marketing para ayudarte a tomar mejores decisiones inmobiliarias.</p>
+            <div className="home-hero-actions">
+              <Link className="home-hero-inventory-link" href="/propiedades">
+                <span>Explorar todas las propiedades</span>
+                <span aria-hidden="true">↗</span>
+              </Link>
+              <span className="home-hero-inventory-note">Inventario residencial, comercial e industrial</span>
+            </div>
             <div className="hero-stats" aria-label="Datos de Rednorte">
               <div className="hero-stat">
                 <div className="hero-stat-num">{metrics.activeProperties}</div>
@@ -106,7 +113,6 @@ export default function HomeHero({ metrics }) {
               </div>
             </div>
           </div>
-          <HeroSearch />
         </div>
 
         <div className="home-hero-scroll" aria-hidden="true">
