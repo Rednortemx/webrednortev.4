@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
 import SellPropertyForm from '@/components/SellPropertyForm';
 import TrustindexWidget from '@/components/TrustindexWidget';
+import ServiceEditorialNav from '@/components/servicios/ServiceEditorialNav';
 import { SITE_CONTACT } from '@/lib/siteConfig';
 
 export const metadata = {
@@ -227,7 +228,7 @@ const serviceSchema = {
 
 export default function VenderPropiedadPage() {
   return (
-    <div className="page-content sell-property-page">
+    <div className="page-content sell-property-page service-editorial service-editorial--sell">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
@@ -239,6 +240,7 @@ export default function VenderPropiedadPage() {
           { label: 'Vender una propiedad' },
         ]}
       />
+      <ServiceEditorialNav active="sell" />
 
       <main>
         <section className="sell-hero">

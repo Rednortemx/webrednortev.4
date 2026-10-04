@@ -3,6 +3,7 @@ import Breadcrumb from '@/components/Breadcrumb';
 import InvestmentAdvisoryForm from '@/components/InvestmentAdvisoryForm';
 import InvestmentCalculator from '@/components/InvestmentCalculator';
 import TrustindexWidget from '@/components/TrustindexWidget';
+import ServiceEditorialNav from '@/components/servicios/ServiceEditorialNav';
 import { SITE_CONTACT } from '@/lib/siteConfig';
 
 export const metadata = {
@@ -365,7 +366,7 @@ const serviceSchema = {
 
 export default function InversionInmobiliariaPage() {
   return (
-    <div className="page-content invest-page">
+    <div className="page-content invest-page service-editorial service-editorial--invest">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
@@ -377,6 +378,7 @@ export default function InversionInmobiliariaPage() {
           { label: 'Inversión inmobiliaria' },
         ]}
       />
+      <ServiceEditorialNav active="invest" />
 
       <main>
         <section className="invest-hero">

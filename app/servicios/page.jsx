@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
 import WhatsAppGateButton from '@/components/WhatsAppGateButton';
+import ServiceEditorialNav from '@/components/servicios/ServiceEditorialNav';
 
 export const metadata = {
   title: 'Servicios inmobiliarios en Monterrey',
@@ -202,8 +203,9 @@ function ServiceGroup({ label, title, description, services, id }) {
 
 export default function ServiciosPage() {
   return (
-    <div className="page-content services-hub-page">
+    <div className="page-content services-hub-page service-editorial service-editorial--hub">
       <Breadcrumb items={[{ label: 'Servicios' }]} />
+      <ServiceEditorialNav active="all" />
 
       <script
         type="application/ld+json"
