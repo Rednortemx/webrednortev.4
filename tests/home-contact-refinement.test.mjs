@@ -27,3 +27,17 @@ test('Inicio conserva la marca, JSON-LD seguro y acceso semántico al inventario
   assert.match(hero, /href="\/propiedades"/);
   assert.match(hero, /Explorar todas las propiedades/);
 });
+
+test('Inicio alinea servicios y evita datos visuales desactualizados', async () => {
+  const [home, reviews, styles] = await Promise.all([
+    readFile(new URL('../app/page.jsx', import.meta.url), 'utf8'),
+    readFile(new URL('../components/GoogleReviews.jsx', import.meta.url), 'utf8'),
+    readFile(new URL('../app/globals.css', import.meta.url), 'utf8'),
+  ]);
+
+  assert.doesNotMatch(home, /equipo\.jpg/);
+  assert.match(home, /nosotros-brand-panel/);
+  assert.match(reviews, /<strong>4\.6<\/strong>/);
+  assert.match(reviews, /148 opiniones en Google/);
+  assert.match(styles, /grid-template-columns: minmax\(0,\.72fr\) minmax\(0,1\.2fr\) minmax\(250px,\.62fr\)/);
+});
