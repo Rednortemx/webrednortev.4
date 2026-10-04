@@ -21,7 +21,11 @@ export default function CuratedProperties({ properties }) {
   function move(direction) {
     const track = trackRef.current;
     if (!track) return;
-    track.scrollBy({ left: direction * track.clientWidth * 0.82, behavior: 'smooth' });
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    track.scrollBy({
+      left: direction * track.clientWidth * 0.82,
+      behavior: reduceMotion ? 'auto' : 'smooth',
+    });
   }
 
   return (
@@ -33,7 +37,7 @@ export default function CuratedProperties({ properties }) {
           <button type="button" onClick={() => move(1)} aria-label="Ver propiedad siguiente">→</button>
         </div>
       </div>
-      <div className="curated-property-track" ref={trackRef} tabIndex="0">
+      <div className="curated-property-track" ref={trackRef} tabIndex={0}>
         {properties.map((property, index) => {
           const href = `/propiedades/${buildPropertySlug(property)}`;
           return (

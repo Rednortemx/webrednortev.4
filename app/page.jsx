@@ -36,7 +36,7 @@ export default async function HomePage() {
   }
 
   return (
-    <div className="page-content home-refresh">
+    <main className="page-content home-refresh">
       {/* HERO */}
       <HomeHero metrics={SITE_METRICS} />
 
@@ -59,7 +59,7 @@ export default async function HomePage() {
       )}
 
       {/* CATEGORÍAS */}
-      <section className="home-categories" style={{ background: 'var(--crema-dark)', padding: '3.5rem 0' }}>
+      <section className="home-categories">
         <div className="container">
           <div className="home-section-intro">
             <div>
@@ -179,6 +179,6 @@ export default async function HomePage() {
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqSchema()) }}
       />
       <FaqHome />
-    </div>
+    </main>
   );
 }
