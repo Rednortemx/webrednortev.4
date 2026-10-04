@@ -1670,8 +1670,9 @@ body:has(.properties-catalog-refresh) .hamburger span { background: #fff; }
 .properties-catalog-refresh .property-landing-directory p { grid-column: 1; grid-row: 2; margin: .45rem 0 0; color: rgba(23,19,15,.68); font-size: .76rem; line-height: 1.5; }
 .properties-catalog-refresh .property-landing-links {
  grid-column: 2; grid-row: 1 / span 2; align-self: center;
- flex-wrap: nowrap; align-items: center; overflow-x: auto; gap: 0; scrollbar-width: thin;
+ flex-wrap: nowrap; align-items: center; overflow-x: auto; gap: 0; scrollbar-width: none;
 }
+.properties-catalog-refresh .property-landing-links::-webkit-scrollbar { display: none; }
 .properties-catalog-refresh .property-landing-links a {
  flex: 0 0 auto; min-height: 0; padding: .35rem 1.05rem; border: 0; border-left: 1px solid rgba(23,19,15,.26);
  border-radius: 0; background: transparent; color: #17130f; font-size: .7rem; font-weight: 700;
