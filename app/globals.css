@@ -1665,10 +1665,13 @@ body:has(.properties-catalog-refresh) .hamburger span { background: #fff; }
  background: #bf542f; color: #17130f;
 }
 .properties-catalog-refresh .property-landing-directory h2 {
- margin: 0; color: #17130f; font-size: .72rem; letter-spacing: .13em; text-transform: uppercase;
+ grid-column: 1; grid-row: 1; margin: 0; color: #17130f; font-size: .72rem; letter-spacing: .13em; text-transform: uppercase;
 }
-.properties-catalog-refresh .property-landing-directory p { margin: .45rem 0 0; color: rgba(23,19,15,.68); font-size: .76rem; line-height: 1.5; }
-.properties-catalog-refresh .property-landing-links { flex-wrap: nowrap; align-items: center; overflow-x: auto; gap: 0; scrollbar-width: thin; }
+.properties-catalog-refresh .property-landing-directory p { grid-column: 1; grid-row: 2; margin: .45rem 0 0; color: rgba(23,19,15,.68); font-size: .76rem; line-height: 1.5; }
+.properties-catalog-refresh .property-landing-links {
+ grid-column: 2; grid-row: 1 / span 2; align-self: center;
+ flex-wrap: nowrap; align-items: center; overflow-x: auto; gap: 0; scrollbar-width: thin;
+}
 .properties-catalog-refresh .property-landing-links a {
  flex: 0 0 auto; min-height: 0; padding: .35rem 1.05rem; border: 0; border-left: 1px solid rgba(23,19,15,.26);
  border-radius: 0; background: transparent; color: #17130f; font-size: .7rem; font-weight: 700;
@@ -1822,6 +1825,9 @@ body:has(.properties-catalog-refresh) .translate-float { bottom: 4.35rem; backgr
  .catalog-heading-aside { display: grid; grid-template-columns: 1fr auto; gap: 1.5rem; align-items: end; }
  .catalog-heading-aside p { margin: 0; }
  .properties-catalog-refresh .property-landing-directory { grid-template-columns: 1fr; gap: .9rem; }
+ .properties-catalog-refresh .property-landing-directory h2,
+ .properties-catalog-refresh .property-landing-directory p,
+ .properties-catalog-refresh .property-landing-links { grid-column: 1; grid-row: auto; }
  .catalog-primary-filters { grid-template-columns: repeat(2,minmax(0,1fr)); }
  .catalog-apply-primary { grid-column: auto; }
  .catalog-advanced-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
