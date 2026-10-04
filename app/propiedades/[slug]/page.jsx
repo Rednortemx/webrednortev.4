@@ -79,7 +79,7 @@ export default async function PropiedadPage({ params }) {
   const canonicalUrl = `${SITE_URL}/propiedades/${buildPropertySlug(property)}`;
 
   return (
-    <div className="page-content">
+    <div className="page-content property-detail-refresh">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(propertyListingSchema(property, canonicalUrl)) }}
@@ -90,15 +90,24 @@ export default async function PropiedadPage({ params }) {
       />
       <Breadcrumb items={breadcrumbItems} />
       <div className="prop-detail">
+        <header className="prop-detail-intro">
+          <div className="prop-detail-intro-copy">
+            <div className="prop-detail-badge">{property.type} en {property.op}</div>
+            <h1 className="prop-detail-title">{property.title}</h1>
+            <div className="prop-detail-intro-meta">
+              <span>{property.zone}</span>
+              <span>Referencia {property.id}</span>
+            </div>
+          </div>
+          <div className="prop-detail-intro-price">
+            <span>{isRenta ? 'Precio mensual' : 'Precio de venta'}</span>
+            <strong>{property.price}</strong>
+          </div>
+        </header>
         <div className="prop-detail-grid">
-          <div>
+          <main className="prop-detail-main">
             <PropertyGallery imgs={property.imgs} icon={property.icon} title={property.title} />
-            <div className="prop-info" style={{ marginTop: '2rem' }}>
-              <div className="prop-detail-badge"> {property.type} en {property.op}</div>
-              <h1 className="prop-detail-title">{property.title}</h1>
-              <p className="prop-detail-code"> Referencia: <strong>{property.id}</strong></p>
-              <div className="prop-detail-price">{property.price}</div>
-              <p className="prop-detail-price-sub">{isRenta ? 'Precio mensual' : 'Precio de venta'} · {property.type}</p>
+            <div className="prop-info">
               <div className="prop-features-grid">
                 {feats.map((f) => (
                   <div className="prop-feature-item" key={f.name}>
@@ -107,16 +116,26 @@ export default async function PropiedadPage({ params }) {
                   </div>
                 ))}
               </div>
-              <p className="prop-section-title">Descripción</p>
-              <p className="prop-description">{property.description || 'Sin descripción disponible.'}</p>
-              <p className="prop-section-title">Amenidades</p>
-              <div className="amenities-list">
-                {property.features && property.features.length > 0 ? (
-                  property.features.slice(0, 10).map((f, i) => <span className="amenity-chip" key={i}>{f}</span>)
-                ) : (
-                  <span className="amenity-chip">Sin amenidades registradas</span>
-                )}
-              </div>
+              <section className="property-detail-section">
+                <span className="property-section-index">01</span>
+                <div>
+                  <h2 className="prop-section-title">Descripción</h2>
+                  <p className="prop-description">{property.description || 'Sin descripción disponible.'}</p>
+                </div>
+              </section>
+              <section className="property-detail-section">
+                <span className="property-section-index">02</span>
+                <div>
+                  <h2 className="prop-section-title">Amenidades</h2>
+                  <div className="amenities-list">
+                    {property.features && property.features.length > 0 ? (
+                      property.features.slice(0, 10).map((f, i) => <span className="amenity-chip" key={i}>{f}</span>)
+                    ) : (
+                      <span className="amenity-chip">Sin amenidades registradas</span>
+                    )}
+                  </div>
+                </div>
+              </section>
               <PropertyMap property={property} />
               {inventoryLanding && (
                 <nav className="property-context-link" aria-label="Más inventario relacionado">
@@ -124,18 +143,24 @@ export default async function PropiedadPage({ params }) {
                   <Link href={inventoryLanding.path}>{inventoryLanding.heading} →</Link>
                 </nav>
               )}
-              {similar.length > 0 && (
-                <>
-                  <p className="prop-section-title">Propiedades similares</p>
-                  <div className="props-grid" style={{ gridTemplateColumns: 'repeat(auto-fill,minmax(260px,1fr))' }}>
-                    {similar.map((p) => <PropertyCard key={p.id} property={p} />)}
-                  </div>
-                </>
-              )}
             </div>
-          </div>
+          </main>
           <PropertySidebar property={property} advisor={advisor} />
         </div>
+        {similar.length > 0 && (
+          <section className="property-similar-section">
+            <div className="property-similar-heading">
+              <div>
+                <span className="catalog-eyebrow">Más opciones</span>
+                <h2>Propiedades similares</h2>
+              </div>
+              <Link href="/propiedades">Ver todo el inventario <span aria-hidden="true">↗</span></Link>
+            </div>
+            <div className="props-grid">
+              {similar.map((p) => <PropertyCard key={p.id} property={p} />)}
+            </div>
+          </section>
+        )}
       </div>
     </div>
   );

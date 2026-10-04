@@ -37,7 +37,7 @@ export default function PropertyGallery({ imgs, icon, title }) {
             id="ficha-main-img"
             className="gallery-main-img"
             src={imgs[idx]}
-            alt="Foto propiedad"
+            alt={`${title} — foto ${idx + 1}`}
             onError={() => setBroken(true)}
           />
         ) : (
@@ -65,7 +65,7 @@ export default function PropertyGallery({ imgs, icon, title }) {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={src}
-              alt={`Foto ${i + 1}`}
+              alt={`${title} — foto ${i + 1}`}
               loading="lazy"
               onError={(e) => {
                 e.currentTarget.hidden = true;
