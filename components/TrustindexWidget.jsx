@@ -20,9 +20,10 @@ const WIDGET_ID = '2febd0b79c3a9262701634a905e';
 //    componente se vuelve a renderizar, React reconcilia ese contenedor y se
 //    lleva el widget por delante. Por eso no tiene estado.
 //
-// Ojo: Trustindex carga el widget de forma diferida, cuando el visitante
-// interactúa con la página y la sección entra en pantalla. Que no aparezca
-// de inmediato al abrir es su comportamiento normal, no una falla.
+// Ojo: el loader debe insertarse cuando su contenedor está cerca del viewport.
+// Si se ejecuta al montar la página —algo que ocurre cuando el consentimiento
+// ya existía de una visita anterior— Trustindex puede terminar antes de que su
+// ancla esté lista y dejar un div vacío.
 export default function TrustindexWidget({ variant = 'default' }) {
   const contenedorRef = useRef(null);
   const { optional, allowOptional } = usePrivacyConsent();
@@ -31,12 +32,30 @@ export default function TrustindexWidget({ variant = 'default' }) {
     if (!optional) return;
     const cont = contenedorRef.current;
     if (!cont || cont.dataset.iniciado) return;
-    cont.dataset.iniciado = '1';
 
-    const script = document.createElement('script');
-    script.src = `https://cdn.trustindex.io/loader.js?${WIDGET_ID}`;
-    script.async = true;
-    cont.appendChild(script);
+    const cargar = () => {
+      if (cont.dataset.iniciado) return;
+      cont.dataset.iniciado = '1';
+
+      const script = document.createElement('script');
+      script.src = `https://cdn.trustindex.io/loader.js?${WIDGET_ID}`;
+      script.async = true;
+      cont.appendChild(script);
+    };
+
+    if (!('IntersectionObserver' in window)) {
+      cargar();
+      return;
+    }
+
+    const observador = new IntersectionObserver((entradas) => {
+      if (!entradas.some((entrada) => entrada.isIntersecting)) return;
+      observador.disconnect();
+      cargar();
+    }, { rootMargin: '320px 0px' });
+
+    observador.observe(cont);
+    return () => observador.disconnect();
   }, [optional]);
 
   if (!optional) {

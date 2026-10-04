@@ -29,9 +29,10 @@ test('Inicio conserva la marca, JSON-LD seguro y acceso semántico al inventario
 });
 
 test('Inicio alinea servicios y evita datos visuales desactualizados', async () => {
-  const [home, reviews, styles] = await Promise.all([
+  const [home, reviews, trustindex, styles] = await Promise.all([
     readFile(new URL('../app/page.jsx', import.meta.url), 'utf8'),
     readFile(new URL('../components/GoogleReviews.jsx', import.meta.url), 'utf8'),
+    readFile(new URL('../components/TrustindexWidget.jsx', import.meta.url), 'utf8'),
     readFile(new URL('../app/globals.css', import.meta.url), 'utf8'),
   ]);
 
@@ -39,5 +40,7 @@ test('Inicio alinea servicios y evita datos visuales desactualizados', async () 
   assert.match(home, /nosotros-brand-panel/);
   assert.match(reviews, /<strong>4\.6<\/strong>/);
   assert.match(reviews, /148 opiniones en Google/);
+  assert.match(trustindex, /new IntersectionObserver/);
+  assert.match(trustindex, /rootMargin: '320px 0px'/);
   assert.match(styles, /grid-template-columns: minmax\(0,\.72fr\) minmax\(0,1\.2fr\) minmax\(250px,\.62fr\)/);
 });
