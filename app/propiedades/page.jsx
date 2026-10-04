@@ -67,16 +67,25 @@ export default async function PropiedadesPage({ searchParams }) {
   };
 
   return (
-    <div className="page-content">
+    <div className="page-content properties-catalog-refresh">
       <Breadcrumb items={[{ label: 'Propiedades' }]} />
-      <div className="propiedades-heading">
-        {source !== 'live' && (
-          <div className="crm-indicator">
-            <span className="crm-dot"></span> Inventario no disponible en este momento
+      <header className="properties-catalog-hero">
+        <div className="propiedades-heading">
+          {source !== 'live' && (
+            <div className="crm-indicator">
+              <span className="crm-dot"></span> Inventario no disponible en este momento
+            </div>
+          )}
+          <span className="catalog-eyebrow">Colección Rednorte</span>
+          <div className="catalog-heading-grid">
+            <h1>Propiedades en venta y renta en Monterrey y Nuevo León</h1>
+            <div className="catalog-heading-aside">
+              <p>Encuentra el espacio correcto para vivir, invertir o hacer crecer tu negocio.</p>
+              <span>{properties.length} propiedades disponibles</span>
+            </div>
           </div>
-        )}
-        <h1>Propiedades en venta y renta en Monterrey y Nuevo León</h1>
-      </div>
+        </div>
+      </header>
       <PropertyLandingDirectory />
       <PropertyFilters properties={propertyCards} initialFilters={initialFilters} />
     </div>

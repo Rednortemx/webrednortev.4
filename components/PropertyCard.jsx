@@ -13,6 +13,7 @@ export default function PropertyCard({ property }) {
   const p = property;
   const isRenta = p.op === 'Renta';
   const hasImgs = p.imgs && p.imgs.length > 0;
+  const surface = p.constructionSize || p.lotSize || 0;
 
   const go = (dir) => {
     setIdx((i) => {
@@ -43,7 +44,7 @@ export default function PropertyCard({ property }) {
                     src={p.imgs[idx]}
                     alt={p.title}
                     fill
-                    sizes="(max-width: 720px) 88vw, (max-width: 1100px) 44vw, 320px"
+                    sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw"
                   />
                 </div>
               </div>
@@ -54,7 +55,10 @@ export default function PropertyCard({ property }) {
               </div>
             </div>
           )}
-          <span className={`prop-badge${isRenta ? ' renta' : ''}`}>{p.op}</span>
+          <div className="prop-card-badges">
+            <span className={`prop-badge${isRenta ? ' renta' : ''}`}>{p.op}</span>
+            <span className="prop-type-badge">{p.type}</span>
+          </div>
           <span className="prop-code">{p.id}</span>
         </Link>
         {hasImgs && p.imgs.length > 1 && (
@@ -66,20 +70,26 @@ export default function PropertyCard({ property }) {
       </div>
       <Link href={href} className="prop-card-body-link">
         <div className="prop-body">
+          <div className="prop-card-kicker">{p.zone}</div>
           <div className="prop-price">{p.price}</div>
-          <div className="prop-price-label">{isRenta ? 'Precio mensual' : 'Precio de venta'} · {p.type}</div>
           <div className="prop-title">{p.title}</div>
-          <div className="prop-location"> {p.zone}</div>
           <div className="prop-features">
             {p.rooms > 0 ? (
               <>
-                <div className="prop-feat"><span></span>{p.rooms} rec</div>
-                <div className="prop-feat"><span></span>{p.baths} baños</div>
-                <div className="prop-feat"><span></span>{p.parking} est</div>
+                <div className="prop-feat">{p.rooms} rec</div>
+                <div className="prop-feat">{p.baths} baños</div>
+                {surface > 0 && <div className="prop-feat">{surface} m²</div>}
               </>
             ) : (
-              <div className="prop-feat"><span></span>{p.parking} cajones</div>
+              <>
+                {surface > 0 && <div className="prop-feat">{surface} m²</div>}
+                {p.parking > 0 && <div className="prop-feat">{p.parking} cajones</div>}
+              </>
             )}
+          </div>
+          <div className="prop-card-footer">
+            <span>{isRenta ? 'Precio mensual' : 'Precio de venta'}</span>
+            <strong>Ver propiedad <span aria-hidden="true">↗</span></strong>
           </div>
         </div>
       </Link>
