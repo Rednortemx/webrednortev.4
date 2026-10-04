@@ -24,7 +24,10 @@ export default function PropertyMap({ property }) {
 
   return (
     <>
-      <p className="prop-section-title">{hasCoords ? 'Ubicación' : 'Ubicación aproximada'}</p>
+      <section className="property-detail-section property-map-section">
+        <span className="property-section-index">03</span>
+        <div>
+          <h2 className="prop-section-title">{hasCoords ? 'Ubicación' : 'Ubicación aproximada'}</h2>
       <div className="prop-map">
         <ExternalContentGate
           provider="Google Maps"
@@ -42,6 +45,8 @@ export default function PropertyMap({ property }) {
         </ExternalContentGate>
       </div>
       <p className="prop-map-caption">{property.zone}</p>
+        </div>
+      </section>
     </>
   );
 }

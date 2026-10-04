@@ -65,8 +65,8 @@ export default function CitaSection({ property, advisor }) {
   };
 
   return (
-    <div id="cita-section" style={{ maxWidth: '860px', margin: '3rem auto 0', padding: '0 0 2rem', borderTop: '1px solid var(--gris-claro)' }}>
-      <div style={{ textAlign: 'center', margin: '2.5rem 0' }}>
+    <div id="cita-section" className="property-appointment">
+      <div className="property-appointment-heading">
         <p className="section-label">Sin costo · Sin compromiso</p>
         <h2 className="section-title">Agenda una cita con el asesor</h2>
         <p className="section-sub" style={{ margin: '0 auto' }}>Elige la fecha y hora que mejor te convenga. El asesor recibirá tu solicitud por WhatsApp y confirmará en breve.</p>
@@ -111,7 +111,7 @@ export default function CitaSection({ property, advisor }) {
           <p style={{ fontSize: '11px', color: 'var(--gris-medio)', textAlign: 'center', marginTop: '.5rem' }}>Se abrirá WhatsApp con los datos de tu cita. El asesor confirmará disponibilidad.</p>
         </div>
         <div>
-          <div style={{ background: 'white', borderRadius: '14px', border: '1px solid var(--gris-claro)', padding: '1.5rem', marginBottom: '1rem' }}>
+          <div className="property-appointment-advisor">
             <p style={{ fontSize: '11px', fontWeight: 700, color: 'var(--gris-medio)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '.75rem' }}>Asesor asignado</p>
             <div className="advisor-card">
               <div className="advisor-avatar">
@@ -134,7 +134,7 @@ export default function CitaSection({ property, advisor }) {
               <p>Sab: 10:00 - 14:00 h</p>
             </div>
           </div>
-          <div style={{ background: 'var(--crema-dark)', borderRadius: '12px', padding: '1.25rem', border: '1px solid var(--gris-claro)' }}>
+          <div className="property-appointment-steps">
             <p style={{ fontSize: '13px', fontWeight: 700, color: 'var(--negro)', marginBottom: '.5rem' }}>Cómo funciona</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '.65rem' }}>
               {[

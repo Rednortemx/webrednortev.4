@@ -135,6 +135,10 @@ export default function PropertyFilters({ properties, initialFilters, basePath =
   const remainingProperties = Math.max(0, filtered.length - visibleEnd);
   const nextBatchSize = Math.min(PROPERTIES_PER_PAGE, remainingProperties);
   const nextPage = currentPage + visiblePageCount;
+  const activeFilterCount = Object.entries(appliedFilters).filter(([key, value]) => {
+    if (key === 'recamaras' || key === 'banos') return value && value !== '0';
+    return Boolean(value);
+  }).length;
 
   const applyFilters = () => {
     trackConversion('filtros_aplicados', 'inventario');
@@ -181,39 +185,38 @@ export default function PropertyFilters({ properties, initialFilters, basePath =
   return (
     <div className="propiedades-layout">
       <aside className="filters-panel">
-        <h3> Filtrar propiedades</h3>
-        <div className="filter-group">
-          <label htmlFor="filtro-operacion">Operación</label>
-          <select id="filtro-operacion" value={operacion} onChange={(e) => setOperacion(e.target.value)}>
-            <option value="">Venta y renta</option>
-            <option value="Venta">Venta</option>
-            <option value="Renta">Renta</option>
-          </select>
+        <div className="filters-panel-heading">
+          <div>
+            <span className="catalog-filter-label">Explorar inventario</span>
+            <h2>Encuentra tu propiedad</h2>
+          </div>
+          {activeFilterCount > 0 && <span className="active-filter-count">{activeFilterCount} activos</span>}
         </div>
-        <div className="filter-group">
-          <label htmlFor="filtro-tipo">Tipo de propiedad</label>
-          <select id="filtro-tipo" value={tipo} onChange={(e) => setTipo(e.target.value)}>
-            <option value="">Todos</option>
-            <option value="Casa">Casa</option>
-            <option value="Depto">Departamento</option>
-            <option value="Local">Local comercial</option>
-            <option value="Bodega">Bodega industrial</option>
-            <option value="Terreno">Terreno</option>
-            <option value="Oficina">Oficina</option>
-          </select>
-        </div>
-        <div className="filter-group">
-          <label htmlFor="filtro-categoria">Categoría</label>
-          <select id="filtro-categoria" value={categoria} onChange={(e) => setCategoria(e.target.value)}>
-            <option value="">Todas</option>
-            <option value="Residencial">Residencial</option>
-            <option value="Comercial">Comercial</option>
-            <option value="Industrial">Industrial</option>
-          </select>
-        </div>
-        <div className="filter-group">
-          <label htmlFor="filtro-zona">Municipio / Zona</label>
-          <select id="filtro-zona" value={zona} onChange={(e) => setZona(e.target.value)}>
+
+        <div className="catalog-primary-filters">
+          <div className="filter-group">
+            <label htmlFor="filtro-operacion">Operación</label>
+            <select id="filtro-operacion" value={operacion} onChange={(e) => setOperacion(e.target.value)}>
+              <option value="">Venta y renta</option>
+              <option value="Venta">Venta</option>
+              <option value="Renta">Renta</option>
+            </select>
+          </div>
+          <div className="filter-group">
+            <label htmlFor="filtro-tipo">Tipo de propiedad</label>
+            <select id="filtro-tipo" value={tipo} onChange={(e) => setTipo(e.target.value)}>
+              <option value="">Todos los tipos</option>
+              <option value="Casa">Casa</option>
+              <option value="Depto">Departamento</option>
+              <option value="Local">Local comercial</option>
+              <option value="Bodega">Bodega industrial</option>
+              <option value="Terreno">Terreno</option>
+              <option value="Oficina">Oficina</option>
+            </select>
+          </div>
+          <div className="filter-group">
+            <label htmlFor="filtro-zona">Municipio / Zona</label>
+            <select id="filtro-zona" value={zona} onChange={(e) => setZona(e.target.value)}>
             <option value="">Todos</option>
             <option value="Abasolo">Abasolo</option>
             <option value="Agualeguas">Agualeguas</option>
@@ -266,43 +269,62 @@ export default function PropertyFilters({ properties, initialFilters, basePath =
             <option value="Vallecillo">Vallecillo</option>
             <option value="Villaldama">Villaldama</option>
             <option value="Zaragoza">Zaragoza</option>
-          </select>
-        </div>
-        <div className="filter-group">
-          <label id="filtro-precio-label">Precio</label>
-          <div className="price-range">
-            <input type="text" inputMode="numeric" aria-label="Precio mínimo" placeholder="Mínimo" value={precioMin} onChange={(e) => setPrecioMin(e.target.value)} />
-            <input type="text" inputMode="numeric" aria-label="Precio máximo" placeholder="Máximo" value={precioMax} onChange={(e) => setPrecioMax(e.target.value)} />
+            </select>
           </div>
+          <button className="btn-search catalog-apply-primary" type="button" onClick={applyFilters}>Ver propiedades</button>
         </div>
-        <div className="filter-group">
-          <label htmlFor="filtro-recamaras">Recámaras mínimas</label>
-          <select id="filtro-recamaras" value={recamaras} onChange={(e) => setRecamaras(e.target.value)}>
-            <option value="0">Cualquiera</option>
-            <option value="1">1+</option>
-            <option value="2">2+</option>
-            <option value="3">3+</option>
-            <option value="4">4+</option>
-          </select>
-        </div>
-        <div className="filter-group">
-          <label htmlFor="filtro-banos">Baños mínimos</label>
-          <select id="filtro-banos" value={banos} onChange={(e) => setBanos(e.target.value)}>
-            <option value="0">Cualquiera</option>
-            <option value="1">1+</option>
-            <option value="2">2+</option>
-            <option value="3">3+</option>
-          </select>
-        </div>
-        <div className="filter-group">
-          <label id="filtro-superficie-label">Superficie (m²)</label>
-          <div className="price-range">
-            <input type="text" inputMode="numeric" aria-label="Superficie mínima" placeholder="Mín m²" value={m2Min} onChange={(e) => setM2Min(e.target.value)} />
-            <input type="text" inputMode="numeric" aria-label="Superficie máxima" placeholder="Máx m²" value={m2Max} onChange={(e) => setM2Max(e.target.value)} />
+
+        <details className="catalog-advanced-filters">
+          <summary>Más filtros <span aria-hidden="true">+</span></summary>
+          <div className="catalog-advanced-grid">
+            <div className="filter-group">
+              <label htmlFor="filtro-categoria">Categoría</label>
+              <select id="filtro-categoria" value={categoria} onChange={(e) => setCategoria(e.target.value)}>
+                <option value="">Todas</option>
+                <option value="Residencial">Residencial</option>
+                <option value="Comercial">Comercial</option>
+                <option value="Industrial">Industrial</option>
+              </select>
+            </div>
+            <div className="filter-group">
+              <label id="filtro-precio-label">Precio</label>
+              <div className="price-range">
+                <input type="text" inputMode="numeric" aria-label="Precio mínimo" placeholder="Mínimo" value={precioMin} onChange={(e) => setPrecioMin(e.target.value)} />
+                <input type="text" inputMode="numeric" aria-label="Precio máximo" placeholder="Máximo" value={precioMax} onChange={(e) => setPrecioMax(e.target.value)} />
+              </div>
+            </div>
+            <div className="filter-group">
+              <label htmlFor="filtro-recamaras">Recámaras mínimas</label>
+              <select id="filtro-recamaras" value={recamaras} onChange={(e) => setRecamaras(e.target.value)}>
+                <option value="0">Cualquiera</option>
+                <option value="1">1+</option>
+                <option value="2">2+</option>
+                <option value="3">3+</option>
+                <option value="4">4+</option>
+              </select>
+            </div>
+            <div className="filter-group">
+              <label htmlFor="filtro-banos">Baños mínimos</label>
+              <select id="filtro-banos" value={banos} onChange={(e) => setBanos(e.target.value)}>
+                <option value="0">Cualquiera</option>
+                <option value="1">1+</option>
+                <option value="2">2+</option>
+                <option value="3">3+</option>
+              </select>
+            </div>
+            <div className="filter-group">
+              <label id="filtro-superficie-label">Superficie (m²)</label>
+              <div className="price-range">
+                <input type="text" inputMode="numeric" aria-label="Superficie mínima" placeholder="Mín m²" value={m2Min} onChange={(e) => setM2Min(e.target.value)} />
+                <input type="text" inputMode="numeric" aria-label="Superficie máxima" placeholder="Máx m²" value={m2Max} onChange={(e) => setM2Max(e.target.value)} />
+              </div>
+            </div>
           </div>
-        </div>
-        <button className="btn-search" style={{ marginTop: '0.5rem' }} type="button" onClick={applyFilters}>Aplicar filtros</button>
-        <button className="btn-clear-filters" type="button" onClick={clearFilters}> Limpiar filtros</button>
+          <div className="catalog-filter-actions">
+            <button className="btn-search" type="button" onClick={applyFilters}>Aplicar filtros</button>
+            <button className="btn-clear-filters" type="button" onClick={clearFilters}>Limpiar filtros</button>
+          </div>
+        </details>
       </aside>
 
       <div className="props-results" style={{ minWidth: 0 }}>
@@ -330,7 +352,7 @@ export default function PropertyFilters({ properties, initialFilters, basePath =
         {pageItems.length > 0 && (
           <div className="load-more-properties">
             <p className="load-more-count" aria-live="polite">
-              Mostrando <strong>{pageItems.length}</strong> de <strong>{filtered.length}</strong> propiedades
+              Mostrando <strong>{start + 1}–{start + pageItems.length}</strong> de <strong>{filtered.length}</strong> propiedades
             </p>
             {remainingProperties > 0 && (
               <Link
@@ -362,7 +384,14 @@ export default function PropertyFilters({ properties, initialFilters, basePath =
               item === '...' ? (
                 <span key={`e${i}`} className="pag-ellipsis">…</span>
               ) : (
-                <Link key={item} className={`pag-btn${item === currentPage ? ' active' : ''}`} href={buildPageHref(item)}>{item}</Link>
+                <Link
+                  key={item}
+                  className={`pag-btn${item === currentPage ? ' active' : ''}`}
+                  href={buildPageHref(item)}
+                  aria-current={item === currentPage ? 'page' : undefined}
+                >
+                  {item}
+                </Link>
               )
             )}
             {currentPage === totalPages ? (
