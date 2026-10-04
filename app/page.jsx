@@ -26,7 +26,7 @@ function propsFilterHref(operacion, tipo, categoria) {
 
 export default async function HomePage() {
   let featured = [];
-  if (HOME_CURATED_PROPERTY_IDS.length === 3) {
+  if (HOME_CURATED_PROPERTY_IDS.length >= 3) {
     const { properties } = await fetchAllProperties();
     const propertyMap = new Map(properties.map((property) => [String(property.id).toUpperCase(), property]));
     featured = HOME_CURATED_PROPERTY_IDS
@@ -40,7 +40,7 @@ export default async function HomePage() {
       {/* HERO */}
       <HomeHero metrics={SITE_METRICS} />
 
-      {featured.length === 3 && (
+      {featured.length >= 3 && (
         <section className="home-featured" aria-labelledby="home-curated-title">
           <div className="container">
             <div className="home-section-intro">
@@ -49,7 +49,7 @@ export default async function HomePage() {
                 <h2 className="section-title" id="home-curated-title">Selección Rednorte</h2>
               </div>
               <div className="home-section-intro-copy">
-                <p>Propiedades elegidas por su arquitectura, ubicación y carácter.</p>
+                <p>Propiedades elegidas por su arquitectura, ubicación, fotografía y carácter.</p>
                 <Link className="home-text-link" href="/propiedades">Explorar todo el inventario ↗</Link>
               </div>
             </div>
