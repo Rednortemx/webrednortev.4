@@ -149,8 +149,14 @@ export default async function HomePage() {
       <section className="nosotros-mini">
         <div className="container">
           <div className="nosotros-grid">
-            <div className="nosotros-img">
-              <Image src="/equipo.jpg" alt="Equipo Rednorte Inmobiliaria" width={1000} height={760} />
+            <div className="nosotros-img nosotros-brand-panel" aria-hidden="true">
+              <div className="nosotros-brand-heading">
+                <span>Rednorte</span>
+                <span>Inmobiliaria</span>
+              </div>
+              <Image className="nosotros-brand-mark" src="/logo.png" alt="" width={940} height={870} />
+              <p className="nosotros-brand-statement">Visión local.<br />Decisiones inteligentes.</p>
+              <p className="nosotros-brand-disciplines">Residencial · Comercial · Industrial</p>
               <span className="nosotros-image-caption">Monterrey · Nuevo León</span>
             </div>
             <div className="nosotros-text">
