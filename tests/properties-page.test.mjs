@@ -55,6 +55,7 @@ test('muestra 18 propiedades y permite cargar bloques adicionales sin perder enl
   assert.match(filters, /Ver \{nextBatchSize\}/);
   assert.match(filters, /href=\{buildPageHref\(nextPage\)\}/);
   assert.match(filters, /event\.preventDefault\(\)/);
-  assert.match(filters, /Mostrando <strong>\{pageItems\.length\}<\/strong> de/);
+  assert.match(filters, /Mostrando <strong>\{start \+ 1\}–\{start \+ pageItems\.length\}<\/strong> de/);
+  assert.match(filters, /aria-current=\{item === currentPage \? 'page' : undefined\}/);
   assert.match(styles, /\.btn-load-more-properties/);
 });

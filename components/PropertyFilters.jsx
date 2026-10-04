@@ -352,7 +352,7 @@ export default function PropertyFilters({ properties, initialFilters, basePath =
         {pageItems.length > 0 && (
           <div className="load-more-properties">
             <p className="load-more-count" aria-live="polite">
-              Mostrando <strong>{pageItems.length}</strong> de <strong>{filtered.length}</strong> propiedades
+              Mostrando <strong>{start + 1}–{start + pageItems.length}</strong> de <strong>{filtered.length}</strong> propiedades
             </p>
             {remainingProperties > 0 && (
               <Link
@@ -384,7 +384,14 @@ export default function PropertyFilters({ properties, initialFilters, basePath =
               item === '...' ? (
                 <span key={`e${i}`} className="pag-ellipsis">…</span>
               ) : (
-                <Link key={item} className={`pag-btn${item === currentPage ? ' active' : ''}`} href={buildPageHref(item)}>{item}</Link>
+                <Link
+                  key={item}
+                  className={`pag-btn${item === currentPage ? ' active' : ''}`}
+                  href={buildPageHref(item)}
+                  aria-current={item === currentPage ? 'page' : undefined}
+                >
+                  {item}
+                </Link>
               )
             )}
             {currentPage === totalPages ? (
