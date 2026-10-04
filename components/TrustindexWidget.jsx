@@ -23,7 +23,7 @@ const WIDGET_ID = '2febd0b79c3a9262701634a905e';
 // Ojo: Trustindex carga el widget de forma diferida, cuando el visitante
 // interactúa con la página y la sección entra en pantalla. Que no aparezca
 // de inmediato al abrir es su comportamiento normal, no una falla.
-export default function TrustindexWidget() {
+export default function TrustindexWidget({ variant = 'default' }) {
   const contenedorRef = useRef(null);
   const { optional, allowOptional } = usePrivacyConsent();
 
@@ -41,9 +41,10 @@ export default function TrustindexWidget() {
 
   if (!optional) {
     return (
-      <div className="external-content-placeholder external-content-placeholder--reviews" role="region" aria-label="Reseñas externas de Trustindex">
-        <strong>Reseñas externas bloqueadas</strong>
-        <p>Trustindex se cargará únicamente si permites los servicios opcionales.</p>
+      <div className={`external-content-placeholder external-content-placeholder--reviews${variant === 'home' ? ' home-review-consent' : ''}`} role="region" aria-label="Reseñas externas de Trustindex">
+        <span className="review-consent-kicker">Opiniones verificadas</span>
+        <strong>Consulta las experiencias de nuestros clientes</strong>
+        <p>Para mostrar las reseñas aquí necesitamos tu permiso para cargar el servicio externo de Trustindex.</p>
         <div className="external-content-actions">
           <button type="button" onClick={allowOptional}>Permitir y cargar reseñas</button>
           <a href="https://www.google.com/search?q=Rednorte+Inmobiliaria+rese%C3%B1as" target="_blank" rel="noopener noreferrer">Ver en Google</a>

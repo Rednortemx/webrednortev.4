@@ -31,25 +31,25 @@ export default function Footer() {
           <p className="footer-desc">Especialistas en venta, renta e inversión inmobiliaria en Monterrey y Nuevo León. Conectamos propiedades con decisiones inteligentes.</p>
           <p className="footer-address">{SITE_CONTACT.address.streetAddress}<br />{SITE_CONTACT.address.neighborhood}<br />{SITE_CONTACT.address.locality}, {SITE_CONTACT.address.regionShort} {SITE_CONTACT.address.postalCode}</p>
           <div className="footer-social">
-            <a className="social-btn" href={SOCIAL_URLS.facebook} target="_blank" rel="noopener noreferrer" title="Facebook">
+            <a className="social-btn" href={SOCIAL_URLS.facebook} target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12.06C22 6.505 17.523 2 12 2S2 6.505 2 12.06c0 5.02 3.657 9.184 8.438 9.94v-7.03H7.898v-2.91h2.54V9.845c0-2.507 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.459h-1.26c-1.243 0-1.63.771-1.63 1.562v1.877h2.773l-.443 2.91h-2.33V22c4.78-.756 8.437-4.92 8.437-9.94z" /></svg>
             </a>
-            <a className="social-btn" href={SOCIAL_URLS.instagram} target="_blank" rel="noopener noreferrer" title="Instagram">
+            <a className="social-btn" href={SOCIAL_URLS.instagram} target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Instagram">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.332.014 7.052.072 2.695.272.273 2.69.073 7.052.014 8.332 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.332 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" /></svg>
             </a>
-            <a className="social-btn" href={SOCIAL_URLS.linkedin} target="_blank" rel="noopener noreferrer" title="LinkedIn">
+            <a className="social-btn" href={SOCIAL_URLS.linkedin} target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.049c.476-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 11-.001-4.124 2.062 2.062 0 010 4.124zM7.114 20.452H3.558V9h3.556v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
             </a>
-            <a className="social-btn" href={SOCIAL_URLS.x} target="_blank" rel="noopener noreferrer" title="X">
+            <a className="social-btn" href={SOCIAL_URLS.x} target="_blank" rel="noopener noreferrer" title="X" aria-label="X">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
             </a>
-            <a className="social-btn" href={SOCIAL_URLS.tiktok} target="_blank" rel="noopener noreferrer" title="TikTok">
+            <a className="social-btn" href={SOCIAL_URLS.tiktok} target="_blank" rel="noopener noreferrer" title="TikTok" aria-label="TikTok">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.82a4.278 4.278 0 01-1.06-2.82h-3.09v12.4a2.592 2.592 0 01-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 004.3 1.38V7.3s-1.88.09-3.24-1.48z" /></svg>
             </a>
-            <a className="social-btn" href={SOCIAL_URLS.youtube} target="_blank" rel="noopener noreferrer" title="YouTube">
+            <a className="social-btn" href={SOCIAL_URLS.youtube} target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a2.994 2.994 0 00-2.107-2.117C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.391.524A2.994 2.994 0 00.502 6.186 31.36 31.36 0 000 12a31.36 31.36 0 00.502 5.814 2.994 2.994 0 002.107 2.117c1.886.524 9.391.524 9.391.524s7.505 0 9.391-.524a2.994 2.994 0 002.107-2.117A31.36 31.36 0 0024 12a31.36 31.36 0 00-.502-5.814zM9.75 15.568V8.432L15.818 12l-6.068 3.568z" /></svg>
             </a>
-            <a className="social-btn" href={SOCIAL_URLS.google} target="_blank" rel="noopener noreferrer" title="Google">
+            <a className="social-btn" href={SOCIAL_URLS.google} target="_blank" rel="noopener noreferrer" title="Google" aria-label="Google">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21.35 11.1h-9.17v2.73h6.51c-.33 3.81-3.5 5.44-6.5 5.44C8.36 19.27 5 16.25 5 12c0-4.1 3.2-7.27 7.2-7.27 3.09 0 4.9 1.97 4.9 1.97L19 4.72S16.56 2 12.1 2C6.42 2 2.03 6.8 2.03 12c0 5.05 4.13 10 10.22 10 5.35 0 9.25-3.67 9.25-9.09 0-1.15-.15-1.81-.15-1.81z" /></svg>
             </a>
             <WhatsAppGateButton className="social-btn" title="WhatsApp" source="Footer (redes)">
@@ -114,13 +114,13 @@ export default function Footer() {
           </div>
         </section>
       </div>
-      <div className="footer-bottom" style={{ borderTop: '1px solid rgba(255,255,255,0.08)', maxWidth: '1200px', margin: '0 auto', padding: '1.25rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
-        <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)' }}>© 2026 Rednorte Inmobiliaria. Todos los derechos reservados.</p>
-        <div style={{ display: 'flex', gap: '1.25rem' }}>
-          <Link style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', textDecoration: 'none' }} href="/aviso-de-privacidad">Aviso de privacidad</Link>
-          <Link style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', textDecoration: 'none' }} href="/terminos-y-condiciones">Términos y condiciones</Link>
-          <Link style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', textDecoration: 'none' }} href="/politica-de-cookies">Política de cookies</Link>
-          <CookiePrefsLink style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)' }} />
+      <div className="footer-bottom">
+        <p>© 2026 Rednorte Inmobiliaria. Todos los derechos reservados.</p>
+        <div className="footer-bottom-links">
+          <Link href="/aviso-de-privacidad">Aviso de privacidad</Link>
+          <Link href="/terminos-y-condiciones">Términos y condiciones</Link>
+          <Link href="/politica-de-cookies">Política de cookies</Link>
+          <CookiePrefsLink />
         </div>
       </div>
     </footer>
