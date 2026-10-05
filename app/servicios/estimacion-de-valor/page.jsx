@@ -1,6 +1,7 @@
 import Breadcrumb from '@/components/Breadcrumb';
 import ServicePage from '@/components/servicios/ServicePage';
 import ServicePageForm from '@/components/servicios/ServicePageForm';
+import ServiceEditorialNav from '@/components/servicios/ServiceEditorialNav';
 import { contenidoEstimacion } from '@/components/servicios/contenidoEstimacion';
 import { estilosEstimacion } from '@/components/servicios/estilosEstimacion';
 import { breadcrumbSchema } from '@/lib/schema';
@@ -30,7 +31,7 @@ const schema = {
 
 export default function EstimacionDeValorServicioPage() {
   return (
-    <div className="page-content">
+    <div className="page-content service-editorial service-editorial--estimate">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <script
         type="application/ld+json"
@@ -44,6 +45,7 @@ export default function EstimacionDeValorServicioPage() {
         }}
       />
       <Breadcrumb items={[{ label: 'Servicios', href: '/servicios' }, { label: 'Estimación de valor' }]} />
+      <ServiceEditorialNav active="other" />
       <ServicePage
         contenido={contenidoEstimacion}
         estilos={estilosEstimacion}

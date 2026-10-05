@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
 import MasterBrokerForm from '@/components/MasterBrokerForm';
+import ServiceEditorialNav from '@/components/servicios/ServiceEditorialNav';
 import TrustindexWidget from '@/components/TrustindexWidget';
 import WhatsAppGateButton from '@/components/WhatsAppGateButton';
 import { SITE_CONTACT } from '@/lib/siteConfig';
@@ -293,13 +294,14 @@ const masterBrokerSchema = {
 
 export default function MasterBrokerPage() {
   return (
-    <div className="page-content master-page">
+    <div className="page-content master-page service-editorial service-editorial--master">
       <Breadcrumb
         items={[
           { label: 'Servicios', href: '/servicios' },
           { label: 'Master Broker' },
         ]}
       />
+      <ServiceEditorialNav active="other" />
 
       <main>
         <section className="master-hero">

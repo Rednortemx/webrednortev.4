@@ -6210,3 +6210,382 @@ body:has(.service-editorial) .breadcrumbs a {
 
   .service-editorial--hub .services-hub-tool-card { min-height: 260px; }
 }
+
+/* ========================================================================== */
+/* Services editorial completion                                              */
+/* ========================================================================== */
+
+.service-editorial :is(
+  .estimate-service-shell,
+  .commercial-shell,
+  .industrial-shell,
+  .foreign-shell,
+  .master-shell
+) {
+  width: min(1360px, calc(100% - 64px));
+}
+
+.service-editorial :is(
+  .estimate-service-hero,
+  .commercial-hero,
+  .industrial-hero,
+  .foreign-hero,
+  .master-hero
+) {
+  padding: 0;
+  background: #17130f;
+  color: #fff;
+}
+
+.service-editorial :is(
+  .estimate-service-hero-grid,
+  .commercial-hero-grid,
+  .industrial-hero-grid,
+  .foreign-hero-grid,
+  .master-hero-grid
+) {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(260px, 0.45fr);
+  gap: clamp(4rem, 9vw, 9rem);
+  min-height: min(760px, calc(100vh - 150px));
+  align-items: center;
+  padding-top: clamp(5rem, 9vw, 8rem);
+  padding-bottom: clamp(5rem, 9vw, 8rem);
+}
+
+.service-editorial :is(
+  .estimate-service-hero,
+  .commercial-hero,
+  .industrial-hero,
+  .foreign-hero,
+  .master-hero
+) h1 {
+  max-width: 12ch;
+  margin: 0;
+  color: #fff;
+  font-size: clamp(3.25rem, 7.4vw, 7.3rem);
+  font-weight: 600;
+  letter-spacing: -0.065em;
+  line-height: 0.92;
+}
+
+.service-editorial :is(
+  .estimate-service-label-light,
+  .commercial-label-light,
+  .industrial-label-light,
+  .foreign-label-light,
+  .master-label-light
+) {
+  color: #c75b31;
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.service-editorial :is(
+  .estimate-service-hero-lead,
+  .commercial-hero-lead,
+  .industrial-hero-lead,
+  .foreign-hero-lead,
+  .master-hero-lead
+) {
+  max-width: 650px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: clamp(1.2rem, 1.65vw, 1.55rem);
+  line-height: 1.48;
+}
+
+.service-editorial :is(
+  .estimate-service-hero-support,
+  .commercial-hero-support,
+  .industrial-hero-support,
+  .foreign-hero-support,
+  .master-hero-support
+) {
+  max-width: 610px;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.service-editorial :is(
+  .estimate-service-hero-panel,
+  .commercial-hero-panel,
+  .industrial-hero-panel,
+  .foreign-hero-panel,
+  .master-hero-panel
+) {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2.2rem 0 2.2rem 2rem;
+  background: transparent;
+  border: 0;
+  border-left: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 0;
+  box-shadow: none;
+  color: #fff;
+  backdrop-filter: none;
+}
+
+.service-editorial :is(
+  .estimate-service-btn,
+  .commercial-btn,
+  .industrial-btn,
+  .foreign-btn,
+  .master-btn
+) {
+  min-height: 52px;
+  padding: 0.9rem 1.35rem;
+  border-radius: 0;
+  box-shadow: none;
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.service-editorial :is(
+  .estimate-service-btn-primary,
+  .commercial-btn-primary,
+  .industrial-btn-primary,
+  .foreign-btn-primary,
+  .master-btn-primary
+) {
+  background: #c75b31;
+  border-color: #c75b31;
+  color: #fff;
+}
+
+.service-editorial :is(
+  .estimate-service-btn-secondary,
+  .commercial-btn-secondary,
+  .industrial-btn-secondary,
+  .foreign-btn-secondary,
+  .master-btn-secondary
+) {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #fff;
+}
+
+.service-editorial :is(
+  .estimate-service-section,
+  .commercial-section,
+  .industrial-section,
+  .foreign-section,
+  .master-section,
+  .commercial-form-section,
+  .industrial-form-section,
+  .foreign-form-section,
+  .master-form-section
+) {
+  padding-top: clamp(5rem, 8vw, 8rem);
+  padding-bottom: clamp(5rem, 8vw, 8rem);
+}
+
+.service-editorial :is(
+  .estimate-service-section-title,
+  .commercial-section-title,
+  .industrial-section-title,
+  .foreign-section-title,
+  .master-section-title
+) {
+  max-width: 16ch;
+  color: #17130f;
+  font-size: clamp(2.3rem, 4.5vw, 4.8rem);
+  font-weight: 600;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+}
+
+.service-editorial :is(
+  .estimate-service-section-heading,
+  .commercial-section-heading,
+  .industrial-section-heading,
+  .foreign-section-heading,
+  .master-section-heading
+) {
+  max-width: 880px;
+  margin-right: 0;
+  margin-bottom: clamp(2.5rem, 5vw, 5rem);
+  margin-left: 0;
+  text-align: left;
+}
+
+.service-editorial :is(
+  .estimate-service-process-section,
+  .estimate-service-form-section,
+  .commercial-process-section,
+  .commercial-form-section,
+  .industrial-process-section,
+  .industrial-form-section,
+  .foreign-company-section,
+  .foreign-form-section,
+  .master-network-section,
+  .master-form-section
+) {
+  background: #17130f;
+}
+
+.service-editorial :is(
+  .estimate-service-title-light,
+  .commercial-title-light,
+  .industrial-title-light,
+  .foreign-title-light,
+  .master-title-light
+) {
+  color: #fff;
+}
+
+.service-editorial :is(
+  .estimate-service-level-card,
+  .estimate-service-factor-card,
+  .estimate-service-tool-card,
+  .estimate-service-process-step,
+  .commercial-audience-card,
+  .commercial-property-card,
+  .commercial-analysis-card,
+  .commercial-process-step,
+  .industrial-audience-card,
+  .industrial-property-card,
+  .industrial-analysis-card,
+  .industrial-process-step,
+  .foreign-path-card,
+  .foreign-card,
+  .foreign-process-card,
+  .foreign-documents-card,
+  .master-use-case-card,
+  .master-process-step,
+  .master-included-card,
+  .master-condition-card,
+  .master-control-card,
+  .master-report-card
+) {
+  background: transparent;
+  border: 1px solid rgba(23, 19, 15, 0.18);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.service-editorial :is(
+  .estimate-service-level-grid,
+  .estimate-service-factor-grid,
+  .estimate-service-tool-grid,
+  .commercial-audience-grid,
+  .commercial-property-grid,
+  .commercial-analysis-grid,
+  .industrial-audience-grid,
+  .industrial-property-grid,
+  .industrial-analysis-grid,
+  .foreign-path-grid,
+  .foreign-difference-grid,
+  .foreign-process-grid,
+  .master-use-cases-grid,
+  .master-process-grid,
+  .master-included-grid,
+  .master-conditions-grid
+) {
+  gap: 0;
+}
+
+.service-editorial :is(
+  .estimate-service-lead-form,
+  .commercial-lead-form,
+  .industrial-lead-form,
+  .foreign-lead-form,
+  .master-lead-form
+) {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.service-editorial :is(
+  .estimate-service-lead-form,
+  .commercial-lead-form,
+  .industrial-lead-form,
+  .foreign-lead-form,
+  .master-lead-form
+) :is(input, select, textarea) {
+  border-radius: 0;
+}
+
+.service-editorial :is(
+  .estimate-service-faq-item,
+  .commercial-faq-item,
+  .industrial-faq-item,
+  .foreign-faq-item,
+  .master-faq-item
+) {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+@media (max-width: 960px) {
+  .service-editorial :is(
+    .estimate-service-shell,
+    .commercial-shell,
+    .industrial-shell,
+    .foreign-shell,
+    .master-shell
+  ) {
+    width: min(100% - 40px, 1360px);
+  }
+
+  .service-editorial :is(
+    .estimate-service-hero-grid,
+    .commercial-hero-grid,
+    .industrial-hero-grid,
+    .foreign-hero-grid,
+    .master-hero-grid
+  ) {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    min-height: auto;
+  }
+
+  .service-editorial :is(
+    .estimate-service-hero-panel,
+    .commercial-hero-panel,
+    .industrial-hero-panel,
+    .foreign-hero-panel,
+    .master-hero-panel
+  ) {
+    padding: 2rem 0 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.24);
+    border-left: 0;
+  }
+}
+
+@media (max-width: 680px) {
+  .service-editorial :is(
+    .estimate-service-shell,
+    .commercial-shell,
+    .industrial-shell,
+    .foreign-shell,
+    .master-shell
+  ) {
+    width: min(100% - 28px, 1360px);
+  }
+
+  .service-editorial :is(
+    .estimate-service-hero-grid,
+    .commercial-hero-grid,
+    .industrial-hero-grid,
+    .foreign-hero-grid,
+    .master-hero-grid
+  ) {
+    padding-top: 4.2rem;
+    padding-bottom: 4.2rem;
+  }
+
+  .service-editorial :is(
+    .estimate-service-hero,
+    .commercial-hero,
+    .industrial-hero,
+    .foreign-hero,
+    .master-hero
+  ) h1 {
+    font-size: clamp(3rem, 15vw, 4.5rem);
+  }
+}
