@@ -1,6 +1,7 @@
 import Breadcrumb from '@/components/Breadcrumb';
 import ServicePage from '@/components/servicios/ServicePage';
 import ServicePageForm from '@/components/servicios/ServicePageForm';
+import ServiceEditorialNav from '@/components/servicios/ServiceEditorialNav';
 import { contenidoComercial } from '@/components/servicios/contenidoComercial';
 import { estilosComercial } from '@/components/servicios/estilosComercial';
 import { breadcrumbSchema } from '@/lib/schema';
@@ -28,7 +29,7 @@ const schema = {
 
 export default function InmobiliariaComercialPage() {
   return (
-    <div className="page-content">
+    <div className="page-content service-editorial service-editorial--commercial">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <script
         type="application/ld+json"
@@ -42,6 +43,7 @@ export default function InmobiliariaComercialPage() {
         }}
       />
       <Breadcrumb items={[{ label: 'Servicios', href: '/servicios' }, { label: 'Inmobiliaria comercial' }]} />
+      <ServiceEditorialNav active="other" />
       <ServicePage
         contenido={contenidoComercial}
         estilos={estilosComercial}

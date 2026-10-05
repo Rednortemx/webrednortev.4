@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
 import ForeignClientsForm from '@/components/ForeignClientsForm';
+import ServiceEditorialNav from '@/components/servicios/ServiceEditorialNav';
 import TrustindexWidget from '@/components/TrustindexWidget';
 import WhatsAppGateButton from '@/components/WhatsAppGateButton';
 import { SITE_CONTACT } from '@/lib/siteConfig';
@@ -280,13 +281,14 @@ const serviceSchema = {
 
 export default function ClientesExtranjerosPage() {
   return (
-    <div className="page-content foreign-page">
+    <div className="page-content foreign-page service-editorial service-editorial--foreign">
       <Breadcrumb
         items={[
           { label: 'Servicios', href: '/servicios' },
           { label: 'Clientes extranjeros' },
         ]}
       />
+      <ServiceEditorialNav active="other" />
 
       <script
         type="application/ld+json"
