@@ -25,9 +25,16 @@ function propsFilterHref(operacion, tipo, categoria) {
 }
 
 export default async function HomePage() {
+  const { properties, source } = await fetchAllProperties();
+  const homeMetrics = {
+    ...SITE_METRICS,
+    activeProperties: source === 'live'
+      ? String(properties.length)
+      : SITE_METRICS.activeProperties,
+  };
+
   let featured = [];
   if (HOME_CURATED_PROPERTY_IDS.length >= 3) {
-    const { properties } = await fetchAllProperties();
     const propertyMap = new Map(properties.map((property) => [String(property.id).toUpperCase(), property]));
     featured = HOME_CURATED_PROPERTY_IDS
       .map((id) => propertyMap.get(String(id).toUpperCase()))
@@ -38,7 +45,7 @@ export default async function HomePage() {
   return (
     <main className="page-content home-refresh">
       {/* HERO */}
-      <HomeHero metrics={SITE_METRICS} />
+      <HomeHero metrics={homeMetrics} />
 
       {featured.length >= 3 && (
         <section className="home-featured" aria-labelledby="home-curated-title">
