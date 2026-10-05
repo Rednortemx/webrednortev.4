@@ -45,10 +45,18 @@ export default function ReportesPage() {
           <p className="report-eyebrow">REDNORTE DATA</p>
           <h1>Reportes inmobiliarios de Monterrey y Nuevo León</h1>
           <p>Datos propios, metodología visible y fuentes públicas para entender mejor el mercado local.</p>
+          <div className="report-hub-hero-footer" aria-label="Criterios editoriales">
+            <span>Investigación local</span><span>Fecha de corte visible</span><span>Metodología abierta</span>
+          </div>
         </div>
       </section>
       <section className="report-hub-list">
         <div className="report-shell">
+          <div className="report-hub-intro">
+            <p className="report-eyebrow">PUBLICACIONES</p>
+            <h2>El mercado, con contexto.</h2>
+            <p>Explora los hallazgos y consulta las fuentes, limitaciones y criterios de cada edición.</p>
+          </div>
           <Link className="report-hub-card" href="/reportes/mercado-inmobiliario-monterrey-nuevo-leon-2026">
             <span>PRIMERA EDICIÓN · V2 ANALÍTICA · CORTE 9 SEP 2026</span>
             <h2>Reporte inmobiliario Rednorte — Monterrey y Nuevo León 2026</h2>
