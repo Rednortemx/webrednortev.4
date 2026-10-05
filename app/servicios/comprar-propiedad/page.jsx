@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
 import BuyPropertyForm from '@/components/BuyPropertyForm';
 import TrustindexWidget from '@/components/TrustindexWidget';
+import ServiceEditorialNav from '@/components/servicios/ServiceEditorialNav';
 import { SITE_CONTACT } from '@/lib/siteConfig';
 
 export const metadata = {
@@ -221,13 +222,14 @@ const serviceSchema = {
 
 export default function ComprarPropiedadPage() {
   return (
-    <div className="page-content buy-page">
+    <div className="page-content buy-page service-editorial service-editorial--buy">
       <Breadcrumb
         items={[
           { label: 'Servicios', href: '/servicios' },
           { label: 'Comprar una propiedad' },
         ]}
       />
+      <ServiceEditorialNav active="buy" />
 
       <script
         type="application/ld+json"

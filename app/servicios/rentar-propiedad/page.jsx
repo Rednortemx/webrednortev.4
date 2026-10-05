@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
 import RentPropertyForm from '@/components/RentPropertyForm';
 import TrustindexWidget from '@/components/TrustindexWidget';
+import ServiceEditorialNav from '@/components/servicios/ServiceEditorialNav';
 import { SITE_CONTACT } from '@/lib/siteConfig';
 
 export const metadata = {
@@ -256,7 +257,7 @@ const serviceSchema = {
 
 export default function RentarPropiedadPage() {
   return (
-    <div className="page-content rent-property-page">
+    <div className="page-content rent-property-page service-editorial service-editorial--rent">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
@@ -268,6 +269,7 @@ export default function RentarPropiedadPage() {
           { label: 'Rentar una propiedad' },
         ]}
       />
+      <ServiceEditorialNav active="rent" />
 
       <main>
         <section className="rent-hero">
