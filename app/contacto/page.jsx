@@ -13,18 +13,36 @@ export const metadata = {
 
 export default function ContactoPage() {
   return (
-    <div className="page-content">
+    <div className="page-content contact-page">
       <Breadcrumb items={[{ label: 'Contacto' }]} />
       <div className="contacto-page">
-        <div className="section-header">
-          <p className="section-label">Estamos para ayudarte</p>
-          <h1 className="section-title">Contáctanos</h1>
-          <p className="section-sub">Cuéntanos en qué podemos ayudarte. {SITE_CONTACT.response.summary}</p>
+        <section className="contact-institutional-hero">
+          <div>
+            <p className="section-label contact-label-light">HABLEMOS DE TU OPERACIÓN</p>
+            <h1>Una conversación clara es el mejor primer paso.</h1>
+            <p>
+              Cuéntanos qué necesitas y te orientaremos con el equipo y el siguiente paso más
+              adecuado para tu operación en Monterrey o Nuevo León.
+            </p>
+          </div>
+          <aside className="contact-response-card">
+            <span>TIEMPO DE RESPUESTA</span>
+            <strong>Menos de 2 horas</strong>
+            <p>{SITE_CONTACT.response.summary}</p>
+            <a href={SITE_CONTACT.phoneHref}>{SITE_CONTACT.phoneDisplay}</a>
+          </aside>
+        </section>
+
+        <div className="contact-section-intro">
+          <p className="section-label">ESCRÍBENOS</p>
+          <h2>Estamos listos para conocer tu caso</h2>
+          <p>Elige el motivo de tu consulta y comparte los datos que nos ayudarán a orientarte.</p>
         </div>
         <div className="contacto-grid">
           <ContactForm />
           <div className="contacto-info">
             <div className="info-card">
+              <p className="contact-card-kicker">CANALES DIRECTOS</p>
               <h4>Información de contacto</h4>
               <div className="info-item"><div className="info-icon"></div><div className="info-text"><span className="info-label">Teléfono</span><a href={SITE_CONTACT.phoneHref}>{SITE_CONTACT.phoneDisplay}</a></div></div>
               <div className="info-item"><div className="info-icon"></div><div className="info-text"><span className="info-label">WhatsApp</span><WhatsAppGateButton style={{ color: 'var(--terracota)' }} source="Página de contacto">{SITE_CONTACT.phoneInternationalDisplay}</WhatsAppGateButton></div></div>
@@ -32,6 +50,7 @@ export default function ContactoPage() {
               <div className="info-item"><div className="info-icon"></div><div className="info-text"><span className="info-label">Horario</span>{SITE_CONTACT.hours.weekdays} h<br />{SITE_CONTACT.hours.saturday} h</div></div>
             </div>
             <div className="info-card">
+              <p className="contact-card-kicker">NUESTRA SEDE</p>
               <h4>Ubicación</h4>
               <div className="map-embed-frame">
                 <ExternalContentGate
@@ -46,6 +65,7 @@ export default function ContactoPage() {
               <a className="btn-como-llegar" href="https://maps.google.com/?q=Av.+Vasconcelos+215+San+Pedro+Garza+Garcia" target="_blank" rel="noopener noreferrer"> Cómo llegar</a>
             </div>
             <div className="info-card">
+              <p className="contact-card-kicker">SIGUE LA CONVERSACIÓN</p>
               <h4>Redes sociales</h4>
               <div className="redes-row">
                 {SOCIAL_LINKS.map((network) => (
