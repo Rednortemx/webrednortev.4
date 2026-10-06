@@ -25,7 +25,7 @@ test('mantiene el header enfocado y deja WhatsApp como acción flotante', async 
   assert.match(footer, /href="\/nosotros\/canaco-monterrey"/);
   assert.match(footer, /Contacto y ubicación/);
 
-  for (const pageClass of ['insights-page', 'insight-detail-page', 'contact-page']) {
+  for (const pageClass of ['insights-page', 'insight-detail-page', 'contact-page', 'tools-hub-page', 'tools-experience-page']) {
     assert.match(styles, new RegExp(`body:has\\(\\.${pageClass}\\) \\.site-header`));
   }
 });

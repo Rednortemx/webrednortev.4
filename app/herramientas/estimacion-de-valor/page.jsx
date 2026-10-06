@@ -9,13 +9,8 @@ export const metadata = {
 
 export default function EstimacionDeValorPage() {
   return (
-    <div className="page-content">
+    <div className="page-content tools-experience-page tools-estimation-page">
       <Breadcrumb items={[{ label: 'Herramientas', href: '/herramientas' }, { label: 'Estimación de valor' }]} />
-      {/* La herramienta trae su propio encabezado visual, así que aquí solo va
-          el h1 real de la ruta: uno por página, como pide el análisis de SEO. */}
-      <div className="estimador-intro">
-        <h1>Estimación de valor de tu propiedad</h1>
-      </div>
       <ValuacionTool />
     </div>
   );

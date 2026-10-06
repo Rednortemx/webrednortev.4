@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function ReporteDeVendibilidadPage() {
   return (
-    <div className="page-content">
+    <div className="page-content tools-experience-page tools-vendibility-page">
       <Breadcrumb items={[{ label: 'Herramientas', href: '/herramientas' }, { label: 'Reporte de vendibilidad' }]} />
       <VendibilidadTool />
     </div>
