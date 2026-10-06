@@ -422,3 +422,29 @@
     transition: none;
   }
 }
+
+
+/* La página conserva su evidencia y su carácter propio, pero toma el pulso
+   visual de los hubs institucionales de Rednorte. */
+.canaco-page .canaco-hero {
+  padding: 5.4rem 0;
+  color: #fff;
+  background:
+    radial-gradient(circle at 82% 18%, rgba(206, 100, 45, .24), transparent 24%),
+    linear-gradient(135deg, var(--cn-ink), var(--cn-brown));
+}
+.canaco-page .canaco-hero h1 { color: #fff; font-size: clamp(2.7rem, 5vw, 4.5rem); }
+.canaco-page .canaco-hero .canaco-lead { color: rgba(255,255,255,.73); font-size: 1.05rem; }
+.canaco-page .canaco-hero .canaco-eyebrow { color: var(--cn-yellow); }
+.canaco-page .canaco-hero-media { padding: .55rem; border: 1px solid rgba(255,255,255,.16); border-radius: 21px; background: rgba(255,255,255,.06); }
+.canaco-page .canaco-hero-media img { border-radius: 13px; }
+.canaco-page .canaco-hero-media figcaption { color: rgba(255,255,255,.58); }
+.canaco-page .canaco-proof { background: var(--cn-cream); }
+.canaco-page .canaco-fact { border-radius: 0; border-left: 1px solid var(--cn-line); background: transparent; }
+.canaco-page .canaco-fact:first-child { border-left: 0; }
+.canaco-page .canaco-event { background: #fff; }
+.canaco-page .canaco-final-card { border-radius: 20px; }
+@media (max-width: 900px) {
+  .canaco-page .canaco-fact { border-left: 0; border-top: 1px solid var(--cn-line); }
+  .canaco-page .canaco-fact:first-child { border-top: 0; }
+}
