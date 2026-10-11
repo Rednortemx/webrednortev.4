@@ -5,7 +5,7 @@ import CareersForm from '@/components/CareersForm';
 // empty, same as the previous version of this page. The spontaneous
 // application form IS real content and stays fully functional.
 export const metadata = {
-  title: 'Trabaja con nosotros | Rednorte Inmobiliaria',
+  title: 'Trabaja con nosotros',
   description:
     'Conoce cómo es trabajar en Rednorte Inmobiliaria y envía tu candidatura para desarrollarte como asesor inmobiliario o integrarte a nuestro equipo en Monterrey.',
   robots: { index: false, follow: false },
