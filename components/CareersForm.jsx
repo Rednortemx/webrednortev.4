@@ -61,6 +61,7 @@ export default function CareersForm() {
           <span>Nombre completo *</span>
           <input
             required
+            autoComplete="name"
             value={form.name}
             onChange={(e) => setForm((v) => ({ ...v, name: e.target.value }))}
             placeholder="Tu nombre"
@@ -71,6 +72,8 @@ export default function CareersForm() {
           <input
             required
             type="tel"
+            inputMode="tel"
+            autoComplete="tel"
             value={form.phone}
             onChange={(e) => setForm((v) => ({ ...v, phone: e.target.value }))}
             placeholder="+52 (81)"
@@ -83,6 +86,7 @@ export default function CareersForm() {
         <input
           required
           type="email"
+          autoComplete="email"
           value={form.email}
           onChange={(e) => setForm((v) => ({ ...v, email: e.target.value }))}
           placeholder="correo@ejemplo.com"
@@ -121,8 +125,8 @@ export default function CareersForm() {
         </span>
       </label>
 
-      {state.error && <p className="quick-form-message is-error">{state.error}</p>}
-      {state.success && <p className="quick-form-message is-success">Solicitud enviada correctamente.</p>}
+      {state.error && <p className="quick-form-message is-error" role="alert">{state.error}</p>}
+      {state.success && <p className="quick-form-message is-success" role="status">Solicitud enviada correctamente.</p>}
 
       <button className="quick-submit" type="submit" disabled={state.loading}>
         {state.loading ? 'Enviando…' : 'Enviar solicitud'}
