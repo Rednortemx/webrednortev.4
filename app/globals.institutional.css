@@ -375,7 +375,7 @@
 
 .faq-hub-groups {
   display: grid;
-  gap: 4rem;
+  gap: 2.25rem;
 }
 
 .faq-hub-category {
@@ -668,6 +668,10 @@
 
   .faq-hub-category-chips button {
     flex: 0 0 auto;
+  }
+
+  .faq-hub-groups {
+    gap: 1.6rem;
   }
 
   .faq-hub-question {
