@@ -6,6 +6,9 @@ import { estimadorStyles } from './estimadorStyles';
 import { estimadorScriptSrc } from './estimadorScript';
 import { bindToolConversions } from '@/lib/toolConversions';
 
+const integratedShellHtml = estimadorShellHtml
+  .replace('<h2>Valúa tu propiedad gratis en pocos minutos.</h2>', '<h1>Valúa tu propiedad gratis en pocos minutos.</h1>');
+
 // Monta el Estimador de Valor.
 //
 // La herramienta se escribio como una pagina HTML independiente, con su
@@ -47,5 +50,5 @@ export default function ValuacionTool() {
     };
   }, []);
 
-  return <div dangerouslySetInnerHTML={{ __html: estimadorShellHtml }} />;
+  return <div dangerouslySetInnerHTML={{ __html: integratedShellHtml }} />;
 }

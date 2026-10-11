@@ -1867,6 +1867,45 @@ body:has(.contact-page) .hamburger span { background: #fff; }
 .insight-detail-page .breadcrumb-current,
 .contact-page .breadcrumb-current { color: rgba(255,255,255,.72); }
 
+/* Herramientas comparte el encabezado editorial oscuro de las rutas principales. */
+body:has(.tools-hub-page) .site-header,
+body:has(.tools-experience-page) .site-header {
+ background: rgba(18,16,14,.9);
+ border-bottom-color: rgba(255,255,255,.12);
+ backdrop-filter: blur(18px) saturate(120%);
+}
+body:has(.tools-hub-page) .logo-name,
+body:has(.tools-experience-page) .logo-name,
+body:has(.tools-hub-page) .site-header nav a,
+body:has(.tools-experience-page) .site-header nav a { color: #fff; }
+body:has(.tools-hub-page) .logo-sub,
+body:has(.tools-experience-page) .logo-sub { color: rgba(255,255,255,.58); }
+body:has(.tools-hub-page) .site-header nav a:hover,
+body:has(.tools-experience-page) .site-header nav a:hover {
+ background: rgba(255,255,255,.08);
+ color: #fff;
+}
+body:has(.tools-hub-page) .site-header nav a.active,
+body:has(.tools-experience-page) .site-header nav a.active { color: #ef8657; }
+body:has(.tools-hub-page) .hamburger span,
+body:has(.tools-experience-page) .hamburger span { background: #fff; }
+.tools-hub-page .breadcrumb,
+.tools-experience-page .breadcrumb {
+ border-bottom-color: rgba(255,255,255,.08);
+ background: #17130f;
+}
+.tools-hub-page .breadcrumb-inner,
+.tools-experience-page .breadcrumb-inner {
+ color: rgba(255,255,255,.5);
+ font-size: .68rem;
+ letter-spacing: .08em;
+ text-transform: uppercase;
+}
+.tools-hub-page .breadcrumb-inner a,
+.tools-experience-page .breadcrumb-inner a { color: #ef8657; }
+.tools-hub-page .breadcrumb-current,
+.tools-experience-page .breadcrumb-current { color: rgba(255,255,255,.72); }
+
 .property-detail-refresh { overflow: hidden; background: #f3f0eb; }
 .property-detail-refresh .breadcrumb { padding-top: .95rem; border: 0; background: #17130f; }
 .property-detail-refresh .breadcrumb-inner {
