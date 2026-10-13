@@ -1662,22 +1662,23 @@ body:has(.properties-catalog-refresh) .hamburger span { background: #fff; }
 .properties-catalog-refresh .property-landing-directory {
  max-width: none; margin: 0; padding: 1.65rem clamp(1.25rem,4vw,4.75rem) 1.8rem;
  display: grid; grid-template-columns: 230px minmax(0,1fr); gap: 2.5rem;
- background: #251d18; color: #fff;
+ border-top: 1px solid #d8cec3; border-bottom: 1px solid #d8cec3;
+ background: #eee8e0; color: #17130f;
 }
 .properties-catalog-refresh .property-landing-directory h2 {
- grid-column: 1; grid-row: 1; margin: 0; color: #ef8657; font-size: .78rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase;
+ grid-column: 1; grid-row: 1; margin: 0; color: #a94724; font-size: .78rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase;
 }
-.properties-catalog-refresh .property-landing-directory p { grid-column: 1; grid-row: 2; margin: .6rem 0 0; color: rgba(255,255,255,.7); font-size: .86rem; line-height: 1.6; }
+.properties-catalog-refresh .property-landing-directory p { grid-column: 1; grid-row: 2; margin: .6rem 0 0; color: #675c52; font-size: .86rem; line-height: 1.6; }
 .properties-catalog-refresh .property-landing-links {
  grid-column: 2; grid-row: 1 / span 2; align-self: center;
  flex-wrap: wrap; align-items: center; overflow: visible; gap: .45rem 0; scrollbar-width: none;
 }
 .properties-catalog-refresh .property-landing-links::-webkit-scrollbar { display: none; }
 .properties-catalog-refresh .property-landing-links a {
- flex: 0 1 auto; min-height: 38px; padding: .55rem 1.05rem; border: 0; border-left: 1px solid rgba(255,255,255,.2);
- border-radius: 0; background: transparent; color: rgba(255,255,255,.92); font-size: .82rem; font-weight: 700; line-height: 1.45;
+ flex: 0 1 auto; min-height: 38px; padding: .55rem 1.05rem; border: 0; border-left: 1px solid rgba(23,19,15,.18);
+ border-radius: 0; background: transparent; color: #2b241f; font-size: .82rem; font-weight: 700; line-height: 1.45;
 }
-.properties-catalog-refresh .property-landing-links a:hover { background: rgba(255,255,255,.05); color: #ef8657; }
+.properties-catalog-refresh .property-landing-links a:hover { background: rgba(191,84,47,.08); color: #a94724; }
 
 .properties-catalog-refresh .propiedades-layout {
  display: block; max-width: 1360px; margin: 0 auto; padding: clamp(3rem,6vw,5.5rem) clamp(1.25rem,4vw,4.75rem) 6rem;
