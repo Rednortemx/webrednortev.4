@@ -59,3 +59,10 @@ test('muestra 18 propiedades y permite cargar bloques adicionales sin perder enl
   assert.match(filters, /aria-current=\{item === currentPage \? 'page' : undefined\}/);
   assert.match(styles, /\.btn-load-more-properties/);
 });
+
+test('la ficha individual oculta recámaras cuando la propiedad reporta cero', async () => {
+  const detail = await readFile(new URL('../app/propiedades/[slug]/page.jsx', import.meta.url), 'utf8');
+
+  assert.match(detail, /property\.rooms > 0 \? \[\{ val: property\.rooms, name: 'Recámaras' \}\] : \[\]/);
+  assert.doesNotMatch(detail, /^\s*\{ val: property\.rooms, name: 'Recámaras' \},$/m);
+});

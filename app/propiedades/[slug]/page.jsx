@@ -67,7 +67,7 @@ export default async function PropiedadPage({ params }) {
   const isRenta = property.op === 'Renta';
 
   const feats = [
-    { val: property.rooms, name: 'Recámaras' },
+    ...(property.rooms > 0 ? [{ val: property.rooms, name: 'Recámaras' }] : []),
     { val: property.baths, name: 'Baños' },
     { val: property.parking, name: 'Estacionamientos' },
     { val: property.lotSize ? `${property.lotSize} m²` : '—', name: 'Terreno' },
