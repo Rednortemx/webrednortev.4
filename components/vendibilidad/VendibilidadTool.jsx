@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import './vendibilidad.css';
+import './vendibilidadEditorial.css';
 import { vendibilidadShellHtml } from './vendibilidadShell';
 import { vendibilidadScriptSrc } from './vendibilidadScript';
 import { buildVendibilidadScript, buildVendibilidadShell } from './vendibilidadIntegration';
