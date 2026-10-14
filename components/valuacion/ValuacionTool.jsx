@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { estimadorShellHtml } from './estimadorShell';
 import { estimadorStyles } from './estimadorStyles';
+import { estimadorEditorialStyles } from './estimadorEditorialStyles';
 import { estimadorScriptSrc } from './estimadorScript';
 import { bindToolConversions } from '@/lib/toolConversions';
 
@@ -26,7 +27,7 @@ export default function ValuacionTool() {
   useEffect(() => {
     const unbind = bindToolConversions(document.querySelector('.ov-val'), 'estimador');
     const style = document.createElement('style');
-    style.textContent = estimadorStyles;
+    style.textContent = `${estimadorStyles}\n${estimadorEditorialStyles}`;
     document.head.appendChild(style);
     styleRef.current = style;
 
