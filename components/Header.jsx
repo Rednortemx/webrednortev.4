@@ -7,7 +7,12 @@ import { usePathname } from 'next/navigation';
 import { SITE_CONTACT } from '@/lib/siteConfig';
 
 const NAV_LINKS = [
-  { href: '/propiedades', label: 'Propiedades', match: (p) => p.startsWith('/propiedades') },
+  { href: '/propiedades/luxury', label: 'Luxury', match: (p) => p.startsWith('/propiedades/luxury') },
+  {
+    href: '/propiedades',
+    label: 'Propiedades',
+    match: (p) => p.startsWith('/propiedades') && !p.startsWith('/propiedades/luxury'),
+  },
   { href: '/servicios', label: 'Servicios', match: (p) => p.startsWith('/servicios') },
   { href: '/insights', label: 'Insights', match: (p) => p.startsWith('/insights') },
   { href: '/nosotros', label: 'Nosotros', match: (p) => p.startsWith('/nosotros') || p.startsWith('/equipo') },

@@ -6,8 +6,9 @@ import GoogleReviews from '@/components/GoogleReviews';
 import FaqHome from '@/components/FaqHome';
 import { faqSchema } from '@/lib/schema';
 import { fetchAllProperties, toPropertyCardData } from '@/lib/properties';
+import { fetchLuxuryProperties } from '@/lib/luxuryProperties';
 import { serializeJsonLd } from '@/lib/security';
-import { HOME_CURATED_PROPERTY_IDS, SITE_METRICS } from '@/lib/siteConfig';
+import { SITE_METRICS } from '@/lib/siteConfig';
 
 export const metadata = {
   title: 'Rednorte Inmobiliaria | Propiedades en Monterrey y su Área Metropolitana',
@@ -25,7 +26,10 @@ function propsFilterHref(operacion, tipo, categoria) {
 }
 
 export default async function HomePage() {
-  const { properties, source } = await fetchAllProperties();
+  const [{ properties, source }, luxury] = await Promise.all([
+    fetchAllProperties(),
+    fetchLuxuryProperties(),
+  ]);
   const homeMetrics = {
     ...SITE_METRICS,
     activeProperties: source === 'live'
@@ -33,14 +37,10 @@ export default async function HomePage() {
       : SITE_METRICS.activeProperties,
   };
 
-  let featured = [];
-  if (HOME_CURATED_PROPERTY_IDS.length >= 3) {
-    const propertyMap = new Map(properties.map((property) => [String(property.id).toUpperCase(), property]));
-    featured = HOME_CURATED_PROPERTY_IDS
-      .map((id) => propertyMap.get(String(id).toUpperCase()))
-      .filter((property) => property?.imgs?.length)
-      .map((property) => toPropertyCardData(property, 1));
-  }
+  const featured = luxury.properties
+    .filter((property) => property?.imgs?.length)
+    .slice(0, 8)
+    .map((property) => toPropertyCardData(property, 1));
 
   return (
     <main className="page-content home-refresh">
@@ -52,12 +52,12 @@ export default async function HomePage() {
           <div className="container">
             <div className="home-section-intro">
               <div>
-                <p className="section-label">Curaduría inmobiliaria</p>
-                <h2 className="section-title" id="home-curated-title">Selección Rednorte</h2>
+                <p className="section-label">Luxury Properties</p>
+                <h2 className="section-title" id="home-curated-title">Selección Luxury Rednorte</h2>
               </div>
               <div className="home-section-intro-copy">
                 <p>Propiedades elegidas por su arquitectura, ubicación, fotografía y carácter.</p>
-                <Link className="home-text-link" href="/propiedades">Explorar todo el inventario ↗</Link>
+                <Link className="home-text-link" href="/propiedades/luxury">Explorar la colección Luxury ↗</Link>
               </div>
             </div>
             <CuratedProperties properties={featured} />
