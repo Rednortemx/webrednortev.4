@@ -15,6 +15,7 @@ import {
 import { breadcrumbSchema } from '@/lib/schema';
 import { getCanonicalSiteUrl, serializeJsonLd } from '@/lib/security';
 import { PROPERTIES_PER_PAGE } from '@/lib/propertyPagination';
+import { socialPreviewImage } from '@/lib/socialPreviews';
 
 const SITE_URL = getCanonicalSiteUrl();
 
@@ -62,6 +63,18 @@ export async function generateMetadata({ params, searchParams }) {
       description,
       url: canonical,
       type: 'website',
+      images: [{
+        url: socialPreviewImage('propiedades'),
+        width: 1200,
+        height: 630,
+        alt: landing.heading,
+      }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${landing.heading}${suffix}`,
+      description,
+      images: [socialPreviewImage('propiedades')],
     },
   };
 }

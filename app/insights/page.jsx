@@ -5,19 +5,14 @@ import InsightFilters from '@/components/InsightFilters';
 import PreferredSourceBadge from '@/components/PreferredSourceBadge';
 import { getPublishedInsights, insightCategories } from '@/lib/insights';
 import { serializeJsonLd } from '@/lib/security';
+import { socialMetadata } from '@/lib/socialPreviews';
 
 export const metadata = {
   title: 'Insights inmobiliarios de Monterrey y Nuevo León',
   description:
     'Análisis, guías, datos y perspectivas de Rednorte sobre compra, venta, renta, inversión y mercado inmobiliario en Monterrey y Nuevo León.',
   alternates: { canonical: '/insights' },
-  openGraph: {
-    title: 'Insights inmobiliarios | Rednorte',
-    description:
-      'Guías, análisis y datos del mercado inmobiliario de Monterrey y Nuevo León.',
-    url: '/insights',
-    type: 'website',
-  },
+  ...socialMetadata('insights', '/insights'),
 };
 
 const schema = {

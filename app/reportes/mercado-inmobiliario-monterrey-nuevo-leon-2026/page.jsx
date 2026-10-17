@@ -3,6 +3,7 @@ import PreferredSourceBadge from '@/components/PreferredSourceBadge';
 import Breadcrumb from '@/components/Breadcrumb';
 import { rednorteReport2026V2 as report } from '@/lib/rednorteReport2026V2';
 import { serializeJsonLd } from '@/lib/security';
+import { socialPreviewImage } from '@/lib/socialPreviews';
 
 export const metadata = {
   title: 'Reporte inmobiliario Monterrey y Nuevo León 2026',
@@ -15,6 +16,18 @@ export const metadata = {
       '553 propiedades activas, 11,317 registros de interés y un análisis propio de concentración por operación, municipio y tipo de propiedad.',
     url: '/reportes/mercado-inmobiliario-monterrey-nuevo-leon-2026',
     type: 'article',
+    images: [{
+      url: socialPreviewImage('reportes'),
+      width: 1200,
+      height: 630,
+      alt: 'Reporte inmobiliario Rednorte — Monterrey y Nuevo León 2026',
+    }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Reporte inmobiliario Rednorte — Monterrey y Nuevo León 2026',
+    description: 'Inventario, señales de interés y concentración del mercado inmobiliario local.',
+    images: [socialPreviewImage('reportes')],
   },
 };
 

@@ -2,17 +2,13 @@ import Link from 'next/link';
 import Breadcrumb from '@/components/Breadcrumb';
 import PreferredSourceBadge from '@/components/PreferredSourceBadge';
 import { serializeJsonLd } from '@/lib/security';
+import { socialMetadata } from '@/lib/socialPreviews';
 
 export const metadata = {
   title: 'Reportes inmobiliarios',
   description: 'Reportes propios sobre inventario, señales de interés y mercado inmobiliario de Monterrey y Nuevo León.',
   alternates: { canonical: '/reportes' },
-  openGraph: {
-    title: 'Reportes inmobiliarios | Rednorte Inmobiliaria',
-    description: 'Datos propios, metodología visible y contexto público sobre el mercado inmobiliario de Monterrey y Nuevo León.',
-    url: '/reportes',
-    type: 'website',
-  },
+  ...socialMetadata('reportes', '/reportes'),
 };
 
 const schema = {

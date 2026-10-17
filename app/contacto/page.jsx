@@ -4,11 +4,13 @@ import WhatsAppGateButton from '@/components/WhatsAppGateButton';
 import ExternalContentGate from '@/components/ExternalContentGate';
 import { SOCIAL_LINKS } from '@/lib/socialLinks';
 import { SITE_CONTACT } from '@/lib/siteConfig';
+import { socialMetadata } from '@/lib/socialPreviews';
 
 export const metadata = {
   title: 'Contacto',
   description: `Contáctanos: cuéntanos en qué podemos ayudarte. ${SITE_CONTACT.response.summary}`,
   alternates: { canonical: '/contacto' },
+  ...socialMetadata('contacto', '/contacto'),
 };
 
 export default function ContactoPage() {

@@ -2,12 +2,14 @@ import Breadcrumb from '@/components/Breadcrumb';
 import PropertyFilters from '@/components/PropertyFilters';
 import { fetchLuxuryProperties } from '@/lib/luxuryProperties';
 import { toPropertyCardData } from '@/lib/properties';
+import { socialMetadata } from '@/lib/socialPreviews';
 
 export const metadata = {
   title: 'Luxury Properties en Monterrey y Nuevo León',
   description:
     'Colección de casas, departamentos y quintas de lujo en venta, seleccionadas por Rednorte Inmobiliaria y verificadas en nuestro inventario vigente.',
   alternates: { canonical: '/propiedades/luxury' },
+  ...socialMetadata('luxury', '/propiedades/luxury'),
 };
 
 export default async function LuxuryPropertiesPage({ searchParams }) {
