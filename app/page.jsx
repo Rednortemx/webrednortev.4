@@ -9,11 +9,13 @@ import { fetchAllProperties, toPropertyCardData } from '@/lib/properties';
 import { fetchLuxuryProperties } from '@/lib/luxuryProperties';
 import { serializeJsonLd } from '@/lib/security';
 import { SITE_METRICS } from '@/lib/siteConfig';
+import { socialMetadata } from '@/lib/socialPreviews';
 
 export const metadata = {
   title: 'Rednorte Inmobiliaria | Propiedades en Monterrey y su Área Metropolitana',
   description: 'Compra, vende, renta o valúa propiedades residenciales, comerciales e industriales con Rednorte Inmobiliaria en Monterrey y Nuevo León.',
   alternates: { canonical: '/' },
+  ...socialMetadata('home', '/'),
 };
 
 function propsFilterHref(operacion, tipo, categoria) {

@@ -4,6 +4,7 @@ import PropertyLandingDirectory from '@/components/PropertyLandingDirectory';
 import { fetchAllProperties, toPropertyCardData } from '@/lib/properties';
 import { PROPERTIES_PER_PAGE } from '@/lib/propertyPagination';
 import { notFound } from 'next/navigation';
+import { socialPreviewImage } from '@/lib/socialPreviews';
 
 // Canonical is self-referencing per page (page 1 -> /propiedades, page N ->
 // /propiedades?page=N) instead of always pointing back at page 1. A fixed
@@ -41,6 +42,26 @@ export async function generateMetadata({ searchParams }) {
     // limpia propia. Los filtros libres siguen siendo utilizables y
     // rastreables, pero no compiten como miles de URLs casi idénticas.
     robots: hasActiveFilters ? { index: false, follow: true } : undefined,
+    openGraph: {
+      title: `Propiedades en venta y renta en Monterrey${suffix}`,
+      description: page > 1
+        ? `Explora la página ${page} del inventario inmobiliario de Rednorte.`
+        : 'Casas, departamentos y espacios comerciales e industriales en Monterrey y Nuevo León.',
+      url: page > 1 ? `/propiedades?page=${page}` : '/propiedades',
+      type: 'website',
+      images: [{
+        url: socialPreviewImage('propiedades'),
+        width: 1200,
+        height: 630,
+        alt: 'Propiedades en venta y renta en Monterrey y Nuevo León',
+      }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `Propiedades en venta y renta en Monterrey${suffix}`,
+      description: 'Explora el inventario inmobiliario de Rednorte en Monterrey y Nuevo León.',
+      images: [socialPreviewImage('propiedades')],
+    },
   };
 }
 

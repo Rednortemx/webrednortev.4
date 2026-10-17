@@ -46,7 +46,15 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title,
       description,
-      images: ogImage ? [{ url: ogImage }] : undefined,
+      url: `/propiedades/${buildPropertySlug(property)}`,
+      type: 'website',
+      images: ogImage ? [{ url: ogImage, alt: title }] : undefined,
+    },
+    twitter: {
+      card: ogImage ? 'summary_large_image' : 'summary',
+      title,
+      description,
+      images: ogImage ? [ogImage] : undefined,
     },
   };
 }
