@@ -13,6 +13,7 @@ const SITE_URL = getCanonicalSiteUrl();
 const STATIC_ROUTES = [
   '',
   '/propiedades',
+  '/propiedades/luxury',
   '/servicios',
   '/servicios/vender-propiedad',
   '/servicios/comprar-propiedad',

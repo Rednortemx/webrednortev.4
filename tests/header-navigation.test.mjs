@@ -9,7 +9,7 @@ test('mantiene el header enfocado y deja WhatsApp como acción flotante', async 
     readFile(new URL('../app/globals.css', import.meta.url), 'utf8'),
   ]);
 
-  for (const href of ['/propiedades', '/servicios', '/insights', '/nosotros']) {
+  for (const href of ['/propiedades', '/propiedades/luxury', '/servicios', '/insights', '/nosotros']) {
     assert.match(header, new RegExp(`href: '${href}'`));
   }
 

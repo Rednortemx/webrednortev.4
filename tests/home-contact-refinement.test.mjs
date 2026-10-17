@@ -27,7 +27,8 @@ test('Inicio conserva la marca, JSON-LD seguro y acceso semántico al inventario
   assert.match(home, /serializeJsonLd\(faqSchema\(\)\)/);
   assert.match(hero, /href="\/propiedades"/);
   assert.match(hero, /Explorar todas las propiedades/);
-  assert.match(home, /const \{ properties, source \} = await fetchAllProperties\(\)/);
+  assert.match(home, /fetchAllProperties\(\)/);
+  assert.match(home, /fetchLuxuryProperties\(\)/);
   assert.match(home, /source === 'live'[\s\S]*String\(properties\.length\)/);
   assert.match(home, /<HomeHero metrics=\{homeMetrics\} \/>/);
   assert.match(siteConfig, /activeProperties: '600'/);
