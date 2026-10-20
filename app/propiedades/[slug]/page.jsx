@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import Breadcrumb from '@/components/Breadcrumb';
 import PropertyGallery from '@/components/PropertyGallery';
 import PropertySidebar from '@/components/PropertySidebar';
@@ -69,6 +69,11 @@ export default async function PropiedadPage({ params }) {
     notFound();
   }
 
+  const canonicalSlug = buildPropertySlug(property);
+  if (slug !== canonicalSlug) {
+    permanentRedirect(`/propiedades/${canonicalSlug}`);
+  }
+
   const advisor = (await getAdvisorForProperty(property.id)) || defaultAdvisor();
   const similar = getRelatedProperties(property, properties);
   const inventoryLanding = findLandingForProperty(property);
@@ -84,7 +89,7 @@ export default async function PropiedadPage({ params }) {
   ];
 
   const breadcrumbItems = [{ label: 'Propiedades', href: '/propiedades' }, { label: property.title }];
-  const canonicalUrl = `${SITE_URL}/propiedades/${buildPropertySlug(property)}`;
+  const canonicalUrl = `${SITE_URL}/propiedades/${canonicalSlug}`;
 
   return (
     <div className="page-content property-detail-refresh">

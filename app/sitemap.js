@@ -11,7 +11,7 @@ import { PROPERTY_LANDING_PAGES } from '@/lib/propertyLandingPages';
 const SITE_URL = getCanonicalSiteUrl();
 
 const STATIC_ROUTES = [
-  '',
+  '/',
   '/propiedades',
   '/propiedades/luxury',
   '/servicios',
@@ -73,5 +73,15 @@ export default async function sitemap() {
     // sin inventario en vivo disponible, el sitemap solo incluye las rutas estáticas
   }
 
-  return [...staticEntries, ...propertyLandingEntries, ...teamEntries, ...insightEntries, ...propertyEntries];
+  const entries = [
+    ...staticEntries,
+    ...propertyLandingEntries,
+    ...teamEntries,
+    ...insightEntries,
+    ...propertyEntries,
+  ];
+
+  // Defensive deduplication: a repeated inventory record or a future static
+  // route overlap must not publish the same canonical URL twice.
+  return [...new Map(entries.map((entry) => [entry.url, entry])).values()];
 }

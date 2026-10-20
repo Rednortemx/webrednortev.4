@@ -1,15 +1,28 @@
 import { NextResponse } from 'next/server';
 import { REDIRECTS_ESTATICOS } from '@/lib/legacy';
+import { canonicalOriginRedirect } from '@/lib/canonical';
 
 // Rutas fijas del sitio anterior que Google todavía visita (/home, /privacy,
 // /contact, /properties…). Se resuelven aquí y no en el router de Next para
 // poder responder un 301 exacto —el que pide el anexo de Search Console— y
 // para no pasar por el render de una página que solo iba a redirigir.
 //
-// El matcher de abajo limita el middleware EXCLUSIVAMENTE a esas rutas, así
-// que el resto del sitio no paga ningún costo por esto.
+// El middleware también protege el origen canónico de todos los documentos
+// públicos; las redirecciones legacy se aplican después de esa normalización.
 export function middleware(request) {
   const { pathname, search } = request.nextUrl;
+
+  // Vercel currently enforces both redirects at the edge, but keeping the
+  // invariant in application code prevents a future domain/configuration
+  // change from serving an indexable HTTP or apex-host duplicate. Preview
+  // and local hosts are deliberately left untouched.
+  const canonicalOrigin = canonicalOriginRedirect({
+    host: request.headers.get('x-forwarded-host') || request.headers.get('host'),
+    protocol: request.headers.get('x-forwarded-proto') || request.nextUrl.protocol,
+    pathname,
+    search,
+  });
+  if (canonicalOrigin) return NextResponse.redirect(canonicalOrigin, 308);
 
   // Se normaliza la barra final para que /team y /team/ se traten igual.
   const limpio = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname;
@@ -33,21 +46,9 @@ export function middleware(request) {
 
 export const config = {
   matcher: [
-    '/home',
-    '/privacy',
-    '/contact',
-    '/contactanos',
-    '/properties',
-    '/nuestrascasas',
-    '/es-MX',
-    '/es-mx',
-    '/blog',
-    '/team',
-    '/team/:path*',
-    '/agents',
-    '/agentes',
-    '/nuestro-equipo',
-    '/assets/img/favicon.ico',
-    '/servicios/comercial-industrial',
+    // Domain normalization must cover every public document, including
+    // sitemap.xml and robots.txt. Framework assets and API responses do not
+    // need an SEO redirect.
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
   ],
 };

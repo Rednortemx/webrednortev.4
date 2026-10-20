@@ -4,13 +4,28 @@ import { fetchLuxuryProperties } from '@/lib/luxuryProperties';
 import { toPropertyCardData } from '@/lib/properties';
 import { socialMetadata } from '@/lib/socialPreviews';
 
-export const metadata = {
-  title: 'Luxury Properties en Monterrey y Nuevo León',
-  description:
-    'Colección de casas, departamentos y quintas de lujo en venta, seleccionadas por Rednorte Inmobiliaria y verificadas en nuestro inventario vigente.',
-  alternates: { canonical: '/propiedades/luxury' },
-  ...socialMetadata('luxury', '/propiedades/luxury'),
-};
+export async function generateMetadata({ searchParams }) {
+  const sp = await searchParams;
+  const parsedPage = Number.parseInt(String(sp?.page || '1'), 10);
+  const page = Number.isFinite(parsedPage) && parsedPage > 1 ? parsedPage : 1;
+  const canonical = page > 1 ? `/propiedades/luxury?page=${page}` : '/propiedades/luxury';
+  const filterKeys = ['tipo', 'zona', 'precioMin', 'precioMax', 'recamaras', 'banos', 'm2Min', 'm2Max'];
+  const hasActiveFilters = filterKeys.some((key) => {
+    const value = sp?.[key];
+    return Array.isArray(value) ? value.some(Boolean) : Boolean(value);
+  });
+  const social = socialMetadata('luxury', canonical);
+
+  return {
+    title: `Luxury Properties en Monterrey y Nuevo León${page > 1 ? ` — página ${page}` : ''}`,
+    description:
+      'Colección de casas, departamentos y quintas de lujo en venta, seleccionadas por Rednorte Inmobiliaria y verificadas en nuestro inventario vigente.',
+    alternates: { canonical },
+    robots: hasActiveFilters ? { index: false, follow: true } : undefined,
+    ...social,
+    openGraph: { ...social.openGraph, url: canonical },
+  };
+}
 
 export default async function LuxuryPropertiesPage({ searchParams }) {
   const sp = await searchParams;
