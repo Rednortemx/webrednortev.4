@@ -55,7 +55,7 @@ export default async function InsightPage({ params }) {
   if (!insight) notFound();
 
   const author = getAuthor(insight.author);
-  const related = getRelatedInsights(insight);
+  const related = getRelatedInsights(insight, insight.relatedLimit || 3);
 
   const schema = {
     '@context': 'https://schema.org',
