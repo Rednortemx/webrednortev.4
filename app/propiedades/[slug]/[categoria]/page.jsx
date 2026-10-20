@@ -52,14 +52,19 @@ export async function generateMetadata({ params, searchParams }) {
   const description = page > 1
     ? `Explora la página ${page} de ${landing.typePlural} en ${landing.operationLower} en ${landing.municipality}, Nuevo León. Compara ubicación, precio y características.`
     : landing.description;
+  const pageTitle = `${landing.heading}${suffix}`;
+  const title = page === 1 && landing.seoTitle
+    ? { absolute: landing.seoTitle }
+    : pageTitle;
+  const socialTitle = page === 1 && landing.seoTitle ? landing.seoTitle : pageTitle;
 
   return {
-    title: `${landing.heading}${suffix}`,
+    title,
     description,
     alternates: { canonical },
     robots: hasActiveFilters ? { index: false, follow: true } : undefined,
     openGraph: {
-      title: `${landing.heading}${suffix}`,
+      title: socialTitle,
       description,
       url: canonical,
       type: 'website',
@@ -72,7 +77,7 @@ export async function generateMetadata({ params, searchParams }) {
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${landing.heading}${suffix}`,
+      title: socialTitle,
       description,
       images: [socialPreviewImage('propiedades')],
     },
@@ -159,11 +164,15 @@ export default async function PropertyLandingPage({ params, searchParams }) {
           </div>
         )}
         <h1>{landing.heading}</h1>
-        <p>
-          Consulta {landing.typePlural} en {landing.operationLower} actualmente disponibles en {landing.municipality}.
-          Compara precios, zonas, superficies y características. El inventario se actualiza conforme las propiedades
-          entran o salen del mercado.
-        </p>
+        {landing.heroCopy ? (
+          <p>{landing.heroCopy}</p>
+        ) : (
+          <p>
+            Consulta {landing.typePlural} en {landing.operationLower} actualmente disponibles en {landing.municipality}.
+            Compara precios, zonas, superficies y características. El inventario se actualiza conforme las propiedades
+            entran o salen del mercado.
+          </p>
+        )}
         {neighborhoods.length > 0 && (
           <div className="property-neighborhoods" aria-label="Zonas con inventario">
             <span>Zonas con inventario:</span>
@@ -178,6 +187,17 @@ export default async function PropertyLandingPage({ params, searchParams }) {
         basePath={landing.path}
         baseFilters={baseFilters}
       />
+
+      {landing.editorial && (
+        <section className="property-landing-editorial">
+          <h2>{landing.editorial.title}</h2>
+          <p>{landing.editorial.copy}</p>
+          <p>
+            Consulta <Link href={landing.editorial.linkHref}>{landing.editorial.linkAnchor}</Link>.{' '}
+            {landing.editorial.linkAfter}
+          </p>
+        </section>
+      )}
 
       <section className="property-landing-support">
         <div>

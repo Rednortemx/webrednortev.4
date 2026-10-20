@@ -641,6 +641,18 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
 .property-neighborhoods > span:not(:first-child) {
  padding: 0.3rem 0.55rem; border-radius: 999px; background: var(--crema-dark); color: var(--cafe);
 }
+.property-landing-editorial {
+ max-width: 1200px; margin: 0 auto 1.5rem; padding: 1.5rem 2rem;
+ border-top: 1px solid var(--gris-claro); border-bottom: 1px solid var(--gris-claro);
+}
+.property-landing-editorial h2 {
+ margin: 0 0 0.65rem; color: var(--negro); font-size: 1.25rem; line-height: 1.35;
+}
+.property-landing-editorial p {
+ max-width: 900px; margin: 0 0 0.7rem; color: var(--gris-medio); font-size: 0.9rem; line-height: 1.7;
+}
+.property-landing-editorial p:last-child { margin-bottom: 0; }
+.property-landing-editorial a { color: var(--terracota); font-weight: 600; }
 .property-landing-support {
  max-width: 1200px; margin: 0 auto; padding: 0 2rem 4rem;
  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.5rem;
@@ -1196,6 +1208,7 @@ footer { background: var(--negro); color: rgba(255,255,255,0.7); }
  .props-grid { grid-template-columns: 1fr; }
  .property-landing-directory { padding: 1rem 1.25rem; }
  .property-landing-hero { padding: 2rem 1.25rem 0; }
+ .property-landing-editorial { margin-bottom: 1.25rem; padding: 1.25rem; }
  .property-landing-support { padding: 0 1.25rem 3rem; }
  .property-context-link { align-items: flex-start; flex-direction: column; gap: 0.35rem; }
  .quick-links-grid { grid-template-columns: 1fr; }
