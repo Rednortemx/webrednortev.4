@@ -10,9 +10,11 @@ import {
   propertyMatchesLanding,
 } from '../lib/propertyLandingPages.js';
 
-test('publica solo las 15 búsquedas de inventario aprobadas y sin rutas duplicadas', () => {
-  assert.equal(PROPERTY_LANDING_PAGES.length, 15);
-  assert.equal(new Set(PROPERTY_LANDING_PAGES.map((landing) => landing.path)).size, 15);
+test('publica las 15 búsquedas de segmento y la landing territorial aprobada sin rutas duplicadas', () => {
+  assert.equal(PROPERTY_LANDING_PAGES.length, 16);
+  assert.equal(PROPERTY_LANDING_PAGES.filter((landing) => landing.kind === 'segment').length, 15);
+  assert.equal(PROPERTY_LANDING_PAGES.filter((landing) => landing.kind === 'area').length, 1);
+  assert.equal(new Set(PROPERTY_LANDING_PAGES.map((landing) => landing.path)).size, 16);
   assert.ok(PROPERTY_LANDING_PAGES.every((landing) => landing.path.startsWith('/propiedades/')));
 });
 

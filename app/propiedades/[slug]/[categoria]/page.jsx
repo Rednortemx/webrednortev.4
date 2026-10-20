@@ -50,7 +50,9 @@ export async function generateMetadata({ params, searchParams }) {
     return Array.isArray(value) ? value.some(Boolean) : Boolean(value);
   });
   const description = page > 1
-    ? `Explora la página ${page} de ${landing.typePlural} en ${landing.operationLower} en ${landing.municipality}, Nuevo León. Compara ubicación, precio y características.`
+    ? (landing.paginationDescription
+        ? landing.paginationDescription(page)
+        : `Explora la página ${page} de ${landing.typePlural} en ${landing.operationLower} en ${landing.municipality}, Nuevo León. Compara ubicación, precio y características.`)
     : landing.description;
   const pageTitle = `${landing.heading}${suffix}`;
   const title = page === 1 && landing.seoTitle
@@ -116,23 +118,26 @@ export default async function PropertyLandingPage({ params, searchParams }) {
   const matchingProperties = properties.filter((property) => propertyMatchesLanding(property, landing));
   const totalPages = Math.max(1, Math.ceil(matchingProperties.length / PROPERTIES_PER_PAGE));
   if (source === 'live' && page > totalPages) notFound();
-  const propertyCards = properties.map((property) => toPropertyCardData(property));
-  const neighborhoods = getLandingNeighborhoods(properties, landing);
+  const inventoryProperties = landing.kind === 'area' ? matchingProperties : properties;
+  const propertyCards = inventoryProperties.map((property) => toPropertyCardData(property));
+  const neighborhoods = landing.kind === 'area' ? [] : getLandingNeighborhoods(properties, landing);
   const related = getRelatedPropertyLandings(landing);
-  const servicePath = landing.operation === 'Venta'
+  const servicePath = landing.servicePath || (landing.operation === 'Venta'
     ? '/servicios/comprar-propiedad'
-    : '/servicios/rentar-propiedad';
+    : '/servicios/rentar-propiedad');
 
-  const baseFilters = {
-    operacion: landing.operation,
-    tipo: landing.type,
-    zona: landing.municipality,
-  };
+  const baseFilters = landing.kind === 'area'
+    ? {}
+    : {
+        operacion: landing.operation,
+        tipo: landing.type,
+        zona: landing.municipality,
+      };
   const initialFilters = {
     operacion: readFilter(sp, 'operacion', baseFilters.operacion),
     tipo: readFilter(sp, 'tipo', baseFilters.tipo),
     categoria: readFilter(sp, 'categoria', ''),
-    zona: readFilter(sp, 'zona', baseFilters.zona),
+    zona: landing.kind === 'area' ? '' : readFilter(sp, 'zona', baseFilters.zona),
     precioMin: sp?.precioMin || '',
     precioMax: sp?.precioMax || '',
     recamaras: sp?.recamaras || '0',
@@ -186,16 +191,25 @@ export default async function PropertyLandingPage({ params, searchParams }) {
         initialFilters={initialFilters}
         basePath={landing.path}
         baseFilters={baseFilters}
+        fixedLocationLabel={landing.fixedLocationLabel}
       />
 
       {landing.editorial && (
         <section className="property-landing-editorial">
           <h2>{landing.editorial.title}</h2>
           <p>{landing.editorial.copy}</p>
-          <p>
-            Consulta <Link href={landing.editorial.linkHref}>{landing.editorial.linkAnchor}</Link>.{' '}
-            {landing.editorial.linkAfter}
-          </p>
+          {landing.editorial.links ? (
+            landing.editorial.links.map((item) => (
+              <p key={item.href}>
+                {item.prefix}{' '}<Link href={item.href}>{item.anchor}</Link>{item.suffix}
+              </p>
+            ))
+          ) : (
+            <p>
+              Consulta <Link href={landing.editorial.linkHref}>{landing.editorial.linkAnchor}</Link>.{' '}
+              {landing.editorial.linkAfter}
+            </p>
+          )}
         </section>
       )}
 

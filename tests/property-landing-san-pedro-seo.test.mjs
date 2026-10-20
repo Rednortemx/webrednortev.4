@@ -55,7 +55,9 @@ test('la plantilla conserva canonical, paginación, noindex de filtros y schemas
 });
 
 test('las demás landings mantienen su metadata y copy genéricos', () => {
-  const others = PROPERTY_LANDING_PAGES.filter((landing) => landing.path !== path);
+  const others = PROPERTY_LANDING_PAGES.filter(
+    (landing) => landing.kind === 'segment' && landing.path !== path,
+  );
   const monterrey = findPropertyLandingPage('monterrey', 'departamentos-en-renta');
 
   assert.equal(others.length, 14);

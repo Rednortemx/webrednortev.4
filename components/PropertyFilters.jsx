@@ -31,7 +31,13 @@ function getPaginationItems(current, total, siblings = 4, boundaries = 1) {
 // Ported from the legacy applyPropFilters()/renderPropsPage()/clearPropFilters().
 // Initial filter values can come from the URL (?operacion=&tipo=&categoria=&zona=...)
 // so links from the footer/homepage categories land on a pre-filtered, shareable URL.
-export default function PropertyFilters({ properties, initialFilters, basePath = '/propiedades', baseFilters = {} }) {
+export default function PropertyFilters({
+  properties,
+  initialFilters,
+  basePath = '/propiedades',
+  baseFilters = {},
+  fixedLocationLabel = '',
+}) {
   const [operacion, setOperacion] = useState(initialFilters.operacion || '');
   const [tipo, setTipo] = useState(initialFilters.tipo || '');
   const [categoria, setCategoria] = useState(initialFilters.categoria || '');
@@ -215,8 +221,21 @@ export default function PropertyFilters({ properties, initialFilters, basePath =
             </select>
           </div>
           <div className="filter-group">
-            <label htmlFor="filtro-zona">Municipio / Zona</label>
-            <select id="filtro-zona" value={zona} onChange={(e) => setZona(e.target.value)}>
+            {fixedLocationLabel ? (
+              <>
+                <label htmlFor="filtro-zona-fija">Municipio / Zona</label>
+                <input
+                  id="filtro-zona-fija"
+                  type="text"
+                  value={fixedLocationLabel}
+                  readOnly
+                  aria-readonly="true"
+                />
+              </>
+            ) : (
+              <>
+                <label htmlFor="filtro-zona">Municipio / Zona</label>
+                <select id="filtro-zona" value={zona} onChange={(e) => setZona(e.target.value)}>
             <option value="">Todos</option>
             <option value="Abasolo">Abasolo</option>
             <option value="Agualeguas">Agualeguas</option>
@@ -269,7 +288,9 @@ export default function PropertyFilters({ properties, initialFilters, basePath =
             <option value="Vallecillo">Vallecillo</option>
             <option value="Villaldama">Villaldama</option>
             <option value="Zaragoza">Zaragoza</option>
-            </select>
+                </select>
+              </>
+            )}
           </div>
           <button className="btn-search catalog-apply-primary" type="button" onClick={applyFilters}>Ver propiedades</button>
         </div>
