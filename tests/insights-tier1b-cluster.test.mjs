@@ -54,12 +54,13 @@ test('Tier 1B conserva H1, SEO title, description y canonical de las tres rutas'
   assert.match(page, /alternates: \{ canonical: `\/insights\/\$\{insight\.slug\}` \}/);
 });
 
-test('Comprar incluye los dos enlaces contextuales aprobados', () => {
+test('Comprar incluye los enlaces contextuales aprobados', () => {
   const links = contextualLinks(getInsight('como-comprar-propiedad-monterrey'));
 
   assert.deepEqual(links.map(({ anchor, href }) => [anchor, href]), [
     ['dónde invertir en bienes raíces en Monterrey', '/insights/donde-invertir-bienes-raices-monterrey'],
     ['cómo estimar el valor de una casa en Monterrey', '/insights/cuanto-vale-mi-casa-monterrey'],
+    ['cuánto cuesta escriturar una casa en Monterrey', '/insights/cuanto-cuesta-escriturar-casa-monterrey'],
   ]);
 });
 

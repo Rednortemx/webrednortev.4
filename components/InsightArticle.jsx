@@ -17,15 +17,20 @@ function SectionBlock({ section }) {
       {section.paragraphs?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
       <ContextualLinks links={section.contextualLinks} />
 
-      {section.bullets?.length > 0 && (
+      {section.bullets?.length > 0 && (section.ordered ? (
+        <ol>{section.bullets.map((item) => <li key={item}>{item}</li>)}</ol>
+      ) : (
         <ul>{section.bullets.map((item) => <li key={item}>{item}</li>)}</ul>
-      )}
+      ))}
 
       {section.subsections?.map((subsection) => (
         <div className="insight-subsection" key={subsection.title}>
           <h3>{subsection.title}</h3>
           {subsection.paragraphs?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
           <ContextualLinks links={subsection.contextualLinks} />
+          {subsection.bullets?.length > 0 && (
+            <ul>{subsection.bullets.map((item) => <li key={item}>{item}</li>)}</ul>
+          )}
         </div>
       ))}
 
