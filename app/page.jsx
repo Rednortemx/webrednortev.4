@@ -12,7 +12,7 @@ import { SITE_METRICS } from '@/lib/siteConfig';
 import { socialMetadata } from '@/lib/socialPreviews';
 
 export const metadata = {
-  title: 'Rednorte Inmobiliaria | Propiedades en Monterrey y su Área Metropolitana',
+  title: { absolute: 'Inmobiliaria en Monterrey | Compra, venta y renta | Rednorte' },
   description: 'Compra, vende, renta o valúa propiedades residenciales, comerciales e industriales con Rednorte Inmobiliaria en Monterrey y Nuevo León.',
   alternates: { canonical: '/' },
   ...socialMetadata('home', '/'),
@@ -173,6 +173,13 @@ export default async function HomePage() {
               <p className="nosotros-since">Desde {SITE_METRICS.since}</p>
               <h2 className="section-title">Conectando personas con propiedades</h2>
               <p className="nosotros-lead">En Rednorte Inmobiliaria somos un equipo de asesores profesionales con profundo conocimiento del mercado de Nuevo León. Trabajamos con integridad, transparencia y resultados.</p>
+              <p className="nosotros-lead">
+                Trabajamos en Monterrey, San Pedro Garza García y los principales municipios del área metropolitana de Nuevo León, con experiencia en{' '}
+                <Link href="/propiedades">propiedades residenciales</Link>,{' '}
+                <Link href="/servicios/inmobiliaria-comercial">comerciales</Link> e{' '}
+                <Link href="/servicios/inmobiliaria-industrial">industriales</Link>.{' '}
+                <Link href="/servicios">Conoce nuestros servicios inmobiliarios.</Link>
+              </p>
               <ul className="nosotros-list">
                 <li>Especialistas en residencial, comercial e industrial</li>
                 <li>Cobertura en los 12 municipios principales de NL</li>
