@@ -23,7 +23,7 @@ test('Inicio conserva la marca, JSON-LD seguro y acceso semántico al inventario
     readFile(new URL('../lib/siteConfig.js', import.meta.url), 'utf8'),
   ]);
 
-  assert.match(home, /title: 'Rednorte Inmobiliaria \| Propiedades en Monterrey y su Área Metropolitana'/);
+  assert.match(home, /title: \{ absolute: 'Inmobiliaria en Monterrey \| Compra, venta y renta \| Rednorte' \}/);
   assert.match(home, /serializeJsonLd\(faqSchema\(\)\)/);
   assert.match(hero, /href="\/propiedades"/);
   assert.match(hero, /Explorar todas las propiedades/);
