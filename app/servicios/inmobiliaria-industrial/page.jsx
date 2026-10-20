@@ -7,9 +7,9 @@ import { estilosIndustrial } from '@/components/servicios/estilosIndustrial';
 import { breadcrumbSchema } from '@/lib/schema';
 
 export const metadata = {
-  title: 'Inmobiliaria industrial en Monterrey',
+  title: { absolute: 'Inmobiliaria industrial en Monterrey y Nuevo León | Rednorte' },
   description:
-    'Naves, bodegas, terrenos, patios, parques industriales y build-to-suit en los corredores industriales de Nuevo León. Búsqueda para empresas y comercialización para propietarios.',
+    'Asesoría inmobiliaria industrial en Monterrey y Nuevo León para comprar, rentar, vender o comercializar naves, bodegas, terrenos, patios y parques industriales.',
   alternates: { canonical: '/servicios/inmobiliaria-industrial' },
 };
 
@@ -19,13 +19,21 @@ const schema = {
   name: 'Inmobiliaria industrial',
   serviceType: 'Corretaje inmobiliario industrial',
   url: 'https://www.rednorte.mx/servicios/inmobiliaria-industrial',
-  areaServed: { '@type': 'City', name: 'Monterrey y área metropolitana' },
+  areaServed: [
+    { '@type': 'City', name: 'Monterrey' },
+    { '@type': 'AdministrativeArea', name: 'Nuevo León' },
+  ],
   provider: {
     '@type': 'RealEstateAgent',
     name: 'Rednorte Inmobiliaria',
     url: 'https://www.rednorte.mx/',
   },
 };
+
+const contenidoIndustrialSeo = contenidoIndustrial.replace(
+  '<h2 class="industrial-section-title">Asesoría para empresas y propietarios</h2>',
+  '<h2 class="industrial-section-title">Asesoría para empresas y propietarios</h2><p>Rednorte trabaja como asesor inmobiliario industrial para empresas y propietarios que necesitan localizar, comprar, rentar, vender o comercializar inmuebles industriales en Monterrey y Nuevo León.</p>',
+);
 
 export default function InmobiliariaIndustrialPage() {
   return (
@@ -45,7 +53,7 @@ export default function InmobiliariaIndustrialPage() {
       <Breadcrumb items={[{ label: 'Servicios', href: '/servicios' }, { label: 'Inmobiliaria industrial' }]} />
       <ServiceEditorialNav active="other" />
       <ServicePage
-        contenido={contenidoIndustrial}
+        contenido={contenidoIndustrialSeo}
         estilos={estilosIndustrial}
         className="industrial-page"
       />
