@@ -1,10 +1,21 @@
 import Link from 'next/link';
 
+function ContextualLinks({ links }) {
+  if (!links?.length) return null;
+
+  return links.map((link) => (
+    <p className="insight-contextual-link" key={`${link.href}-${link.anchor}`}>
+      {link.before}<Link href={link.href}>{link.anchor}</Link>{link.after}
+    </p>
+  ));
+}
+
 function SectionBlock({ section }) {
   return (
     <section id={section.id} className={section.type === 'lead' ? 'insight-lead-answer' : 'insight-content-section'}>
       <h2>{section.title}</h2>
       {section.paragraphs?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+      <ContextualLinks links={section.contextualLinks} />
 
       {section.bullets?.length > 0 && (
         <ul>{section.bullets.map((item) => <li key={item}>{item}</li>)}</ul>
@@ -14,6 +25,7 @@ function SectionBlock({ section }) {
         <div className="insight-subsection" key={subsection.title}>
           <h3>{subsection.title}</h3>
           {subsection.paragraphs?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+          <ContextualLinks links={subsection.contextualLinks} />
         </div>
       ))}
 

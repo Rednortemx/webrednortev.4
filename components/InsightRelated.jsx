@@ -1,12 +1,12 @@
 import Link from 'next/link';
 
-export default function InsightRelated({ insights }) {
+export default function InsightRelated({ insights, title = 'Insights relacionados' }) {
   if (!insights?.length) return null;
 
   return (
     <section className="insight-related">
       <p className="insight-small-label">SIGUE EXPLORANDO</p>
-      <h2>Insights relacionados</h2>
+      <h2>{title}</h2>
       <nav className="insight-related-list" aria-label="Insights relacionados">
         {insights.map((item) => (
           <Link className="insight-related-item" href={`/insights/${item.slug}`} key={item.slug}>
