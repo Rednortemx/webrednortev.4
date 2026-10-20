@@ -88,9 +88,9 @@ export default function HomeHero({ metrics }) {
         <div className="home-hero-content">
           <div className="home-hero-copy">
             <div className="hero-badge">Especialistas inmobiliarios en Monterrey</div>
-            <h1 id="home-hero-title">Compra, vende, renta e invierte en Monterrey</h1>
+            <h1 id="home-hero-title">Inmobiliaria en Monterrey para comprar, vender, rentar e invertir</h1>
             <p className="hero-highlight">Residencial, comercial e industrial en Nuevo León.</p>
-            <p>Rednorte Inmobiliaria combina asesoría, datos y marketing para ayudarte a tomar mejores decisiones inmobiliarias.</p>
+            <p>Rednorte es una inmobiliaria en Monterrey y Nuevo León especializada en compra, venta, renta e inversión de propiedades residenciales, comerciales e industriales.</p>
             <div className="home-hero-actions">
               <Link className="home-hero-inventory-link" href="/propiedades">
                 <span>Explorar todas las propiedades</span>
