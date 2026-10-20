@@ -13,11 +13,11 @@ export default function GoogleReviews() {
             <h2 className="section-title" id="home-reviews-title">Confianza construida operación por operación</h2>
           </div>
           {/* Trustindex carga las reseñas debajo. Este resumen refleja el perfil
-              público de Google al 3 de octubre de 2026. */}
-          <div className="home-review-summary" aria-label="Calificación de Rednorte en Google: 4.6 de 5, basada en 148 opiniones">
-            <strong>4.6</strong>
+              público de Google al 20 de octubre de 2026. */}
+          <div className="home-review-summary" aria-label="Calificación de Rednorte en Google: 4.7 de 5, basada en 158 opiniones">
+            <strong>4.7</strong>
             <span className="home-review-stars" aria-hidden="true">★★★★★</span>
-            <p>148 opiniones en Google</p>
+            <p>158 opiniones en Google</p>
           </div>
         </div>
         <TrustindexWidget variant="home" />
