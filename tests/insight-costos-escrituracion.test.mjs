@@ -70,6 +70,7 @@ test('presenta 5% como referencia operativa y no como tasa legal', () => {
   assert.match(insight.directAnswer, /4\.1% y 4\.7%/);
   assert.match(insight.directAnswer, /4\.9% y 5\.3%/);
   assert.match(fullText, /no una tasa legal ni una cotización/i);
+  assert.match(fullText, /alrededor de 1%/);
   assert.match(fullText, /alerta catastral/);
   assert.match(fullText, /derechos de registro sobre compraventa/);
   assert.deepEqual(sections.get('ejemplo-practico').paragraphs, [
