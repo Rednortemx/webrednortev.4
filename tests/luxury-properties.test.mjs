@@ -19,7 +19,9 @@ test('la página pública incluye metadatos, filtros acotados y estado de contin
     'utf8',
   );
 
-  assert.match(page, /canonical: '\/propiedades\/luxury'/);
+  assert.match(page, /canonical = page > 1/);
+  assert.match(page, /: '\/propiedades\/luxury'/);
+  assert.match(page, /alternates: \{ canonical \}/);
   assert.match(page, /basePath="\/propiedades\/luxury"/);
   assert.match(page, /operacion: 'Venta'/);
   assert.match(page, /categoria: 'Residencial'/);
