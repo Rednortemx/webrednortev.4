@@ -68,6 +68,7 @@ test('Inversión incluye compra, renta segura y valoración en contextos natural
 
   assert.deepEqual(links.map(({ anchor, href }) => [anchor, href]), [
     ['proceso para comprar una propiedad en Monterrey', '/insights/como-comprar-propiedad-monterrey'],
+    ['asesoría inmobiliaria industrial en Monterrey y Nuevo León', '/servicios/inmobiliaria-industrial'],
     ['cómo rentar una propiedad de forma segura en Nuevo León', '/insights/como-rentar-propiedad-segura-nuevo-leon'],
     ['cómo estimar el valor de una casa en Monterrey', '/insights/cuanto-vale-mi-casa-monterrey'],
   ]);
