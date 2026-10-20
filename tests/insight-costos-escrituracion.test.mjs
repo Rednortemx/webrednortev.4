@@ -61,14 +61,39 @@ test('conserva la tasa, base legal, ejemplos y disclaimer del ISAI', () => {
   );
 });
 
+test('presenta 5% como referencia operativa y no como tasa legal', () => {
+  const insight = getInsight(slug);
+  const sections = new Map(insight.sections.map((section) => [section.id, section]));
+  const fullText = JSON.stringify(insight);
+
+  assert.match(insight.directAnswer, /alrededor de 5%/);
+  assert.match(insight.directAnswer, /4\.1% y 4\.7%/);
+  assert.match(insight.directAnswer, /4\.9% y 5\.3%/);
+  assert.match(fullText, /no una tasa legal ni una cotización/i);
+  assert.match(fullText, /alerta catastral/);
+  assert.match(fullText, /derechos de registro sobre compraventa/);
+  assert.deepEqual(sections.get('ejemplo-practico').paragraphs, [
+    'En una de las cotizaciones de compraventa de contado revisadas por Rednorte, para una operación de $3,000,000 el ISAI fue de $90,000.',
+    'Los impuestos y derechos, incluyendo el ISAI, sumaron $109,394; los honorarios notariales más IVA fueron $27,492; y el total cotizado fue $136,886.',
+    'Ese total equivale aproximadamente a 4.56% del valor de la operación. Es un ejemplo real de referencia, no una tarifa aplicable a todas las compraventas ni una cotización vigente para otro inmueble.',
+  ]);
+  assert.match(
+    insight.faqs.find(({ question }) => question === '¿Cuánto cuesta escriturar una casa en Monterrey?').answer,
+    /alrededor de 5%/,
+  );
+});
+
 test('incluye metodología, fuentes oficiales y todos los enlaces autorizados', () => {
   const insight = getInsight(slug);
   const buying = getInsight('como-comprar-propiedad-monterrey');
   const links = allContextualLinks(insight);
   const buyingLinks = allContextualLinks(buying);
 
-  assert.equal(insight.sections.find(({ id }) => id === 'metodologia').bullets.length, 4);
+  assert.equal(insight.sections.find(({ id }) => id === 'metodologia').bullets.length, 5);
   assert.equal(insight.sources[0].type, 'official');
+  assert.ok(insight.sources.some(({ type, label }) => (
+    type === 'internal' && /cinco cotizaciones notariales/.test(label)
+  )));
   assert.match(insight.sources[0].label, /artículo 28 Bis/);
   assert.ok(links.some(({ anchor, href }) => (
     anchor === 'cómo comprar una propiedad en Monterrey'
