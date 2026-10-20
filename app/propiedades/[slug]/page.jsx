@@ -10,7 +10,7 @@ import { getAdvisorForProperty, defaultAdvisor } from '@/lib/advisor';
 import { buildPropertySlug, extractCodeFromSlug } from '@/lib/slug';
 import { buildPropertyMetaDescription, buildPropertySeoTitle } from '@/lib/propertySeo';
 import { getRelatedProperties } from '@/lib/propertyRelations';
-import { findLandingForProperty } from '@/lib/propertyLandingPages';
+import { getLandingsForProperty } from '@/lib/propertyLandingPages';
 import { propertyListingSchema, breadcrumbSchema } from '@/lib/schema';
 import { getCanonicalSiteUrl, serializeJsonLd } from '@/lib/security';
 
@@ -76,7 +76,7 @@ export default async function PropiedadPage({ params }) {
 
   const advisor = (await getAdvisorForProperty(property.id)) || defaultAdvisor();
   const similar = getRelatedProperties(property, properties);
-  const inventoryLanding = findLandingForProperty(property);
+  const inventoryLandings = getLandingsForProperty(property);
   const isRenta = property.op === 'Renta';
 
   const feats = [
@@ -150,10 +150,12 @@ export default async function PropiedadPage({ params }) {
                 </div>
               </section>
               <PropertyMap property={property} />
-              {inventoryLanding && (
+              {inventoryLandings.length > 0 && (
                 <nav className="property-context-link" aria-label="Más inventario relacionado">
                   <span>Explora más opciones</span>
-                  <Link href={inventoryLanding.path}>{inventoryLanding.heading} →</Link>
+                  {inventoryLandings.map((landing) => (
+                    <Link key={landing.path} href={landing.path}>{landing.heading} →</Link>
+                  ))}
                 </nav>
               )}
             </div>
