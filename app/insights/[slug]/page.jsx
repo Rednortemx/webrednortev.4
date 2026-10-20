@@ -18,7 +18,9 @@ export async function generateMetadata({ params }) {
   if (!insight) return {};
 
   return {
-    title: insight.seoTitle || insight.title,
+    title: insight.seoTitleAbsolute
+      ? { absolute: insight.seoTitle || insight.title }
+      : insight.seoTitle || insight.title,
     description: insight.description,
     alternates: { canonical: `/insights/${insight.slug}` },
     openGraph: {
@@ -157,7 +159,7 @@ export default async function InsightPage({ params }) {
             <InsightSources sources={insight.sources} />
             <InsightAuthor author={author} />
             <PreferredSourceBadge />
-            <InsightRelated insights={related} />
+            <InsightRelated insights={related} title={insight.relatedTitle} />
           </div>
         </main>
       </article>
