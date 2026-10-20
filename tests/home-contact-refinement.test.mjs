@@ -45,8 +45,9 @@ test('Inicio alinea servicios y evita datos visuales desactualizados', async () 
 
   assert.doesNotMatch(home, /equipo\.jpg/);
   assert.match(home, /nosotros-brand-panel/);
-  assert.match(reviews, /<strong>4\.6<\/strong>/);
-  assert.match(reviews, /148 opiniones en Google/);
+  assert.match(reviews, /<strong>4\.7<\/strong>/);
+  assert.match(reviews, /158 opiniones en Google/);
+  assert.match(reviews, /4\.7 de 5, basada en 158 opiniones/);
   assert.match(trustindex, /new IntersectionObserver/);
   assert.match(trustindex, /rootMargin: '320px 0px'/);
   assert.match(styles, /grid-template-columns: minmax\(0,\.72fr\) minmax\(0,1\.2fr\) minmax\(250px,\.62fr\)/);
