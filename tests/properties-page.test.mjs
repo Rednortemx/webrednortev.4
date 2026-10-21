@@ -60,9 +60,24 @@ test('muestra 18 propiedades y permite cargar bloques adicionales sin perder enl
   assert.match(styles, /\.btn-load-more-properties/);
 });
 
-test('la ficha individual oculta recámaras cuando la propiedad reporta cero', async () => {
+test('la ficha individual omite características sin un valor positivo', async () => {
   const detail = await readFile(new URL('../app/propiedades/[slug]/page.jsx', import.meta.url), 'utf8');
 
   assert.match(detail, /property\.rooms > 0 \? \[\{ val: property\.rooms, name: 'Recámaras' \}\] : \[\]/);
-  assert.doesNotMatch(detail, /^\s*\{ val: property\.rooms, name: 'Recámaras' \},$/m);
+  assert.match(detail, /property\.baths > 0 \? \[\{ val: property\.baths, name: 'Baños' \}\] : \[\]/);
+  assert.match(detail, /property\.parking > 0 \? \[\{ val: property\.parking, name: 'Estacionamientos' \}\] : \[\]/);
+  assert.match(detail, /property\.lotSize > 0 \? \[\{ val: `\$\{property\.lotSize\} m²`, name: 'Terreno' \}\] : \[\]/);
+  assert.match(detail, /property\.constructionSize > 0 \? \[\{ val: `\$\{property\.constructionSize\} m²`, name: 'Construcción' \}\] : \[\]/);
+  assert.doesNotMatch(detail, /val: property\.(?:rooms|baths|parking), name: '[^']+' \},$/m);
+  assert.doesNotMatch(detail, /\? `\$\{property\.(?:lotSize|constructionSize)\} m²` : '—'/);
+});
+
+test('las tarjetas evalúan cada característica de manera independiente', async () => {
+  const card = await readFile(new URL('../components/PropertyCard.jsx', import.meta.url), 'utf8');
+
+  assert.match(card, /p\.rooms > 0 && <div className="prop-feat">\{p\.rooms\} rec<\/div>/);
+  assert.match(card, /p\.baths > 0 && <div className="prop-feat">\{p\.baths\} baños<\/div>/);
+  assert.match(card, /surface > 0 && <div className="prop-feat">\{surface\} m²<\/div>/);
+  assert.match(card, /p\.parking > 0 && <div className="prop-feat">\{p\.parking\} cajones<\/div>/);
+  assert.doesNotMatch(card, /p\.rooms > 0 \? \(/);
 });

@@ -74,18 +74,10 @@ export default function PropertyCard({ property }) {
           <div className="prop-price">{p.price}</div>
           <div className="prop-title">{p.title}</div>
           <div className="prop-features">
-            {p.rooms > 0 ? (
-              <>
-                <div className="prop-feat">{p.rooms} rec</div>
-                <div className="prop-feat">{p.baths} baños</div>
-                {surface > 0 && <div className="prop-feat">{surface} m²</div>}
-              </>
-            ) : (
-              <>
-                {surface > 0 && <div className="prop-feat">{surface} m²</div>}
-                {p.parking > 0 && <div className="prop-feat">{p.parking} cajones</div>}
-              </>
-            )}
+            {p.rooms > 0 && <div className="prop-feat">{p.rooms} rec</div>}
+            {p.baths > 0 && <div className="prop-feat">{p.baths} baños</div>}
+            {surface > 0 && <div className="prop-feat">{surface} m²</div>}
+            {p.parking > 0 && <div className="prop-feat">{p.parking} cajones</div>}
           </div>
           <div className="prop-card-footer">
             <span>{isRenta ? 'Precio mensual' : 'Precio de venta'}</span>

@@ -81,10 +81,10 @@ export default async function PropiedadPage({ params }) {
 
   const feats = [
     ...(property.rooms > 0 ? [{ val: property.rooms, name: 'Recámaras' }] : []),
-    { val: property.baths, name: 'Baños' },
-    { val: property.parking, name: 'Estacionamientos' },
-    { val: property.lotSize ? `${property.lotSize} m²` : '—', name: 'Terreno' },
-    { val: property.constructionSize ? `${property.constructionSize} m²` : '—', name: 'Construcción' },
+    ...(property.baths > 0 ? [{ val: property.baths, name: 'Baños' }] : []),
+    ...(property.parking > 0 ? [{ val: property.parking, name: 'Estacionamientos' }] : []),
+    ...(property.lotSize > 0 ? [{ val: `${property.lotSize} m²`, name: 'Terreno' }] : []),
+    ...(property.constructionSize > 0 ? [{ val: `${property.constructionSize} m²`, name: 'Construcción' }] : []),
     { val: property.municipio || (property.zone || '').split(',')[0], name: 'Municipio' },
   ];
 
