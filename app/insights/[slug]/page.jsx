@@ -82,7 +82,7 @@ export default async function InsightPage({ params }) {
           '@type': 'Thing',
           name,
         })),
-        spatialCoverage: insight.spatialCoverage
+        spatialCoverage: insight.spatialCoverage && insight.schemaSpatialCoverage !== false
           ? { '@type': 'Place', name: insight.spatialCoverage }
           : undefined,
         ...(insight.image ? { image: `https://www.rednorte.mx${insight.image}` } : {}),
