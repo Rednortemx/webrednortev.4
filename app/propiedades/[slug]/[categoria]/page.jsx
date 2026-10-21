@@ -198,6 +198,7 @@ export default async function PropertyLandingPage({ params, searchParams }) {
         <section className="property-landing-editorial">
           <h2>{landing.editorial.title}</h2>
           <p>{landing.editorial.copy}</p>
+          {landing.editorial.paragraphs?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
           {landing.editorial.links ? (
             landing.editorial.links.map((item) => (
               <p key={item.href}>
