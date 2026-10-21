@@ -29,6 +29,11 @@ test('publica el Insight con slug, metadata, canonical editorial y H1 aprobados'
     'Precios de renta cerca de Distrito Armida, Haciendas de la Sierra y Valle Oriente: medianas, rangos, recámaras, precio por m² y metodología Rednorte.',
   );
   assert.equal(insight.updatedAt, '2026-10-20');
+  assert.equal(insight.schemaSpatialCoverage, false);
+  assert.equal(
+    insight.spatialCoverage,
+    'Distrito Armida, Haciendas de la Sierra y Valle Oriente, San Pedro Garza García, Nuevo León',
+  );
   assert.equal(
     `/insights/${insight.slug}`,
     '/insights/cuanto-cuesta-rentar-cerca-distrito-armida',
@@ -154,5 +159,6 @@ test('mantiene metodología visible, fuentes oficiales y schemas vigentes', asyn
   assert.match(page, /'@type': 'Article'/);
   assert.match(page, /'@type': 'FAQPage'/);
   assert.match(page, /'@type': 'BreadcrumbList'/);
+  assert.match(page, /insight\.schemaSpatialCoverage !== false/);
   assert.doesNotMatch(page, /'@type': '(Dataset|StatisticalPopulation|Product|Residence|AggregateOffer)'/);
 });
