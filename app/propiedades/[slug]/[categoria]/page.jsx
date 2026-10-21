@@ -218,7 +218,7 @@ export default async function PropertyLandingPage({ params, searchParams }) {
           <span className="section-label">Asesoría inmobiliaria</span>
           <h2>¿Necesitas apoyo para encontrar la propiedad adecuada?</h2>
           <p>Te ayudamos a revisar opciones, validar información y avanzar con claridad durante el proceso.</p>
-          <Link className="btn-secondary" href={servicePath}>Conoce nuestro servicio</Link>
+          <Link className="btn-secondary" href={servicePath}>{landing.serviceCta || 'Conoce nuestro servicio'}</Link>
         </div>
         <nav aria-label="Búsquedas de propiedades relacionadas">
           <h2>Búsquedas relacionadas</h2>
