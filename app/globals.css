@@ -1748,6 +1748,13 @@ body:has(.properties-catalog-refresh) .hamburger span { background: #fff; }
 }
 .property-landing-page .active-filter-count { display: inline-flex; margin-top: .8rem; }
 .property-landing-page .catalog-filter-actions { margin-top: 1rem; }
+.property-landing-page .prop-card-footer {
+ display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+ margin-top: 1rem; padding-top: .75rem; border-top: 1px solid var(--gris-claro);
+ color: var(--gris-medio); font-size: .68rem; letter-spacing: .04em; text-transform: uppercase;
+}
+.property-landing-page .prop-card-footer strong { color: var(--negro); font-weight: 700; white-space: nowrap; }
+.property-landing-page .prop-card-footer strong span { color: var(--terracota); }
 
 .properties-catalog-refresh .props-results { margin-top: clamp(3.5rem,7vw,6rem); }
 .properties-catalog-refresh .props-header { margin-bottom: 1.7rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(23,19,15,.18); }
