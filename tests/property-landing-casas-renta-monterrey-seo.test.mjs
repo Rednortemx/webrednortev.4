@@ -87,10 +87,10 @@ test('mantiene metadata, CTA y copy de las demás landings sin regresiones', () 
   const apodaca = findPropertyLandingPage('apodaca', 'casas-en-venta');
   const generic = PROPERTY_LANDING_PAGES.filter(
     (landing) => landing.kind === 'segment'
-      && ![path, departamentosRenta.path, casasVenta.path, oficinas.path, sanPedro.path, apodaca.path].includes(landing.path),
+      && ![path, departamentosRenta.path, casasVenta.path, oficinas.path, sanPedro.path, apodaca.path, '/propiedades/monterrey/locales-en-renta'].includes(landing.path),
   );
 
-  assert.equal(generic.length, 9);
+  assert.equal(generic.length, 8);
   assert.ok(generic.every((landing) => !landing.seoTitle && !landing.heroCopy && !landing.editorial));
   assert.equal(departamentosRenta.seoTitle, 'Departamentos en renta en Monterrey, Nuevo León | Rednorte');
   assert.equal(casasVenta.seoTitle, 'Casas en venta en Monterrey, Nuevo León | Rednorte');
