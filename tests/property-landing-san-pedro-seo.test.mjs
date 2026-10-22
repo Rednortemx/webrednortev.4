@@ -62,11 +62,12 @@ test('las demás landings mantienen su metadata y copy genéricos', () => {
       && landing.path !== '/propiedades/monterrey/oficinas-en-renta'
       && landing.path !== '/propiedades/monterrey/casas-en-venta'
       && landing.path !== '/propiedades/monterrey/departamentos-en-renta'
-      && landing.path !== '/propiedades/monterrey/casas-en-renta',
+      && landing.path !== '/propiedades/monterrey/casas-en-renta'
+      && landing.path !== '/propiedades/monterrey/locales-en-renta',
   );
   const monterrey = findPropertyLandingPage('monterrey', 'departamentos-en-renta');
 
-  assert.equal(others.length, 9);
+  assert.equal(others.length, 8);
   assert.ok(others.every((landing) => !landing.seoTitle && !landing.heroCopy && !landing.editorial));
   assert.equal(monterrey.heading, 'Departamentos en renta en Monterrey');
   assert.equal(
