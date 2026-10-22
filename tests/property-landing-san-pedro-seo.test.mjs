@@ -60,15 +60,16 @@ test('las demás landings mantienen su metadata y copy genéricos', () => {
       && landing.path !== path
       && landing.path !== '/propiedades/apodaca/casas-en-venta'
       && landing.path !== '/propiedades/monterrey/oficinas-en-renta'
-      && landing.path !== '/propiedades/monterrey/casas-en-venta',
+      && landing.path !== '/propiedades/monterrey/casas-en-venta'
+      && landing.path !== '/propiedades/monterrey/departamentos-en-renta',
   );
   const monterrey = findPropertyLandingPage('monterrey', 'departamentos-en-renta');
 
-  assert.equal(others.length, 11);
+  assert.equal(others.length, 10);
   assert.ok(others.every((landing) => !landing.seoTitle && !landing.heroCopy && !landing.editorial));
   assert.equal(monterrey.heading, 'Departamentos en renta en Monterrey');
   assert.equal(
     monterrey.description,
-    'Explora departamentos en renta en Monterrey, Nuevo León. Compara ubicación, precio, superficie y características en el inventario inmobiliario de Rednorte.',
+    'Departamentos en renta en Monterrey, Nuevo León. Consulta opciones disponibles, precios, zonas, recámaras, amenidades y características con Rednorte.',
   );
 });

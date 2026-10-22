@@ -74,12 +74,13 @@ test('no cambia metadata, hero ni CTA de las otras landings', () => {
       && landing.path !== path
       && landing.path !== '/propiedades/san-pedro-garza-garcia/departamentos-en-renta'
       && landing.path !== '/propiedades/monterrey/oficinas-en-renta'
-      && landing.path !== '/propiedades/monterrey/casas-en-venta',
+      && landing.path !== '/propiedades/monterrey/casas-en-venta'
+      && landing.path !== '/propiedades/monterrey/departamentos-en-renta',
   );
   const sanPedro = findPropertyLandingPage('san-pedro-garza-garcia', 'departamentos-en-renta');
   const valleOriente = findPropertyLandingPage('san-pedro-garza-garcia', 'valle-oriente');
 
-  assert.equal(others.length, 11);
+  assert.equal(others.length, 10);
   assert.ok(others.every((landing) => !landing.seoTitle && !landing.heroCopy && !landing.serviceCta));
   assert.equal(sanPedro.seoTitle, 'Departamentos en renta en San Pedro Garza García | Rednorte');
   assert.equal(sanPedro.serviceCta, undefined);
