@@ -77,14 +77,15 @@ test('conserva canonical, indexabilidad, filtros, paginación y schemas de catá
 test('mantiene intactas las demás landings configuradas', () => {
   const apodaca = findPropertyLandingPage('apodaca', 'casas-en-venta');
   const casasMonterrey = findPropertyLandingPage('monterrey', 'casas-en-venta');
+  const departamentosRenta = findPropertyLandingPage('monterrey', 'departamentos-en-renta');
   const sanPedro = findPropertyLandingPage('san-pedro-garza-garcia', 'departamentos-en-renta');
   const valleOriente = findPropertyLandingPage('san-pedro-garza-garcia', 'valle-oriente');
   const generic = PROPERTY_LANDING_PAGES.filter(
     (landing) => landing.kind === 'segment'
-      && ![path, apodaca.path, casasMonterrey.path, sanPedro.path].includes(landing.path),
+      && ![path, apodaca.path, casasMonterrey.path, departamentosRenta.path, sanPedro.path].includes(landing.path),
   );
 
-  assert.equal(generic.length, 11);
+  assert.equal(generic.length, 10);
   assert.ok(generic.every((landing) => !landing.seoTitle && !landing.heroCopy && !landing.editorial));
   assert.equal(casasMonterrey.seoTitle, 'Casas en venta en Monterrey, Nuevo León | Rednorte');
   assert.match(casasMonterrey.heroCopy, /Consulta casas en venta actualmente disponibles/);

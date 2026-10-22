@@ -77,14 +77,15 @@ test('conserva canonical, indexabilidad, filtros, paginación y schemas de catá
 
 test('mantiene metadata y copy de las demás landings sin regresiones', () => {
   const apodaca = findPropertyLandingPage('apodaca', 'casas-en-venta');
+  const departamentosRenta = findPropertyLandingPage('monterrey', 'departamentos-en-renta');
   const offices = findPropertyLandingPage('monterrey', 'oficinas-en-renta');
   const sanPedro = findPropertyLandingPage('san-pedro-garza-garcia', 'departamentos-en-renta');
   const generic = PROPERTY_LANDING_PAGES.filter(
     (landing) => landing.kind === 'segment'
-      && ![path, apodaca.path, offices.path, sanPedro.path].includes(landing.path),
+      && ![path, apodaca.path, departamentosRenta.path, offices.path, sanPedro.path].includes(landing.path),
   );
 
-  assert.equal(generic.length, 11);
+  assert.equal(generic.length, 10);
   assert.ok(generic.every((landing) => !landing.seoTitle && !landing.heroCopy && !landing.editorial));
   assert.equal(apodaca.seoTitle, 'Casas en venta en Apodaca, Nuevo León | Rednorte');
   assert.equal(offices.seoTitle, 'Oficinas en renta en Monterrey, Nuevo León | Rednorte');
