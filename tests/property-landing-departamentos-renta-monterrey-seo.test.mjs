@@ -80,7 +80,7 @@ test('no altera metadata editorial de las demás landings', () => {
   const sanPedro = findPropertyLandingPage('san-pedro-garza-garcia', 'departamentos-en-renta');
   const generic = PROPERTY_LANDING_PAGES.filter(
     (landing) => landing.kind === 'segment'
-      && ![path, casas.path, oficinas.path, sanPedro.path, '/propiedades/apodaca/casas-en-venta'].includes(landing.path),
+      && ![path, casas.path, oficinas.path, sanPedro.path, '/propiedades/apodaca/casas-en-venta', '/propiedades/monterrey/casas-en-renta'].includes(landing.path),
   );
 
   assert.equal(casas.seoTitle, 'Casas en venta en Monterrey, Nuevo León | Rednorte');

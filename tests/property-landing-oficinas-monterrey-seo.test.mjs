@@ -82,10 +82,10 @@ test('mantiene intactas las demás landings configuradas', () => {
   const valleOriente = findPropertyLandingPage('san-pedro-garza-garcia', 'valle-oriente');
   const generic = PROPERTY_LANDING_PAGES.filter(
     (landing) => landing.kind === 'segment'
-      && ![path, apodaca.path, casasMonterrey.path, departamentosRenta.path, sanPedro.path].includes(landing.path),
+      && ![path, apodaca.path, casasMonterrey.path, departamentosRenta.path, sanPedro.path, '/propiedades/monterrey/casas-en-renta'].includes(landing.path),
   );
 
-  assert.equal(generic.length, 10);
+  assert.equal(generic.length, 9);
   assert.ok(generic.every((landing) => !landing.seoTitle && !landing.heroCopy && !landing.editorial));
   assert.equal(casasMonterrey.seoTitle, 'Casas en venta en Monterrey, Nuevo León | Rednorte');
   assert.match(casasMonterrey.heroCopy, /Consulta casas en venta actualmente disponibles/);
