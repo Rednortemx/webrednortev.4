@@ -7,11 +7,16 @@ import { estilosEstimacion } from '@/components/servicios/estilosEstimacion';
 import { breadcrumbSchema } from '@/lib/schema';
 
 export const metadata = {
-  title: 'Estimación de valor inmobiliario en Monterrey',
+  title: { absolute: 'Estimación de valor de propiedad en Monterrey | Rednorte' },
   description:
-    'Conoce un rango orientativo del valor de venta de tu propiedad en Monterrey y Nuevo León. Analizamos ubicación, características, comparables y condiciones del mercado. No sustituye un avalúo.',
+    'Obtén una estimación inicial del valor de tu propiedad en Monterrey. Analizamos ubicación y características para darte una primera referencia comercial.',
   alternates: { canonical: '/servicios/estimacion-de-valor' },
 };
+
+const contenidoEstimacionSeo = contenidoEstimacion.replace(
+  '<p class="estimate-service-hero-disclaimer">La estimación es informativa y no sustituye un avalúo profesional, bancario, fiscal, judicial o catastral.</p>',
+  '<p class="estimate-service-hero-disclaimer">La estimación es informativa y no sustituye un avalúo profesional, bancario, fiscal, judicial o catastral.</p><p class="estimate-service-hero-support">¿Quieres entender cómo se estima el valor de una casa? Consulta nuestra guía sobre <a href="/insights/cuanto-vale-mi-casa-monterrey">cuánto vale una casa en Monterrey</a>.</p>',
+);
 
 // Datos estructurados del servicio. Se declara como Service y no como
 // producto: es asesoria, no algo que se compre en linea.
@@ -47,7 +52,7 @@ export default function EstimacionDeValorServicioPage() {
       <Breadcrumb items={[{ label: 'Servicios', href: '/servicios' }, { label: 'Estimación de valor' }]} />
       <ServiceEditorialNav active="other" />
       <ServicePage
-        contenido={contenidoEstimacion}
+        contenido={contenidoEstimacionSeo}
         estilos={estilosEstimacion}
         className="estimate-service-page"
       />
