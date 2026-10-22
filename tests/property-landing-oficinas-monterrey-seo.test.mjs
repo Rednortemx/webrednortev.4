@@ -86,8 +86,8 @@ test('mantiene intactas las demás landings configuradas', () => {
 
   assert.equal(generic.length, 11);
   assert.ok(generic.every((landing) => !landing.seoTitle && !landing.heroCopy && !landing.editorial));
-  assert.equal(casasMonterrey.seoTitle, undefined);
-  assert.equal(casasMonterrey.heroCopy, undefined);
+  assert.equal(casasMonterrey.seoTitle, 'Casas en venta en Monterrey, Nuevo León | Rednorte');
+  assert.match(casasMonterrey.heroCopy, /Consulta casas en venta actualmente disponibles/);
   assert.equal(casasMonterrey.editorial.linkHref, '/insights/cuanto-cuesta-comprar-casa-monterrey');
   assert.equal(apodaca.servicePath, undefined);
   assert.equal(apodaca.serviceCta, 'Quiero comprar una propiedad');
