@@ -35,6 +35,7 @@ test('el cluster de propietarios conserva sus tres URLs canónicas', async () =>
 test('cada pieza enlaza contextualmente a las otras dos con anchors descriptivos', () => {
   const expected = {
     'cuanto-vale-mi-casa-monterrey': [
+      ['estimación de valor de Rednorte', '/servicios/estimacion-de-valor'],
       ['evaluar qué tan vendible es una propiedad', '/insights/que-tan-vendible-es-una-propiedad'],
       ['cómo vender una propiedad en Monterrey', '/insights/como-vender-propiedad-monterrey'],
     ],
@@ -51,7 +52,7 @@ test('cada pieza enlaza contextualmente a las otras dos con anchors descriptivos
 
   for (const slug of CLUSTER) {
     const links = contextualLinks(getInsight(slug));
-    assert.equal(links.length, slug === 'como-vender-propiedad-monterrey' ? 3 : 2);
+    assert.equal(links.length, slug === 'como-vender-propiedad-monterrey' ? 3 : slug === 'cuanto-vale-mi-casa-monterrey' ? 3 : 2);
     assert.deepEqual(links.map(({ anchor, href }) => [anchor, href]), expected[slug]);
     assert.ok(links.every((link) => !/haz clic|aquí/i.test(link.anchor)));
   }
@@ -85,6 +86,7 @@ test('los otros dos H1 y SEO titles permanecen sin cambios', () => {
 
   assert.equal(value.title, '¿Cuánto vale mi casa en Monterrey en 2026? Cómo estimar su valor');
   assert.equal(value.seoTitle, '¿Cuánto vale mi casa en Monterrey en 2026? | Rednorte');
+  assert.equal(value.seoTitleAbsolute, true);
   assert.equal(sellability.title, 'Qué tan vendible es una propiedad y cómo mejorarla: precio, presentación y estrategia');
   assert.equal(sellability.seoTitle, 'Qué tan vendible es una propiedad y cómo mejorarlo | Rednorte');
 });
