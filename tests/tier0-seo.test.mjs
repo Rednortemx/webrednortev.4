@@ -7,7 +7,7 @@ import {
   canonicalOriginRedirect,
 } from '../lib/canonical.js';
 import { getCanonicalSiteUrl } from '../lib/security.js';
-import { extractLegacyCode, legacyCategoryTarget, REDIRECTS_ESTATICOS } from '../lib/legacy.js';
+import { extractLegacyCode, legacyCategoryTarget, legacyPropertyStatus, REDIRECTS_ESTATICOS } from '../lib/legacy.js';
 import { buildPropertySlug, extractCodeFromSlug } from '../lib/slug.js';
 
 test('el origen canónico es HTTPS con www y no depende del entorno', () => {
@@ -56,6 +56,25 @@ test('las fichas legacy se identifican sólo por código y las categorías conse
     '/propiedades?operacion=Renta&tipo=Bodega&zona=Santa+Catarina',
   );
   assert.equal(REDIRECTS_ESTATICOS['/properties'], '/propiedades');
+});
+
+test('la resolución legacy distingue ficha vigente, retirada y caída temporal del inventario', () => {
+  const vigente = { id: 'NN-ABC123' };
+
+  assert.equal(legacyPropertyStatus('live', vigente), 'redirect');
+  assert.equal(legacyPropertyStatus('live', null), 'not-found');
+  assert.equal(legacyPropertyStatus('fallback', vigente), 'unavailable');
+  assert.equal(legacyPropertyStatus('fallback', null), 'unavailable');
+});
+
+test('la ruta legacy sólo devuelve 404 para códigos ausentes del inventario vivo', async () => {
+  const page = await readFile(new URL('../app/propiedad/[...slug]/page.jsx', import.meta.url), 'utf8');
+
+  assert.match(page, /const \{ properties, source \} = await fetchAllProperties\(\)/);
+  assert.match(page, /legacyPropertyStatus\(source, property\)/);
+  assert.match(page, /status === 'unavailable'[\s\S]*throw new Error/);
+  assert.match(page, /status === 'redirect'[\s\S]*permanentRedirect/);
+  assert.match(page, /notFound\(\)/);
 });
 
 test('cada código produce una sola ficha canónica aunque cambien las palabras del slug', () => {

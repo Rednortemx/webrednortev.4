@@ -1,7 +1,7 @@
 import { permanentRedirect, notFound } from 'next/navigation';
 import { fetchAllProperties, findPropertyById } from '@/lib/properties';
 import { buildPropertySlug } from '@/lib/slug';
-import { extractLegacyCode, legacyCategoryTarget } from '@/lib/legacy';
+import { extractLegacyCode, legacyCategoryTarget, legacyPropertyStatus } from '@/lib/legacy';
 
 // Todas las URLs viejas que cuelgan de /propiedad/.
 //
@@ -25,9 +25,16 @@ export default async function LegacyPropiedadRedirect({ params }) {
 
   const codigo = extractLegacyCode(ruta);
   if (codigo) {
-    const { properties } = await fetchAllProperties();
+    const { properties, source } = await fetchAllProperties();
     const property = findPropertyById(properties, codigo);
-    if (property) {
+    const status = legacyPropertyStatus(source, property);
+    if (status === 'unavailable') {
+      // No podemos afirmar que la ficha fue retirada si NocNok no respondió
+      // y sólo recibimos el fallback local. Un error temporal no debe acabar
+      // convertido en un 404 de legacy.
+      throw new Error(`Inventario vivo no disponible para resolver ${codigo}`);
+    }
+    if (status === 'redirect') {
       permanentRedirect(`/propiedades/${buildPropertySlug(property)}`);
     }
     // La URL era una ficha, pero esa propiedad ya se retiró. Aquí se corta:

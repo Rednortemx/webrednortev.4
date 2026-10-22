@@ -109,7 +109,6 @@ export default async function TeamMemberPage({ params }) {
         '@id': `https://www.rednorte.mx/equipo/${member.slug}#profile`,
         url: `https://www.rednorte.mx/equipo/${member.slug}`,
         name: `${member.name} | Rednorte Inmobiliaria`,
-        dateModified: '2026-09-04',
         mainEntity: personSchema,
       },
       {
