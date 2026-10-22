@@ -39,6 +39,7 @@ test('cada pieza enlaza contextualmente a las otras dos con anchors descriptivos
       ['cómo vender una propiedad en Monterrey', '/insights/como-vender-propiedad-monterrey'],
     ],
     'como-vender-propiedad-monterrey': [
+      ['servicio para vender una propiedad en Monterrey', '/servicios/vender-propiedad'],
       ['cómo estimar cuánto vale una casa en Monterrey', '/insights/cuanto-vale-mi-casa-monterrey'],
       ['evaluar qué tan vendible es una propiedad', '/insights/que-tan-vendible-es-una-propiedad'],
     ],
@@ -50,7 +51,7 @@ test('cada pieza enlaza contextualmente a las otras dos con anchors descriptivos
 
   for (const slug of CLUSTER) {
     const links = contextualLinks(getInsight(slug));
-    assert.equal(links.length, 2);
+    assert.equal(links.length, slug === 'como-vender-propiedad-monterrey' ? 3 : 2);
     assert.deepEqual(links.map(({ anchor, href }) => [anchor, href]), expected[slug]);
     assert.ok(links.every((link) => !/haz clic|aquí/i.test(link.anchor)));
   }
@@ -69,11 +70,13 @@ test('Cómo vender cambia sólo metadata y mantiene su H1 editorial', () => {
   const insight = getInsight('como-vender-propiedad-monterrey');
 
   assert.equal(insight.title, 'Cómo vender una propiedad en Monterrey: proceso, costos y tiempos');
-  assert.equal(insight.seoTitle, 'Cómo vender una casa o propiedad en Monterrey en 2026 | Rednorte');
-  assert.equal(insight.description, 'Pasos para vender una casa o propiedad en Monterrey: documentos, estimación de valor, precio, comisión, costos, tiempos, negociación y cierre.');
+  assert.equal(insight.seoTitle, 'Cómo vender una propiedad en Monterrey en 2026 | Rednorte');
+  assert.equal(insight.description, 'Guía para vender una propiedad en Monterrey en 2026: precio, documentos, comisión inmobiliaria, tiempos, promoción, negociación y cierre.');
   assert.equal(insight.seoTitleAbsolute, true);
-  assert.equal(insight.seoTitle.length, 64);
-  assert.equal(insight.description.length, 142);
+  assert.equal(insight.seoTitle.length, 57);
+  assert.equal(insight.description.length, 137);
+  assert.match(insight.directAnswer, /atender y perfilar interesados/);
+  assert.match(insight.directAnswer, /notaría, bancos y demás participantes/);
 });
 
 test('los otros dos H1 y SEO titles permanecen sin cambios', () => {

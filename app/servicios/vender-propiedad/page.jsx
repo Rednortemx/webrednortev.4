@@ -6,24 +6,24 @@ import ServiceEditorialNav from '@/components/servicios/ServiceEditorialNav';
 import { SITE_CONTACT } from '@/lib/siteConfig';
 
 export const metadata = {
-  title: 'Vender una propiedad en Monterrey',
+  title: 'Inmobiliaria para vender tu propiedad en Monterrey | Rednorte',
   description:
-    'Vende tu casa, departamento, terreno o inmueble comercial en Monterrey con estrategia de precio, promoción, negociación y acompañamiento de Rednorte.',
+    'Vende tu casa, departamento, terreno o inmueble en Monterrey con Rednorte. Estrategia de precio, promoción, prospectos, negociación y acompañamiento al cierre.',
   alternates: {
     canonical: '/servicios/vender-propiedad',
   },
   openGraph: {
-    title: 'Vende tu propiedad con estrategia | Rednorte Inmobiliaria',
+    title: 'Inmobiliaria para vender tu propiedad en Monterrey | Rednorte',
     description:
-      'Analizamos valor, vendibilidad, presentación, promoción y negociación para posicionar tu propiedad en el mercado de Monterrey.',
+      'Vende tu casa, departamento, terreno o inmueble en Monterrey con Rednorte. Estrategia de precio, promoción, prospectos, negociación y acompañamiento al cierre.',
     url: '/servicios/vender-propiedad',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Vende tu propiedad con estrategia | Rednorte Inmobiliaria',
+    title: 'Inmobiliaria para vender tu propiedad en Monterrey | Rednorte',
     description:
-      'Analizamos valor, vendibilidad, presentación, promoción y negociación para posicionar tu propiedad en el mercado de Monterrey.',
+      'Vende tu casa, departamento, terreno o inmueble en Monterrey con Rednorte. Estrategia de precio, promoción, prospectos, negociación y acompañamiento al cierre.',
   },
 };
 
@@ -344,6 +344,9 @@ export default function VenderPropiedadPage() {
                 <p>Seleccionamos canales, atendemos prospectos, coordinamos visitas y ajustamos la estrategia según la respuesta real del mercado.</p>
               </article>
             </div>
+            <p className="sell-callout-note">
+              ¿Quieres entender primero el proceso? Consulta nuestra guía sobre <Link href="/insights/como-vender-propiedad-monterrey">cómo vender una propiedad en Monterrey</Link>.
+            </p>
           </div>
         </section>
 
