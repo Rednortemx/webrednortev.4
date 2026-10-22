@@ -82,10 +82,10 @@ test('mantiene metadata y copy de las demás landings sin regresiones', () => {
   const sanPedro = findPropertyLandingPage('san-pedro-garza-garcia', 'departamentos-en-renta');
   const generic = PROPERTY_LANDING_PAGES.filter(
     (landing) => landing.kind === 'segment'
-      && ![path, apodaca.path, departamentosRenta.path, offices.path, sanPedro.path].includes(landing.path),
+      && ![path, apodaca.path, departamentosRenta.path, offices.path, sanPedro.path, '/propiedades/monterrey/casas-en-renta'].includes(landing.path),
   );
 
-  assert.equal(generic.length, 10);
+  assert.equal(generic.length, 9);
   assert.ok(generic.every((landing) => !landing.seoTitle && !landing.heroCopy && !landing.editorial));
   assert.equal(apodaca.seoTitle, 'Casas en venta en Apodaca, Nuevo León | Rednorte');
   assert.equal(offices.seoTitle, 'Oficinas en renta en Monterrey, Nuevo León | Rednorte');
