@@ -76,15 +76,19 @@ test('conserva canonical, indexabilidad, filtros, paginación y schemas de catá
 
 test('mantiene intactas las demás landings configuradas', () => {
   const apodaca = findPropertyLandingPage('apodaca', 'casas-en-venta');
+  const casasMonterrey = findPropertyLandingPage('monterrey', 'casas-en-venta');
   const sanPedro = findPropertyLandingPage('san-pedro-garza-garcia', 'departamentos-en-renta');
   const valleOriente = findPropertyLandingPage('san-pedro-garza-garcia', 'valle-oriente');
   const generic = PROPERTY_LANDING_PAGES.filter(
     (landing) => landing.kind === 'segment'
-      && ![path, apodaca.path, sanPedro.path].includes(landing.path),
+      && ![path, apodaca.path, casasMonterrey.path, sanPedro.path].includes(landing.path),
   );
 
-  assert.equal(generic.length, 12);
+  assert.equal(generic.length, 11);
   assert.ok(generic.every((landing) => !landing.seoTitle && !landing.heroCopy && !landing.editorial));
+  assert.equal(casasMonterrey.seoTitle, undefined);
+  assert.equal(casasMonterrey.heroCopy, undefined);
+  assert.equal(casasMonterrey.editorial.linkHref, '/insights/cuanto-cuesta-comprar-casa-monterrey');
   assert.equal(apodaca.servicePath, undefined);
   assert.equal(apodaca.serviceCta, 'Quiero comprar una propiedad');
   assert.equal(sanPedro.servicePath, undefined);

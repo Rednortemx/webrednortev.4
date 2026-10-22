@@ -59,11 +59,12 @@ test('las demás landings mantienen su metadata y copy genéricos', () => {
     (landing) => landing.kind === 'segment'
       && landing.path !== path
       && landing.path !== '/propiedades/apodaca/casas-en-venta'
-      && landing.path !== '/propiedades/monterrey/oficinas-en-renta',
+      && landing.path !== '/propiedades/monterrey/oficinas-en-renta'
+      && landing.path !== '/propiedades/monterrey/casas-en-venta',
   );
   const monterrey = findPropertyLandingPage('monterrey', 'departamentos-en-renta');
 
-  assert.equal(others.length, 12);
+  assert.equal(others.length, 11);
   assert.ok(others.every((landing) => !landing.seoTitle && !landing.heroCopy && !landing.editorial));
   assert.equal(monterrey.heading, 'Departamentos en renta en Monterrey');
   assert.equal(

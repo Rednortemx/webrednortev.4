@@ -8,11 +8,11 @@ import {
   insights,
 } from '../lib/insights.js';
 
-test('publica diez Insights completos y relacionados de forma consistente', () => {
+test('publica once Insights completos y relacionados de forma consistente', () => {
   const published = getPublishedInsights();
   const publishedSlugs = new Set(published.map((insight) => insight.slug));
 
-  assert.equal(published.length, 10);
+  assert.equal(published.length, 11);
   assert.equal(publishedSlugs.size, published.length);
 
   for (const insight of published) {
