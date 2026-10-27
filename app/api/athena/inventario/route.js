@@ -7,12 +7,16 @@
 
 import { fetchAllProperties } from '@/lib/properties';
 import { fetchLuxuryProperties } from '@/lib/luxuryProperties';
+import { buildPropertySlug } from '@/lib/slug';
 import { json, revisarAcceso } from '@/lib/athena';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-const FICHA = 'https://www.rednorte.mx/propiedad/';
+// La canonica del sitio. El asistente manda este link al cliente, asi que
+// tiene que ser la misma que indexa Google y la que comparte un asesor: una
+// ruta legacy manda al cliente por una redireccion y se ve de segunda.
+const FICHA = 'https://www.rednorte.mx/propiedades/';
 
 // El asistente necesita describir y ubicar, no renderizar la ficha completa:
 // se queda fuera todo lo pesado (el resto de las fotos, la geolocalización)
@@ -42,7 +46,7 @@ function paraAthena(p, esLuxury) {
     description: p.description,
     features: p.features,
     img: Array.isArray(p.imgs) && p.imgs.length ? p.imgs[0] : '',
-    url: p.id ? FICHA + String(p.id).toLowerCase() : '',
+    url: p.id ? FICHA + buildPropertySlug(p) : '',
   };
 }
 
