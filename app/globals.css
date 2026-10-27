@@ -2270,6 +2270,19 @@ body:has(.property-detail-refresh) .translate-float { bottom: 4.35rem; backgroun
  body:has(.home-refresh) .translate-float { right: .75rem; }
  body:has(.home-refresh) .wa-float { bottom: .75rem; }
  body:has(.home-refresh) .translate-float { bottom: 3.8rem; }
+
+/* Athena stays above WhatsApp. The language toggle moves to the opposite
+   side so the three persistent actions never overlap. */
+body:has([data-inmobot="rednorte"]) .translate-float {
+ left: 1.25rem;
+ right: auto;
+}
+
+@media (max-width: 700px) {
+ body:has([data-inmobot="rednorte"]) .translate-float {
+  left: .75rem;
+ }
+}
  .home-refresh .prop-img { height: 230px; }
 }
 
