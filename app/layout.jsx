@@ -73,6 +73,11 @@ export default function RootLayout({ children }) {
         <GlobalModals />
         <LanguageToggle />
         <PrivacyAnalytics />
+        <script
+          src="https://athena-v00x.onrender.com/widget/inmobot.js"
+          data-inquilino="rednorte"
+          data-api="https://athena-v00x.onrender.com"
+        />
       </body>
     </html>
   );
