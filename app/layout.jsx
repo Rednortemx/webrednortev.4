@@ -11,6 +11,7 @@ import CookieBanner from '@/components/CookieBanner';
 import GlobalModals from '@/components/GlobalModals';
 import LanguageToggle from '@/components/LanguageToggle';
 import PrivacyAnalytics from '@/components/PrivacyAnalytics';
+import AthenaWidgetLayout from '@/components/AthenaWidgetLayout';
 import { organizationSchema } from '@/lib/schema';
 import { getCanonicalSiteUrl, serializeJsonLd } from '@/lib/security';
 
@@ -73,6 +74,12 @@ export default function RootLayout({ children }) {
         <GlobalModals />
         <LanguageToggle />
         <PrivacyAnalytics />
+        <script
+          src="https://athena-v00x.onrender.com/widget/inmobot.js"
+          data-inquilino="rednorte"
+          data-api="https://athena-v00x.onrender.com"
+        />
+        <AthenaWidgetLayout />
       </body>
     </html>
   );
