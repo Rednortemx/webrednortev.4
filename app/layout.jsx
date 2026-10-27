@@ -1,3 +1,4 @@
+import Script from 'next/script';
 import './globals.css';
 import './globals.services.css';
 import './globals.institutional.css';
@@ -73,6 +74,21 @@ export default function RootLayout({ children }) {
         <GlobalModals />
         <LanguageToggle />
         <PrivacyAnalytics />
+        {/*
+          Athena, la asistente que atiende por chat. Se carga despues de que
+          la pagina ya pinto (lazyOnload) para no competir con el contenido:
+          nadie abre un chat antes de ver las propiedades.
+
+          El widget se dibuja dentro de un shadow DOM, asi que los estilos
+          del sitio no lo tocan ni el los toca. data-inquilino decide de que
+          inventario lee y con que marca se presenta.
+        */}
+        <Script
+          src="https://athena-v00x.onrender.com/widget/inmobot.js"
+          data-inquilino="rednorte"
+          data-api="https://athena-v00x.onrender.com"
+          strategy="lazyOnload"
+        />
       </body>
     </html>
   );
