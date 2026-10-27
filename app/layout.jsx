@@ -1,3 +1,4 @@
+import Script from 'next/script';
 import './globals.css';
 import './globals.services.css';
 import './globals.institutional.css';
@@ -73,6 +74,13 @@ export default function RootLayout({ children }) {
         <GlobalModals />
         <LanguageToggle />
         <PrivacyAnalytics />
+        <Script
+          src="https://athena-v00x.onrender.com/widget/inmobot.js"
+          data-inquilino="rednorte"
+          data-api="https://athena-v00x.onrender.com"
+          data-launcher="false"
+          strategy="lazyOnload"
+        />
       </body>
     </html>
   );

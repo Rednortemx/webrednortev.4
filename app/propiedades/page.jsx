@@ -1,6 +1,7 @@
 import Breadcrumb from '@/components/Breadcrumb';
 import PropertyFilters from '@/components/PropertyFilters';
 import PropertyLandingDirectory from '@/components/PropertyLandingDirectory';
+import AthenaLauncher from '@/components/AthenaLauncher';
 import { fetchAllProperties, toPropertyCardData } from '@/lib/properties';
 import { PROPERTIES_PER_PAGE } from '@/lib/propertyPagination';
 import { notFound } from 'next/navigation';
@@ -108,6 +109,9 @@ export default async function PropiedadesPage({ searchParams }) {
         </div>
       </header>
       <PropertyLandingDirectory />
+      <div className="container">
+        <AthenaLauncher variant="catalog" />
+      </div>
       <PropertyFilters properties={propertyCards} initialFilters={initialFilters} />
     </div>
   );

@@ -1366,10 +1366,29 @@ body:has(.home-refresh) .hamburger span { background: #fff; }
  transition: background .2s ease, color .2s ease, transform .2s ease;
 }
 .home-hero-inventory-link:hover { background: #fff; color: #17130f; transform: translateY(-2px); }
+.athena-hero-button {
+ display: inline-flex; flex-direction: column; align-items: flex-start; gap: .25rem;
+ min-width: min(100%, 330px); padding: .9rem 1.1rem; border: 1px solid rgba(255,255,255,.34);
+ background: rgba(17,13,11,.34); color: #fff; cursor: pointer; text-align: left;
+ font-family: var(--font-poppins), sans-serif; transition: background .2s ease, border-color .2s ease, transform .2s ease;
+}
+.athena-hero-button:hover { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.72); transform: translateY(-2px); }
+.athena-hero-button-label { color: #ff9a6b; font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.athena-hero-button > span:last-child { font-size: .78rem; font-weight: 600; }
 .home-hero-inventory-note {
  max-width: 210px; color: rgba(255,255,255,.58);
  font-size: .7rem; line-height: 1.55; letter-spacing: .06em; text-transform: uppercase;
 }
+.athena-catalog-prompt {
+ display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+ margin: 0 0 2rem; padding: clamp(1.25rem, 2.5vw, 2rem); border: 1px solid #e4d8cf;
+ background: #f7f3ef;
+}
+.athena-catalog-prompt h2 { margin: .2rem 0 .4rem; color: #211712; font-size: clamp(1.2rem, 2vw, 1.55rem); }
+.athena-catalog-prompt p:not(.athena-eyebrow) { margin: 0; color: #645850; font-size: .9rem; }
+.athena-eyebrow { margin: 0; color: #b84f2c; font-size: .66rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.athena-catalog-button { display: inline-flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex: 0 0 auto; padding: .85rem 1rem; border: 1px solid #bf542f; background: #bf542f; color: #fff; cursor: pointer; font-family: var(--font-poppins), sans-serif; font-size: .8rem; font-weight: 700; transition: background .2s ease, transform .2s ease; }
+.athena-catalog-button:hover { background: #9f4123; transform: translateY(-2px); }
 .home-refresh .home-hero .hero-stats {
  margin-top: 1.8rem; gap: clamp(1.25rem, 3vw, 2.75rem);
  padding-top: 1.2rem; border-top: 1px solid rgba(255,255,255,.2);
@@ -2252,6 +2271,9 @@ body:has(.property-detail-refresh) .translate-float { bottom: 4.35rem; backgroun
  .home-refresh .home-hero .hero-stats { display: grid; grid-template-columns: 1fr 1fr; }
  .home-refresh .home-hero .hero-stat:last-child { grid-column: 1 / -1; }
  .home-hero-inventory-link { width: 100%; min-width: 0; }
+ .athena-hero-button { width: 100%; min-width: 0; }
+ .athena-catalog-prompt { align-items: flex-start; flex-direction: column; gap: 1.1rem; }
+ .athena-catalog-button { width: 100%; }
  .home-hero-inventory-note { display: none; }
  .curated-carousel-controls p { max-width: 160px; }
  .curated-property-card { flex-basis: 88vw; }
