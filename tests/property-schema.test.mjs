@@ -1,7 +1,28 @@
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
-import { propertyListingSchema } from '../lib/schema.js';
+import { organizationSchema, propertyListingSchema, websiteSchema } from '../lib/schema.js';
+
+test('el sitio y la inmobiliaria conservan identificadores estables y relacionados', () => {
+  const organization = organizationSchema();
+  const website = websiteSchema();
+
+  assert.equal(organization['@id'], 'https://www.rednorte.mx/#organization');
+  assert.equal(website['@type'], 'WebSite');
+  assert.equal(website['@id'], 'https://www.rednorte.mx/#website');
+  assert.equal(website.url, 'https://www.rednorte.mx/');
+  assert.equal(website.publisher['@id'], organization['@id']);
+});
+
+test('el layout publica las dos entidades globales sin alterar el widget Athena', async () => {
+  const layout = await readFile(new URL('../app/layout.jsx', import.meta.url), 'utf8');
+
+  assert.match(layout, /organizationSchema, websiteSchema/);
+  assert.match(layout, /serializeJsonLd\(organizationSchema\(\)\)/);
+  assert.match(layout, /serializeJsonLd\(websiteSchema\(\)\)/);
+  assert.match(layout, /data-launcher="false"/);
+});
 
 const canonical = 'https://www.rednorte.mx/propiedades/casa-en-venta-rn-1';
 
