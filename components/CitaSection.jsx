@@ -130,7 +130,7 @@ export default function CitaSection({ property, advisor }) {
             <a className="advisor-phone" href={`tel:+${advisorNumber}`} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', color: 'var(--terracota)', fontWeight: 600, margin: '-0.75rem 0 1rem', textDecoration: 'none' }}> {formatMxPhone(advisor?.phone) || SITE_CONTACT.phoneInternationalDisplay}</a>
             <div style={{ fontSize: '12px', color: 'var(--cafe)', lineHeight: 1.7, paddingTop: '.75rem', borderTop: '1px solid var(--gris-claro)' }}>
               <p><strong>Horario de atención:</strong></p>
-              <p>Lun-Vie: 9:00 - 18:00 h</p>
+              <p>{SITE_CONTACT.hours.weekdays} h</p>
               <p>Sab: 10:00 - 14:00 h</p>
             </div>
           </div>
