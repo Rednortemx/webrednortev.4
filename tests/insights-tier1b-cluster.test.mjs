@@ -19,6 +19,7 @@ const METADATA = {
   'donde-invertir-bienes-raices-monterrey': {
     title: 'Dónde invertir en bienes raíces en Monterrey en 2026: zonas, estrategias y riesgos',
     seoTitle: 'Dónde invertir en bienes raíces en Monterrey en 2026 | Rednorte',
+    seoTitleAbsolute: true,
     description: 'Guía para evaluar dónde invertir en bienes raíces en Monterrey en 2026 según objetivo: renta, plusvalía, preservación patrimonial, preventa, industrial o comercial. Incluye datos actuales, zonas, riesgos, métricas y metodología.',
   },
   'como-rentar-propiedad-segura-nuevo-leon': {
@@ -47,7 +48,7 @@ test('Tier 1B conserva H1, SEO title, description y canonical de las tres rutas'
     assert.equal(insight.title, METADATA[slug].title);
     assert.equal(insight.seoTitle, METADATA[slug].seoTitle);
     assert.equal(insight.description, METADATA[slug].description);
-    assert.equal(insight.seoTitleAbsolute, undefined);
+    assert.equal(insight.seoTitleAbsolute, METADATA[slug].seoTitleAbsolute);
     assert.equal(`/insights/${insight.slug}`, `/insights/${slug}`);
   }
 
