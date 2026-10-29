@@ -12,7 +12,7 @@ import CookieBanner from '@/components/CookieBanner';
 import GlobalModals from '@/components/GlobalModals';
 import LanguageToggle from '@/components/LanguageToggle';
 import PrivacyAnalytics from '@/components/PrivacyAnalytics';
-import { organizationSchema } from '@/lib/schema';
+import { organizationSchema, websiteSchema } from '@/lib/schema';
 import { getCanonicalSiteUrl, serializeJsonLd } from '@/lib/security';
 
 const SITE_URL = getCanonicalSiteUrl();
@@ -64,6 +64,10 @@ export default function RootLayout({ children }) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: serializeJsonLd(organizationSchema()) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(websiteSchema()) }}
         />
       </head>
       <body>
