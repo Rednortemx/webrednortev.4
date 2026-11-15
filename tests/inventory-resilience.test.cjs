@@ -4,8 +4,9 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 
-function setup({ apiKey = 'test-key', responses = [] } = {}) {
+function setup({ apiKey = 'test-key', responses = [], simulateStaleCache = false } = {}) {
   let cachedCallback;
+  let lastSuccessfulSnapshot = null;
   const requests = [];
   const errors = [];
   const warnings = [];
@@ -19,7 +20,18 @@ function setup({ apiKey = 'test-key', responses = [] } = {}) {
     },
     unstable_cache: (callback) => {
       cachedCallback = callback;
-      return callback;
+      if (!simulateStaleCache) return callback;
+      // Models Next.js keeping the last successful snapshot after a rejected revalidation.
+      return async () => {
+        try {
+          const result = await callback();
+          lastSuccessfulSnapshot = result;
+          return result;
+        } catch (error) {
+          if (lastSuccessfulSnapshot) return lastSuccessfulSnapshot;
+          throw error;
+        }
+      };
     },
     fetch: async (_url, options) => {
       requests.push(options);
@@ -58,8 +70,8 @@ test('a rejected refresh throws instead of replacing the cached snapshot', async
 });
 
 test('a complete successful refresh returns the live inventory', async () => {
-  const first = Array.from({ length: 100 }, (_, index) => item(`RN-${index}`));
-  const second = [item('RN-100')];
+  const first = Array.from({ length: 100 }, (_, index) => item(`NN-${index}`));
+  const second = [item('NN-100')];
   const s = setup({
     responses: [
       response({ items: first, totalItems: 101 }),
@@ -74,7 +86,7 @@ test('a complete successful refresh returns the live inventory', async () => {
 });
 
 test('a failed later page rejects the whole refresh instead of caching partial data', async () => {
-  const first = Array.from({ length: 100 }, (_, index) => item(`RN-${index}`));
+  const first = Array.from({ length: 100 }, (_, index) => item(`NN-${index}`));
   const s = setup({
     responses: [response({ items: first, totalItems: 101 }), new Error('timeout')],
   });
@@ -82,10 +94,33 @@ test('a failed later page rejects the whole refresh instead of caching partial d
   assert.equal(s.errors[0].event, 'nocnok_inventory_refresh_failed');
 });
 
-test('a cold cache failure uses the small local fallback', async () => {
+test('a cold cache without NocNok yields no listings, prices or fictitious IDs', async () => {
   const s = setup({ apiKey: '' });
   const result = await s.context.fetchAllProperties();
-  assert.equal(result.source, 'fallback');
-  assert.equal(result.properties.length, 6);
-  assert.equal(s.warnings[0].event, 'nocnok_inventory_fallback');
+  assert.equal(result.source, 'unavailable');
+  assert.equal(result.properties.length, 0);
+  assert.equal(s.warnings[0].event, 'nocnok_inventory_unavailable');
+  assert.equal(s.requests.length, 0);
+});
+
+test('a successful live snapshot remains usable when a later refresh fails', async () => {
+  const s = setup({
+    simulateStaleCache: true,
+    responses: [response({ items: [item('NN-REAL1')], totalItems: 1 }), new Error('timeout')],
+  });
+  const first = await s.context.fetchAllProperties();
+  const retained = await s.context.fetchAllProperties();
+  assert.equal(first.source, 'live');
+  assert.equal(retained.source, 'live');
+  assert.equal(retained.properties[0].id, 'NN-REAL1');
+  assert.equal(s.errors[0].event, 'nocnok_inventory_refresh_failed');
+  assert.equal(s.warnings.length, 0);
+});
+
+test('a first-request API failure never exposes incomplete or invented inventory', async () => {
+  const s = setup({ responses: [response(null, false, 503)] });
+  const result = await s.context.fetchAllProperties();
+  assert.equal(result.source, 'unavailable');
+  assert.deepEqual(Array.from(result.properties), []);
+  assert.equal(s.errors[0].event, 'nocnok_inventory_refresh_failed');
 });
