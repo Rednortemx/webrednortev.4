@@ -157,10 +157,12 @@ export default async function PropertyLandingPage({ params, searchParams }) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbSchema(breadcrumbItems)) }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: serializeJsonLd(buildItemList(matchingProperties, page)) }}
-      />
+      {source === 'live' && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(buildItemList(matchingProperties, page)) }}
+        />
+      )}
       <Breadcrumb items={breadcrumbItems} />
       <header className="property-landing-hero">
         {source !== 'live' && (
@@ -169,7 +171,9 @@ export default async function PropertyLandingPage({ params, searchParams }) {
           </div>
         )}
         <h1>{landing.heading}</h1>
-        {landing.heroCopy ? (
+        {source !== 'live' ? (
+          <p>Inventario temporalmente no disponible. Estamos actualizando los datos de NocNok antes de mostrar propiedades.</p>
+        ) : landing.heroCopy ? (
           <p>{landing.heroCopy}</p>
         ) : (
           <p>
@@ -186,13 +190,20 @@ export default async function PropertyLandingPage({ params, searchParams }) {
         )}
       </header>
 
-      <PropertyFilters
+      {source === 'live' ? (
+        <PropertyFilters
         properties={propertyCards}
         initialFilters={initialFilters}
         basePath={landing.path}
         baseFilters={baseFilters}
         fixedLocationLabel={landing.fixedLocationLabel}
-      />
+        />
+      ) : (
+        <section className="container" aria-live="polite" style={{ padding: '4rem 0 6rem' }}>
+          <h2>Inventario temporalmente no disponible</h2>
+          <p>No mostraremos anuncios ni precios hasta que podamos confirmar su vigencia en NocNok.</p>
+        </section>
+      )}
 
       {landing.editorial && (
         <section className="property-landing-editorial">
