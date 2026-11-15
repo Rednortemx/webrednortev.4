@@ -96,12 +96,13 @@ export default function HomeHero({ metrics }) {
                 <span>Explorar todas las propiedades</span>
                 <span aria-hidden="true">↗</span>
               </Link>
+
               <span className="home-hero-inventory-note">Inventario residencial, comercial e industrial</span>
             </div>
             <div className="hero-stats" aria-label="Datos de Rednorte">
               <div className="hero-stat">
-                <div className="hero-stat-num">{metrics.activeProperties}</div>
-                <div className="hero-stat-label">Propiedades activas</div>
+                <div className="hero-stat-num">Inventario</div>
+                <div className="hero-stat-label">Actualizado continuamente</div>
               </div>
               <div className="hero-stat">
                 <div className="hero-stat-num">{metrics.teamMembers}</div>
