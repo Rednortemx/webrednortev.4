@@ -5,7 +5,7 @@ import CuratedProperties from '@/components/CuratedProperties';
 import GoogleReviews from '@/components/GoogleReviews';
 import FaqHome from '@/components/FaqHome';
 import { faqSchema } from '@/lib/schema';
-import { fetchAllProperties, toPropertyCardData } from '@/lib/properties';
+import { toPropertyCardData } from '@/lib/properties';
 import { fetchLuxuryProperties } from '@/lib/luxuryProperties';
 import { serializeJsonLd } from '@/lib/security';
 import { SITE_METRICS } from '@/lib/siteConfig';
@@ -28,16 +28,7 @@ function propsFilterHref(operacion, tipo, categoria) {
 }
 
 export default async function HomePage() {
-  const [{ properties, source }, luxury] = await Promise.all([
-    fetchAllProperties(),
-    fetchLuxuryProperties(),
-  ]);
-  const homeMetrics = {
-    ...SITE_METRICS,
-    activeProperties: source === 'live'
-      ? String(properties.length)
-      : SITE_METRICS.activeProperties,
-  };
+  const luxury = await fetchLuxuryProperties();
 
   const featured = luxury.properties
     .filter((property) => property?.imgs?.length)
@@ -47,7 +38,7 @@ export default async function HomePage() {
   return (
     <main className="page-content home-refresh">
       {/* HERO */}
-      <HomeHero metrics={homeMetrics} />
+      <HomeHero metrics={SITE_METRICS} />
 
       {featured.length >= 3 && (
         <section className="home-featured" aria-labelledby="home-curated-title">

@@ -102,8 +102,8 @@ export default function HomeHero({ metrics }) {
             </div>
             <div className="hero-stats" aria-label="Datos de Rednorte">
               <div className="hero-stat">
-                <div className="hero-stat-num">{metrics.activeProperties}</div>
-                <div className="hero-stat-label">Propiedades activas</div>
+                <div className="hero-stat-num">Inventario</div>
+                <div className="hero-stat-label">Actualizado continuamente</div>
               </div>
               <div className="hero-stat">
                 <div className="hero-stat-num">{metrics.teamMembers}</div>

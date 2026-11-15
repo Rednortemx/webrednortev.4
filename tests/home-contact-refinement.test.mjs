@@ -16,7 +16,7 @@ test('contacto comparte todas las redes declaradas para el sitio', async () => {
   assert.match(contacto, /SOCIAL_LINKS\.map/);
 });
 
-test('Inicio conserva la marca, JSON-LD seguro y acceso semántico al inventario', async () => {
+test('Inicio conserva la marca, JSON-LD seguro y separa el conteo dinámico del catálogo', async () => {
   const [home, hero, siteConfig] = await Promise.all([
     readFile(new URL('../app/page.jsx', import.meta.url), 'utf8'),
     readFile(new URL('../components/HomeHero.jsx', import.meta.url), 'utf8'),
@@ -27,12 +27,12 @@ test('Inicio conserva la marca, JSON-LD seguro y acceso semántico al inventario
   assert.match(home, /serializeJsonLd\(faqSchema\(\)\)/);
   assert.match(hero, /href="\/propiedades"/);
   assert.match(hero, /Explorar todas las propiedades/);
-  assert.match(home, /fetchAllProperties\(\)/);
   assert.match(home, /fetchLuxuryProperties\(\)/);
-  assert.match(home, /source === 'live'[\s\S]*String\(properties\.length\)/);
-  assert.match(home, /<HomeHero metrics=\{homeMetrics\} \/>/);
-  assert.match(siteConfig, /activeProperties: '600'/);
-  assert.doesNotMatch(siteConfig, /activeProperties: '600\+'/);
+  assert.doesNotMatch(home, /fetchAllProperties\(\)/);
+  assert.match(home, /<HomeHero metrics=\{SITE_METRICS\} \/>/);
+  assert.match(hero, /Actualizado continuamente/);
+  assert.doesNotMatch(hero, /Propiedades activas/);
+  assert.doesNotMatch(siteConfig, /activeProperties:/);
 });
 
 test('Inicio alinea servicios y evita datos visuales desactualizados', async () => {
