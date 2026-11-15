@@ -15,13 +15,13 @@ test('el sitio y la inmobiliaria conservan identificadores estables y relacionad
   assert.equal(website.publisher['@id'], organization['@id']);
 });
 
-test('el layout publica las dos entidades globales sin alterar el widget Athena', async () => {
+test('el layout publica las dos entidades globales', async () => {
   const layout = await readFile(new URL('../app/layout.jsx', import.meta.url), 'utf8');
 
   assert.match(layout, /organizationSchema, websiteSchema/);
   assert.match(layout, /serializeJsonLd\(organizationSchema\(\)\)/);
   assert.match(layout, /serializeJsonLd\(websiteSchema\(\)\)/);
-  assert.match(layout, /data-launcher="false"/);
+  assert.doesNotMatch(layout, /athena|inmobot/i);
 });
 
 const canonical = 'https://www.rednorte.mx/propiedades/casa-en-venta-rn-1';
