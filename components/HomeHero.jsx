@@ -3,7 +3,6 @@
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import AthenaLauncher from '@/components/AthenaLauncher';
 
 export default function HomeHero({ metrics }) {
   const heroRef = useRef(null);
@@ -97,7 +96,6 @@ export default function HomeHero({ metrics }) {
                 <span>Explorar todas las propiedades</span>
                 <span aria-hidden="true">↗</span>
               </Link>
-              <AthenaLauncher />
               <span className="home-hero-inventory-note">Inventario residencial, comercial e industrial</span>
             </div>
             <div className="hero-stats" aria-label="Datos de Rednorte">
