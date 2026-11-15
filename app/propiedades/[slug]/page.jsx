@@ -26,7 +26,11 @@ const SITE_URL = getCanonicalSiteUrl();
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const code = extractCodeFromSlug(slug);
-  const { properties } = await fetchAllProperties();
+  const { properties, source } = await fetchAllProperties();
+  if (source !== 'live') {
+    // Do not turn a temporary outage into a false 404 for a valid property.
+    throw new Error('Inventario NocNok temporalmente no disponible');
+  }
   const property = findPropertyById(properties, code);
 
   if (!property) {
@@ -62,7 +66,11 @@ export async function generateMetadata({ params }) {
 export default async function PropiedadPage({ params }) {
   const { slug } = await params;
   const code = extractCodeFromSlug(slug);
-  const { properties } = await fetchAllProperties();
+  const { properties, source } = await fetchAllProperties();
+  if (source !== 'live') {
+    // Do not turn a temporary outage into a false 404 for a valid property.
+    throw new Error('Inventario NocNok temporalmente no disponible');
+  }
   const property = findPropertyById(properties, code);
 
   if (!property) {

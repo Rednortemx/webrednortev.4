@@ -102,13 +102,20 @@ export default async function PropiedadesPage({ searchParams }) {
             <h1>Propiedades en venta y renta en Monterrey y Nuevo León</h1>
             <div className="catalog-heading-aside">
               <p>Encuentra el espacio correcto para vivir, invertir o hacer crecer tu negocio.</p>
-              <span>{properties.length} propiedades disponibles</span>
+              <span>{source === 'live' ? `${properties.length} propiedades disponibles` : 'Consulta temporalmente no disponible'}</span>
             </div>
           </div>
         </div>
       </header>
       <PropertyLandingDirectory />
-      <PropertyFilters properties={propertyCards} initialFilters={initialFilters} />
+      {source === 'live' ? (
+        <PropertyFilters properties={propertyCards} initialFilters={initialFilters} />
+      ) : (
+        <section className="container" aria-live="polite" style={{ padding: '4rem 0 6rem' }}>
+          <h2>Inventario temporalmente no disponible</h2>
+          <p>Estamos actualizando las propiedades directamente desde NocNok. Vuelve a consultar más tarde para confirmar precios y disponibilidad.</p>
+        </section>
+      )}
     </div>
   );
 }
