@@ -192,11 +192,11 @@ export default async function PropertyLandingPage({ params, searchParams }) {
 
       {source === 'live' ? (
         <PropertyFilters
-        properties={propertyCards}
-        initialFilters={initialFilters}
-        basePath={landing.path}
-        baseFilters={baseFilters}
-        fixedLocationLabel={landing.fixedLocationLabel}
+          properties={propertyCards}
+          initialFilters={initialFilters}
+          basePath={landing.path}
+          baseFilters={baseFilters}
+          fixedLocationLabel={landing.fixedLocationLabel}
         />
       ) : (
         <section className="container" aria-live="polite" style={{ padding: '4rem 0 6rem' }}>
