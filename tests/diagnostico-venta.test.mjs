@@ -16,10 +16,12 @@ test('la landing comercial nueva es independiente del Reporte de Vendibilidad', 
   assert.match(sitemap, /'\/herramientas\/por-que-no-se-vende'/);
   assert.match(tools, /href: '\/herramientas\/por-que-no-se-vende'/);
   assert.match(component, /href="\/herramientas\/reporte-de-vendibilidad"/);
-  assert.match(component, /Sin datos personales para consultar la orientación/);
-  assert.match(component, /sale-diagnosis-hero-photo/);
+  assert.match(component, /¿Qué está pasando/);
+  assert.match(component, /sale-diagnosis-first-grid/);
+  assert.match(component, /sale-diagnosis-selector/);
   assert.match(component, /sale-diagnosis-mobile-cta/);
   assert.match(component, /defaultOpen=\{index === 0\}/);
+  assert.doesNotMatch(component, /sale-diagnosis-hero-photo/);
 });
 
 test('los cinco escenarios incluyen causas, acciones concretas y el feedback al asesor', async () => {
@@ -49,8 +51,21 @@ test('contacto: validación, consentimiento, recepción confirmada y WhatsApp co
   assert.match(component, /Situación: /);
   assert.match(component, /function mensajeWhatsApp/);
   assert.match(component, /window\.location\.assign\(link\)/);
+  assert.match(component, /'Revisión general sin selección'/);
+  assert.doesNotMatch(component, /if \(!scenario \|\| !validateForm/);
+  assert.match(component, /<section className="sale-diagnosis-review"/);
+  assert.match(component, /getElementById\('diagnostico-revision'\)/);
   assert.match(component, /Aviso de Privacidad/);
   assert.match(component, /type="checkbox" name="privacidad"/);
   assert.match(tracking, /'diagnostico_venta'/);
   assert.doesNotMatch(component, /window\.rnToolLeads/);
+});
+
+test('la captura es libre de selección obligatoria y la promesa de revisión es visible desde el inicio', async () => {
+  const component = await load('../components/diagnostico-venta/DiagnosticoVenta.jsx');
+  const beforeResults = component.slice(component.indexOf('  return ('), component.indexOf('{scenario && ('));
+  assert.match(beforeResults, /Quiero una revisión gratuita/);
+  assert.match(beforeResults, /Desde 2018/);
+  assert.match(beforeResults, /Revisión gratis de mi anuncio/);
+  assert.match(component, /Es una revisión inicial y orientativa/);
 });
