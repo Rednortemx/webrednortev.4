@@ -27,6 +27,7 @@ const STATIC_ROUTES = [
   '/herramientas',
   '/herramientas/estimacion-de-valor',
   '/herramientas/reporte-de-vendibilidad',
+  '/herramientas/por-que-no-se-vende',
   '/insights',
   '/reportes',
   '/reportes/mercado-inmobiliario-monterrey-nuevo-leon-2026',
