@@ -1,350 +1,259 @@
-/* Rednorte — Diagnóstico de Comercialización
-   Sistema editorial de conversión. Paleta oficial de Rednorte:
-   #bc4b31 · #3c3429 · #111111 · #f2ed99 · #efece8
-   Los estilos se limitan a esta landing; no afectan otras páginas. */
+/* REDNORTE | Landing de captación de propietarios — versión 3
+ * Una experiencia de asesoría, no una página institucional.
+ * Colores basados en la guía: #bc4b31, #111111, #3c3429, neutros.
+ * CSS aislado para no alterar el diseño general de Rednorte.
+ */
 
 .sale-diagnosis {
-  --sd-orange: #bc4b31;
-  --sd-dark: #111111;
-  --sd-charcoal: #3c3429;
-  --sd-lime: #f2ed99;
-  --sd-stone: #7c7b67;
+  --sd-primary: #bc4b31;
+  --sd-primary-dark: #9e3e28;
   --sd-ink: #111111;
+  --sd-muted: #4d4c48;
+  --sd-border: #dbdad6;
   --sd-soft: #f7f7f5;
-  --sd-line: #dedbd5;
-  font-family: var(--font-poppins), Arial, sans-serif;
+  --sd-soft-red: #fff1eb;
+  background: #fff;
   color: var(--sd-ink);
-  background: white;
+  font-family: var(--font-poppins), sans-serif;
+  font-weight: 400;
 }
 .sale-diagnosis *, .sale-diagnosis *::before, .sale-diagnosis *::after { box-sizing: border-box; }
-.sale-diagnosis-container { width: min(1280px, calc(100% - 76px)); margin-inline: auto; }
-.sale-diagnosis h1, .sale-diagnosis h2, .sale-diagnosis h3, .sale-diagnosis p { margin-top: 0; }
-.sale-diagnosis h1, .sale-diagnosis h2, .sale-diagnosis h3 {
-  font-family: var(--font-poppins), Arial, sans-serif;
-  font-weight: 700;
-  letter-spacing: -.055em;
-}
-.sale-diagnosis h1 { font-size: clamp(52px, 5.5vw, 91px); line-height: .99; }
-.sale-diagnosis h2 { font-size: clamp(39px, 4.1vw, 65px); line-height: 1.075; }
-.sale-diagnosis h3 { font-size: clamp(25px, 2.6vw, 39px); line-height: 1.14; }
-.sale-diagnosis p { line-height: 1.7; }
-.sale-diagnosis em { font-style: normal; }
+.sale-diagnosis-container { width: min(1220px, calc(100% - 72px)); margin-inline: auto; }
+.sale-diagnosis h1, .sale-diagnosis h2, .sale-diagnosis h3 { font-family: var(--font-poppins), sans-serif; font-weight: 700; letter-spacing: -.047em; }
+.sale-diagnosis p { line-height: 1.65; }
+.sale-diagnosis button, .sale-diagnosis input { font-family: inherit; }
+.sale-diagnosis button { cursor: pointer; }
 .sale-diagnosis a, .sale-diagnosis button { -webkit-tap-highlight-color: transparent; }
-.sale-diagnosis button { font-family: inherit; cursor: pointer; }
 .sale-diagnosis a:focus-visible, .sale-diagnosis button:focus-visible,
 .sale-diagnosis summary:focus-visible, .sale-diagnosis input:focus-visible {
-  outline: 3px solid var(--sd-orange);
-  outline-offset: 4px;
+  outline: 3px solid #c55b38; outline-offset: 3px;
 }
 .sale-diagnosis-eyebrow {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .15em;
-  text-transform: uppercase;
-  line-height: 1.5;
-  color: var(--sd-orange);
+  display: flex; align-items: center; gap: 9px;
+  font-size: 11px; line-height: 1.5; font-weight: 700; letter-spacing: .105em;
+  color: var(--sd-primary); text-transform: uppercase;
 }
-.sale-diagnosis-primary {
-  display: inline-flex;
-  min-height: 56px;
-  gap: 24px;
-  padding: 16px 23px;
-  justify-content: space-between;
-  align-items: center;
-  border: 1px solid var(--sd-orange);
-  background: var(--sd-orange);
-  color: #fff;
-  text-decoration: none;
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.35;
-  border-radius: 3px;
-  transition: background .18s, transform .18s, border-color .18s;
+.sale-diagnosis-eyebrow-line { display: inline-block; height: 3px; width: 18px; background: var(--sd-primary); }
+.sale-diagnosis-action-primary {
+  display: inline-flex; justify-content: space-between; align-items: center; gap: 20px;
+  min-height: 53px; padding: 14px 19px; font-size: 13px; font-weight: 700; line-height: 1.3;
+  color: #fff; background: var(--sd-primary); border: 1px solid var(--sd-primary);
+  text-decoration: none; border-radius: 3px; transition: background .2s, transform .2s;
 }
-.sale-diagnosis-primary:hover { background: #9d3824; border-color: #9d3824; transform: translateY(-2px); }
-.sale-diagnosis-primary span { font-size: 21px; line-height: 1; font-weight: 400; }
-.sale-diagnosis-primary:disabled, .sale-diagnosis-secondary:disabled { opacity: .65; cursor: not-allowed; transform: none; }
+.sale-diagnosis-action-primary:hover { background: var(--sd-primary-dark); transform: translateY(-1px); }
+.sale-diagnosis-action-primary span { font-size: 18px; font-weight: 400; }
 
-/* 01 — Landing hero: fotografía, mensaje, beneficio y acción en primer scroll. */
-.sale-diagnosis-hero {
-  position: relative;
+/* Primera pantalla: propuesta + pregunta. Ningún hero gigante ni fotografía genérica. */
+.sale-diagnosis-first {
+  position: relative; background: #fff; padding: 56px 0 73px;
+  border-bottom: 1px solid var(--sd-border);
+}
+.sale-diagnosis-first::before {
+  content: ""; position: absolute; width: min(27vw, 375px); height: 7px;
+  top: 0; left: 0; background: var(--sd-primary);
+}
+.sale-diagnosis-first-grid {
   display: grid;
-  grid-template-columns: 55% 45%;
-  min-height: clamp(600px, 72vh, 800px);
-  overflow: hidden;
-  background: var(--sd-dark);
-  color: #fff;
-}
-.sale-diagnosis-hero-copy {
-  display: flex;
+  grid-template-columns: minmax(0, .94fr) minmax(430px, 1.06fr);
+  gap: clamp(42px, 5.8vw, 104px);
   align-items: center;
-  padding: clamp(56px, 6.2vw, 110px) clamp(35px, 5.3vw, 110px);
-  background: #111111;
-  position: relative;
-  z-index: 1;
 }
-.sale-diagnosis-hero-copy-inner { max-width: 740px; margin-left: auto; }
-.sale-diagnosis-hero .sale-diagnosis-eyebrow { color: #eab7aa; margin-bottom: 25px; }
-.sale-diagnosis-hero .sale-diagnosis-eyebrow span { color: #85817a; padding-inline: 8px; }
-.sale-diagnosis-hero-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  margin-bottom: 26px;
-  padding: 8px 12px;
-  border: 1px solid rgba(242,237,153,.45);
-  background: rgba(242,237,153,.06);
-  color: #f2ed99;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .07em;
+.sale-diagnosis-intro { padding: 15px 0; }
+.sale-diagnosis-intro > .sale-diagnosis-eyebrow { margin-bottom: 27px; }
+.sale-diagnosis-intro h1 { font-size: clamp(51px, 4.75vw, 73px); line-height: 1.055; margin: 0 0 25px; max-width: 660px; color: var(--sd-ink); }
+.sale-diagnosis-intro h1 span { color: var(--sd-primary); }
+.sale-diagnosis-intro-lead { font-size: clamp(17px, 1.43vw, 21px); font-weight: 500; color: #292926; max-width: 560px; margin: 0 0 17px; line-height: 1.55 !important; }
+.sale-diagnosis-intro-explainer { max-width: 565px; color: var(--sd-muted); font-size: 14px; margin-bottom: 27px; }
+.sale-diagnosis-intro-explainer strong { color: #191917; font-weight: 700; }
+.sale-diagnosis-intro-actions { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+.sale-diagnosis-intro-actions .sale-diagnosis-action-primary { flex-shrink: 0; }
+.sale-diagnosis-action-link { display: inline-flex; align-items: center; gap: 10px; background: none; border: 0; border-bottom: 1px solid #a6a4a0; color: var(--sd-ink); font-size: 12px; font-weight: 700; padding: 10px 1px; }
+.sale-diagnosis-action-link:hover { color: var(--sd-primary); border-color: var(--sd-primary); }
+.sale-diagnosis-trust-strip {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--sd-border); margin-top: 47px; padding-top: 21px; gap: 15px;
 }
-.sale-diagnosis-hero-pill > span { width: 7px; height: 7px; background: var(--sd-lime); border-radius: 50%; box-shadow: 0 0 0 4px rgba(242,237,153,.1); }
-.sale-diagnosis-hero h1 { margin-bottom: 30px; color: #fff; max-width: 800px; }
-.sale-diagnosis-hero h1 em { color: var(--sd-lime); }
-.sale-diagnosis-lead { color: #d3d3cf; max-width: 610px; font-size: clamp(15px, 1.28vw, 18px); margin-bottom: 28px; }
-.sale-diagnosis-hero-actions { display: flex; align-items: center; gap: 25px; flex-wrap: wrap; }
-.sale-diagnosis-hero .sale-diagnosis-primary { min-height: 60px; padding-inline: 22px; }
-.sale-diagnosis-hero-text-link { border: 0; background: none; padding: 12px 0; color: #fff; font-size: 13px; font-weight: 600; border-bottom: 1px solid #9e9d99; }
-.sale-diagnosis-hero-text-link:hover { border-color: #fff; }
-.sale-diagnosis-hero-text-link span { margin-left: 8px; }
-.sale-diagnosis-hero-points { margin-top: 42px; display: flex; flex-wrap: wrap; gap: 14px 26px; }
-.sale-diagnosis-hero-points span { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 500; color: #c9c9c5; }
-.sale-diagnosis-hero-points b { color: var(--sd-lime); font-weight: 800; }
-.sale-diagnosis-hero-photo { position: relative; min-height: 550px; overflow: hidden; background: #3c3429; }
-.sale-diagnosis-hero-image { object-fit: cover; object-position: 54% 42%; filter: saturate(.88) contrast(1.06); }
-.sale-diagnosis-hero-photo-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,6,5,.3) 0%, rgba(8,7,5,.02) 38%, rgba(10,8,7,.78) 100%); z-index: 1; }
-.sale-diagnosis-photo-top { position: absolute; inset: 30px 34px auto; z-index: 2; display: flex; justify-content: space-between; gap: 12px; color: #fff; font-size: 10px; letter-spacing: .14em; font-weight: 700; }
-.sale-diagnosis-photo-statement { position: absolute; z-index: 2; left: clamp(23px, 4.3vw, 72px); bottom: clamp(54px, 7vw, 90px); right: 28px; color: #fff; }
-.sale-diagnosis-photo-statement span { display: block; font-size: 12px; letter-spacing: .18em; font-weight: 700; color: var(--sd-lime); margin-bottom: 14px; }
-.sale-diagnosis-photo-statement strong { display: block; font-size: clamp(34px, 3.6vw, 58px); line-height: 1.08; letter-spacing: -.055em; font-weight: 700; }
-.sale-diagnosis-photo-index { position: absolute; bottom: 25px; right: 33px; color: #f2ed99; z-index: 2; font-size: 11px; letter-spacing: .14em; font-weight: 700; }
+.sale-diagnosis-trust-strip span { display: grid; gap: 6px; }
+.sale-diagnosis-trust-strip strong { font-size: 12px; font-weight: 700; }
+.sale-diagnosis-trust-strip small { color: #6b6a66; font-size: 10px; line-height: 1.5; }
 
-/* 02 — Selección con ritmo visual y cinco decisiones distintas. */
-.sale-diagnosis-choose { background: #fff; padding: clamp(72px, 8.5vw, 128px) 0 clamp(80px, 8vw, 120px); scroll-margin-top: 90px; }
-.sale-diagnosis-section-heading { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(250px, .6fr); gap: 80px; align-items: end; margin-bottom: 45px; }
-.sale-diagnosis-section-heading h2 { margin-bottom: 0; }
-.sale-diagnosis-choose .sale-diagnosis-section-heading h2 em { color: var(--sd-orange); }
-.sale-diagnosis-section-aside { border-left: 1px solid var(--sd-line); padding-left: 24px; max-width: 430px; }
-.sale-diagnosis-section-aside p { color: #595751; font-size: 14px; margin-bottom: 8px; }
-.sale-diagnosis-section-aside small { font-size: 11px; color: #7c7b67; }
-.sale-diagnosis-step-count { display: block; font-size: 28px; font-weight: 700; color: var(--sd-orange); line-height: 1.1; margin-bottom: 20px; }
-.sale-diagnosis-step-count span { font-size: 14px; color: #b5b1ac; }
-.sale-diagnosis-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; }
-.sale-diagnosis-option {
-  display: flex;
-  flex-direction: column;
-  min-height: 258px;
-  padding: clamp(20px, 2.4vw, 32px);
-  background: #f6f6f3;
-  border: 1px solid #e2e2df;
-  color: var(--sd-ink);
-  text-align: left;
-  border-radius: 3px;
-  transition: transform .2s, background .2s, border-color .2s, box-shadow .2s;
+/* Selector: cinco opciones del mismo tamaño; blanco, jerarquía y fácil lectura. */
+.sale-diagnosis-selector { background: #fff; border: 1px solid #d7d5d1; border-top: 5px solid var(--sd-primary); box-shadow: 0 20px 55px rgba(17,17,17,.075); scroll-margin-top: 96px; }
+.sale-diagnosis-selector-top { background: #111; color: #fff; padding: 27px 30px 23px; }
+.sale-diagnosis-selector-top .sale-diagnosis-eyebrow { color: #f0bca8; margin: 0 0 9px; }
+.sale-diagnosis-selector-top h2 { font-size: clamp(25px, 2.15vw, 33px); line-height: 1.16; margin: 0 0 8px; }
+.sale-diagnosis-selector-top h2 span { color: #f0bca8; }
+.sale-diagnosis-selector-top > p:last-child { margin: 0; color: #dedbd8; font-size: 12px; }
+.sale-diagnosis-choices { display: grid; }
+.sale-diagnosis-choice {
+  display: flex; align-items: center; gap: 16px; width: 100%; min-height: 76px;
+  padding: 14px 23px; border: 0; border-bottom: 1px solid #e8e6e2;
+  text-align: left; background: #fff; color: var(--sd-ink); transition: background .15s;
 }
-.sale-diagnosis-option:hover { transform: translateY(-4px); border-color: var(--sd-orange); box-shadow: 0 12px 26px rgba(17,17,17,.08); }
-.sale-diagnosis-option.is-selected { border: 2px solid var(--sd-orange); background: #fff8f5; padding: calc(clamp(20px, 2.4vw, 32px) - 1px); }
-.sale-diagnosis-option:first-child { grid-column: span 2; background: var(--sd-orange); border-color: var(--sd-orange); color: #fff; }
-.sale-diagnosis-option:first-child.is-selected { border-color: #111; box-shadow: inset 0 0 0 2px #fff; }
-.sale-diagnosis-option-top { display: flex; align-items: flex-start; justify-content: space-between; width: 100%; margin-bottom: 25px; }
-.sale-diagnosis-option-number { font-size: 12px; font-weight: 700; letter-spacing: .13em; color: var(--sd-orange); }
-.sale-diagnosis-option:first-child .sale-diagnosis-option-number { color: #fff; }
-.sale-diagnosis-option-indicator { border: 1px solid #d1ceca; border-radius: 50%; width: 34px; height: 34px; display: grid; place-items: center; font-size: 16px; font-weight: 600; }
-.sale-diagnosis-option:first-child .sale-diagnosis-option-indicator { border-color: rgba(255,255,255,.55); }
-.sale-diagnosis-option.is-selected .sale-diagnosis-option-indicator { background: #bc4b31; color: white; border-color: #bc4b31; }
-.sale-diagnosis-option:first-child.is-selected .sale-diagnosis-option-indicator { background: #fff; color: #bc4b31; }
-.sale-diagnosis-option-copy { display: grid; gap: 12px; margin: auto 0 20px; }
-.sale-diagnosis-option-copy strong { font-size: clamp(20px, 1.8vw, 27px); font-weight: 700; line-height: 1.13; letter-spacing: -.045em; max-width: 460px; }
-.sale-diagnosis-option-copy small { font-size: 12px; line-height: 1.65; color: #6b6861; max-width: 370px; }
-.sale-diagnosis-option:first-child .sale-diagnosis-option-copy small { color: #fff4ed; }
-.sale-diagnosis-option-foot { display: flex; align-items: center; justify-content: space-between; padding-top: 13px; border-top: 1px solid #d6d3cf; color: #8b523e; font-size: 10px; letter-spacing: .1em; font-weight: 700; width: 100%; }
-.sale-diagnosis-option:first-child .sale-diagnosis-option-foot { color: #fff; border-color: rgba(255,255,255,.5); }
-.sale-diagnosis-option-foot span { font-size: 18px; font-weight: 400; }
-.sale-diagnosis-selector-note { display: flex; align-items: center; gap: 17px; margin-top: 26px; color: #5b5a56; max-width: 770px; }
-.sale-diagnosis-selector-note p { margin: 0; font-size: 12px; }
-.sale-diagnosis-note-mark { flex-shrink: 0; font-size: 17px; font-weight: 800; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; background: #111; color: #fff; }
+.sale-diagnosis-choice:hover { background: #f8f4f0; }
+.sale-diagnosis-choice.is-selected { background: var(--sd-soft-red); box-shadow: inset 4px 0 var(--sd-primary); }
+.sale-diagnosis-choice-number { flex: 0 0 25px; align-self: flex-start; color: var(--sd-primary); font-size: 11px; line-height: 24px; font-weight: 700; }
+.sale-diagnosis-choice-copy { flex: 1; display: grid; gap: 5px; }
+.sale-diagnosis-choice-copy strong { font-size: 15px; line-height: 1.25; font-weight: 600; }
+.sale-diagnosis-choice-copy small { font-size: 11px; line-height: 1.5; color: #6b6864; }
+.sale-diagnosis-choice-arrow { display: grid; place-items: center; flex: 0 0 29px; width: 29px; height: 29px; border: 1px solid #d6d4d0; border-radius: 50%; font-size: 17px; color: var(--sd-primary); line-height: 1; }
+.sale-diagnosis-choice.is-selected .sale-diagnosis-choice-arrow { background: var(--sd-primary); color: white; border-color: var(--sd-primary); font-size: 13px; }
+.sale-diagnosis-selector-bottom { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 22px; background: #f6f6f3; }
+.sale-diagnosis-selector-bottom span { color: #464541; font-size: 11px; line-height: 1.4; }
+.sale-diagnosis-selector-bottom button { display: inline-flex; align-items: center; gap: 11px; border: 0; background: none; border-bottom: 1px solid var(--sd-primary); padding: 8px 0; color: var(--sd-primary); text-align: left; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.sale-diagnosis-selector-bottom button:hover { color: #7f2b1a; }
 
-/* 03 — Resultado: el mensaje respira y las causas se revelan bajo demanda. */
-.sale-diagnosis-result { padding: clamp(70px, 8vw, 118px) 0; background: #f7f7f5; scroll-margin-top: 90px; }
-.sale-diagnosis-section-heading--result { margin-bottom: 24px; }
-.sale-diagnosis-section-heading--result h2 { max-width: 750px; }
-.sale-diagnosis-section-heading--result .sale-diagnosis-section-aside p { font-size: 15px; color: #42423e; }
-.sale-diagnosis-disclaimer { display: flex; align-items: baseline; gap: 12px; max-width: 860px; margin-bottom: 38px; color: #65635e; font-size: 12px; }
-.sale-diagnosis-disclaimer > span { display: inline-grid; place-items: center; flex: 0 0 20px; width: 20px; height: 20px; border: 1px solid #c7c6c1; border-radius: 50%; font-size: 12px; font-weight: 700; }
-.sale-diagnosis-insights { display: grid; grid-template-columns: .86fr 1.14fr; align-items: start; gap: 18px; }
-.sale-diagnosis-insights-lead {
-  display: flex; flex-direction: column; align-items: flex-start;
-  min-height: 460px; padding: clamp(25px, 3.4vw, 52px);
-  color: white; background: #3c3429;
-}
-.sale-diagnosis-insights-lead .sale-diagnosis-eyebrow { color: #f2ed99; }
-.sale-diagnosis-insights-lead h3 { color: #fff; font-size: clamp(31px, 3.1vw, 48px); margin: 10px 0 17px; }
-.sale-diagnosis-insights-lead p:not(.sale-diagnosis-eyebrow) { font-size: 14px; color: #e0dbd5; }
-.sale-diagnosis-insights-cta {
-  display: inline-flex; align-items: center; justify-content: space-between; gap: 22px;
-  margin-top: auto; padding: 14px 0 8px; background: transparent; border: 0; border-bottom: 1px solid #f2ed99;
-  color: #f2ed99; font-size: 13px; font-weight: 600;
-}
-.sale-diagnosis-insights-cta:hover { color: white; border-color: white; }
-.sale-diagnosis-reasons { display: grid; gap: 11px; }
-.sale-diagnosis-reason { overflow: hidden; background: #fff; border: 1px solid #deded9; border-radius: 2px; }
-.sale-diagnosis-reason[open] { border-color: #bcbdb4; box-shadow: 0 6px 14px rgba(17,17,17,.045); }
-.sale-diagnosis-reason summary {
-  list-style: none; display: flex; align-items: center; gap: 19px; min-height: 108px;
-  padding: 21px 25px; cursor: pointer; transition: background .2s;
-}
-.sale-diagnosis-reason summary::-webkit-details-marker { display: none; }
-.sale-diagnosis-reason summary:hover { background: #fafafa; }
-.sale-diagnosis-reason-number { flex-shrink: 0; font-size: 12px; font-weight: 700; color: #bc4b31; }
-.sale-diagnosis-reason-title { flex: 1; font-size: clamp(17px, 1.6vw, 21px); font-weight: 700; letter-spacing: -.035em; line-height: 1.3; }
-.sale-diagnosis-reason-toggle {
-  flex-shrink: 0; display: grid; place-items: center; height: 33px; width: 33px;
-  border-radius: 50%; background: #eeeae5; font-size: 23px; font-weight: 400; line-height: 1;
-  transition: transform .15s, background .15s;
-}
-.sale-diagnosis-reason[open] .sale-diagnosis-reason-toggle { transform: rotate(45deg); background: #f2ed99; }
-.sale-diagnosis-reason-body { padding: 0 25px 28px 56px; }
-.sale-diagnosis-reason-body > p { margin-bottom: 19px; font-size: 14px; color: #4e4d49; }
-.sale-diagnosis-answer { padding: 19px 20px; background: #f5f5f0; border-left: 3px solid #bc4b31; }
-.sale-diagnosis-answer-tag { display: block; margin-bottom: 8px; font-size: 10px; font-weight: 800; letter-spacing: .12em; color: #aa3d2a; }
-.sale-diagnosis-answer p { margin: 0; color: #393833; font-size: 13px; }
-.sale-diagnosis-summary { display: grid; grid-template-columns: 72px 1fr auto; align-items: center; gap: 30px; padding: 34px 39px; margin-top: 35px; background: #f2ed99; }
-.sale-diagnosis-summary-mark { display: grid; place-items: center; width: 62px; height: 62px; border: 2px solid #111; border-radius: 50%; font-weight: 800; font-size: 32px; line-height: 1; }
-.sale-diagnosis-summary .sale-diagnosis-eyebrow { color: #48463d; }
-.sale-diagnosis-summary h3 { max-width: 800px; font-size: clamp(24px, 2.4vw, 34px); margin: 7px 0; }
-.sale-diagnosis-summary h3 em { color: #bc4b31; }
-.sale-diagnosis-summary p:not(.sale-diagnosis-eyebrow) { max-width: 800px; margin-bottom: 0; font-size: 13px; }
-.sale-diagnosis-summary .sale-diagnosis-primary { white-space: nowrap; }
+/* Resultado acotado: valor inmediato y detalles bajo demanda. */
+.sale-diagnosis-result { background: #f7f7f5; padding: 72px 0 85px; scroll-margin-top: 100px; }
+.sale-diagnosis-result-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 38px; margin-bottom: 26px; }
+.sale-diagnosis-result-head > div { max-width: 880px; }
+.sale-diagnosis-result-head .sale-diagnosis-eyebrow { margin-bottom: 17px; }
+.sale-diagnosis-result h2 { font-size: clamp(33px, 3.1vw, 49px); line-height: 1.15; margin: 0 0 12px; }
+.sale-diagnosis-result-intro { font-size: 15px; color: var(--sd-muted); margin: 0; }
+.sale-diagnosis-change { flex-shrink: 0; border: none; background: transparent; color: var(--sd-primary); border-bottom: 1px solid var(--sd-primary); padding: 9px 0; font-size: 12px; font-weight: 600; }
+.sale-diagnosis-change:hover { color: #7f2b1a; }
+.sale-diagnosis-result-grid { display: grid; grid-template-columns: minmax(260px, .84fr) minmax(0, 1.16fr); align-items: start; gap: 16px; }
+.sale-diagnosis-result-promise { display: flex; flex-direction: column; align-items: flex-start; background: white; border-left: 5px solid var(--sd-primary); padding: 30px 32px; min-height: 325px; }
+.sale-diagnosis-result-promise .sale-diagnosis-eyebrow { margin-bottom: 14px; }
+.sale-diagnosis-result-promise h3 { font-size: clamp(26px, 2.7vw, 38px); line-height: 1.12; margin: 0 0 13px; }
+.sale-diagnosis-result-promise h3 span { color: var(--sd-primary); }
+.sale-diagnosis-result-promise p:not(.sale-diagnosis-eyebrow) { font-size: 14px; color: var(--sd-muted); margin: 0 0 16px; }
+.sale-diagnosis-promise-action { margin-top: auto; border: none; background: transparent; border-bottom: 1px solid var(--sd-primary); padding: 10px 0; font-size: 13px; font-weight: 700; color: var(--sd-primary); }
+.sale-diagnosis-promise-action:hover { color: #7f2b1a; }
+.sale-diagnosis-questions { display: grid; gap: 9px; }
+.sale-diagnosis-question { border: 1px solid #deddd9; background: white; }
+.sale-diagnosis-question[open] { border-color: #c1c0bc; }
+.sale-diagnosis-question summary { list-style: none; display: flex; align-items: center; gap: 15px; padding: 17px 20px; min-height: 76px; cursor: pointer; }
+.sale-diagnosis-question summary::-webkit-details-marker { display: none; }
+.sale-diagnosis-question summary:hover { background: #fcfcfb; }
+.sale-diagnosis-question-count { flex-shrink: 0; font-weight: 700; color: var(--sd-primary); font-size: 11px; }
+.sale-diagnosis-question-name { flex: 1; font-weight: 700; font-size: 15px; line-height: 1.3; }
+.sale-diagnosis-question-plus { display: grid; place-items: center; flex: 0 0 28px; height: 28px; width: 28px; border-radius: 50%; background: #efefec; color: #333; font-size: 22px; transition: transform .2s; }
+.sale-diagnosis-question[open] .sale-diagnosis-question-plus { transform: rotate(45deg); background: #f7e6de; color: var(--sd-primary); }
+.sale-diagnosis-question-body { padding: 0 20px 20px 46px; }
+.sale-diagnosis-question-body > p { font-size: 13px; line-height: 1.7; color: #4a4945; margin-bottom: 13px; }
+.sale-diagnosis-rednorte-action { background: #f7f7f3; padding: 16px 18px; border-left: 3px solid var(--sd-primary); }
+.sale-diagnosis-rednorte-action strong { color: var(--sd-primary); font-size: 11px; text-transform: uppercase; letter-spacing: .045em; }
+.sale-diagnosis-rednorte-action p { font-size: 13px; line-height: 1.65; margin: 6px 0 0; }
+.sale-diagnosis-result-note { font-size: 11px; color: #696761; margin: 8px 0 0; }
+.sale-diagnosis-next-step { display: flex; align-items: center; gap: 25px; justify-content: space-between; margin-top: 28px; padding: 23px 27px; background: #fff; border: 1px solid #e0ded9; border-left: 5px solid var(--sd-primary); }
+.sale-diagnosis-next-step strong { font-size: 19px; line-height: 1.35; }
+.sale-diagnosis-next-step p { font-size: 13px; color: var(--sd-muted); max-width: 720px; margin: 5px 0 0; }
+.sale-diagnosis-next-step .sale-diagnosis-action-primary { white-space: nowrap; }
 
-/* 04 — Conversión protagonista, con formulario limpio y beneficios claros. */
-.sale-diagnosis-contact { padding: clamp(80px, 9vw, 130px) 0; background: #111111; color: white; scroll-margin-top: 90px; }
-.sale-diagnosis-contact-grid { display: grid; grid-template-columns: minmax(0, .95fr) minmax(360px, 1fr); align-items: start; gap: clamp(45px, 6vw, 100px); }
-.sale-diagnosis-contact-copy { padding: 18px 0 0; }
-.sale-diagnosis-contact .sale-diagnosis-eyebrow { color: #f2ed99; }
-.sale-diagnosis-contact h2 { color: #fff; font-size: clamp(40px, 4.5vw, 65px); max-width: 640px; margin-bottom: 25px; }
-.sale-diagnosis-contact h2 em { color: #f2ed99; }
-.sale-diagnosis-contact-lead { color: #d4d4cf; max-width: 530px; font-size: 16px; margin-bottom: 28px; }
-.sale-diagnosis-promise-list { border-top: 1px solid #575750; max-width: 530px; margin: 36px 0; }
-.sale-diagnosis-promise-list > div { display: grid; grid-template-columns: 36px 1fr; gap: 4px 15px; padding: 17px 0; border-bottom: 1px solid #454640; }
-.sale-diagnosis-promise-list span { grid-row: span 2; color: #f2ed99; font-size: 11px; font-weight: 700; }
-.sale-diagnosis-promise-list strong { font-size: 14px; font-weight: 600; }
-.sale-diagnosis-promise-list small { color: #b4b5ae; font-size: 12px; }
-.sale-diagnosis-contact-context { margin: 0 0 15px; border-left: 3px solid #bc4b31; padding-left: 17px; color: #c6c5c1; font-size: 12px; }
-.sale-diagnosis-contact-context strong { display: block; color: #fff; font-size: 15px; }
-.sale-diagnosis-contact-small { font-size: 11px; line-height: 1.6; color: #7c7972; }
-.sale-diagnosis-contact-copy .sale-diagnosis-contact-small { color: #999992; }
-.sale-diagnosis-form { display: grid; gap: 18px; border-radius: 4px; background: #fff; color: #111; padding: clamp(25px, 3.4vw, 54px); box-shadow: 0 30px 65px rgba(0,0,0,.28); }
-.sale-diagnosis-form-header { margin-bottom: 4px; }
-.sale-diagnosis-form-badge { display: inline-flex; padding: 8px 11px; background: #f2ed99; color: #111; font-size: 10px; font-weight: 800; letter-spacing: .07em; }
-.sale-diagnosis-form h3 { max-width: 520px; font-size: clamp(29px, 2.7vw, 43px); margin: 15px 0 10px; }
-.sale-diagnosis-form-header p { font-size: 13px; color: #5a5a55; margin: 0; }
-.sale-diagnosis-form-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-.sale-diagnosis-form label:not(.sale-diagnosis-privacy) { display: grid; gap: 7px; font-size: 12px; font-weight: 600; color: #3a3a35; }
-.sale-diagnosis-form input:not([type="checkbox"]) {
-  width: 100%; min-width: 0; min-height: 50px; padding: 12px 13px;
-  border-radius: 2px; border: 1px solid #c9c9c4; background: #fafaf8; color: #111;
-  font-family: inherit; font-size: 13px;
-}
-.sale-diagnosis-form input::placeholder { color: #8d8e8a; }
-.sale-diagnosis-privacy { display: flex; gap: 10px; align-items: flex-start; color: #4e4e47; font-size: 11px; line-height: 1.6; }
-.sale-diagnosis-privacy input { flex-shrink: 0; margin-top: 4px; accent-color: #bc4b31; }
-.sale-diagnosis-privacy a { color: #9b3b28; text-decoration: underline; }
-.sale-diagnosis-form .sale-diagnosis-primary { width: 100%; justify-content: space-between; min-height: 58px; font-size: 15px; }
-.sale-diagnosis-form-alternative { display: flex; align-items: center; gap: 12px; color: #72726c; font-size: 10px; font-weight: 600; letter-spacing: .1em; }
-.sale-diagnosis-form-alternative::before, .sale-diagnosis-form-alternative::after { content: ""; height: 1px; background: #deded9; flex: 1; }
-.sale-diagnosis-secondary { width: 100%; display: inline-flex; justify-content: space-between; align-items: center; gap: 15px; min-height: 54px; padding: 14px 17px; border: 1px solid #1d1d1b; border-radius: 2px; background: #fff; color: #111; font-size: 13px; font-weight: 600; }
-.sale-diagnosis-secondary:hover { background: #f5f5f2; }
-.sale-diagnosis-secondary span { font-size: 21px; font-weight: 400; }
-.sale-diagnosis-form-message { margin: 0; padding: 12px 14px; background: #e9f4ed; border-left: 3px solid #276849; color: #1e5136; font-size: 12px; }
-.sale-diagnosis-form-message.is-error { background: #fbeae5; border-color: #bc4b31; color: #853723; }
-.sale-diagnosis-form-message.is-submitting { background: #f7f5e5; border-color: #7c7b67; color: #56534d; }
-.sale-diagnosis-honey { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+/* Revisión gratuita: siempre disponible, sin tener que elegir escenario. */
+.sale-diagnosis-review { background: #111; color: white; padding: 87px 0; scroll-margin-top: 98px; }
+.sale-diagnosis-review-grid { display: grid; grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); align-items: start; gap: clamp(36px, 6vw, 90px); }
+.sale-diagnosis-review .sale-diagnosis-eyebrow { color: #f1bcaa; margin-bottom: 17px; }
+.sale-diagnosis-review h2 { font-size: clamp(37px, 3.8vw, 55px); line-height: 1.14; color: white; margin: 0 0 19px; }
+.sale-diagnosis-review h2 span { color: #f0b6a2; }
+.sale-diagnosis-review-lead { color: #d4d4d1; font-size: 15px; max-width: 540px; margin-bottom: 29px; }
+.sale-diagnosis-review-points { max-width: 580px; }
+.sale-diagnosis-review-points > div { display: flex; align-items: flex-start; gap: 15px; border-top: 1px solid #4e4d48; padding: 16px 0; }
+.sale-diagnosis-review-points > div:last-child { border-bottom: 1px solid #4e4d48; }
+.sale-diagnosis-review-points > div > span { flex: 0 0 27px; font-weight: 700; color: #e7ab95; font-size: 11px; padding-top: 2px; }
+.sale-diagnosis-review-points strong { display: block; color: #fff; font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.sale-diagnosis-review-points small { font-size: 12px; color: #c5c3bd; }
+.sale-diagnosis-review-footnote { max-width: 560px; margin: 20px 0 0; color: #a9a69e; font-size: 11px; }
+.sale-diagnosis-form { display: grid; gap: 15px; background: #fff; border-radius: 3px; padding: clamp(24px, 3vw, 40px); color: #111; box-shadow: 0 18px 45px rgba(0,0,0,.18); }
+.sale-diagnosis-form-top { margin-bottom: 2px; }
+.sale-diagnosis-form-badge { display: inline-flex; background: #fff0e8; color: var(--sd-primary-dark); padding: 7px 10px; font-size: 10px; letter-spacing: .045em; font-weight: 700; }
+.sale-diagnosis-form h3 { font-size: clamp(27px, 2.35vw, 36px); margin: 13px 0 9px; line-height: 1.18; }
+.sale-diagnosis-form-top > p:not(.sale-diagnosis-form-badge, .sale-diagnosis-selected) { font-size: 12px; color: #55534f; margin: 0; }
+.sale-diagnosis-selected { margin: 14px 0 0; padding: 10px 12px; background: #f7f4f1; border-left: 3px solid var(--sd-primary); color: #42342f; font-size: 12px; }
+.sale-diagnosis-form-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.sale-diagnosis-form label:not(.sale-diagnosis-privacy) { display: grid; gap: 6px; font-size: 12px; font-weight: 600; color: #3a3936; }
+.sale-diagnosis-form input:not([type="checkbox"]) { min-height: 48px; width: 100%; min-width: 0; border-radius: 2px; border: 1px solid #d0cfcb; background: #fdfdfc; font-size: 13px; padding: 11px 12px; color: #111; }
+.sale-diagnosis-form input::placeholder { color: #93918a; }
+.sale-diagnosis-privacy { display: flex; align-items: flex-start; gap: 10px; color: #4a4844; font-size: 11px; line-height: 1.6; }
+.sale-diagnosis-privacy input { flex: 0 0 auto; margin-top: 3px; accent-color: var(--sd-primary); }
+.sale-diagnosis-privacy a { color: var(--sd-primary-dark); text-decoration: underline; }
+.sale-diagnosis-honey { width: 1px; height: 1px; position: absolute; overflow: hidden; clip-path: inset(50%); }
+.sale-diagnosis-submit { width: 100%; font-size: 15px; min-height: 55px; }
+.sale-diagnosis-submit:disabled, .sale-diagnosis-whatsapp:disabled { opacity: .63; cursor: not-allowed; }
+.sale-diagnosis-or { display: flex; align-items: center; gap: 10px; color: #76736e; font-size: 11px; justify-content: center; }
+.sale-diagnosis-or::before, .sale-diagnosis-or::after { content: ""; height: 1px; background: #dfdedb; flex: 1; }
+.sale-diagnosis-whatsapp { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 50px; padding: 12px 15px; color: #111; background: #fff; border: 1px solid #b6b4ae; font-size: 13px; font-weight: 600; border-radius: 2px; }
+.sale-diagnosis-whatsapp:hover { background: #f7f7f4; }
+.sale-diagnosis-form-notice { color: #74716d; font-size: 11px; margin: -3px 0 0; }
+.sale-diagnosis-form-message { background: #ebf4ed; color: #1e5834; border-left: 3px solid #2b6747; font-size: 12px; padding: 12px; margin: 0; }
+.sale-diagnosis-form-message.is-error { color: #8d3424; background: #f9ede9; border-color: #bc4b31; }
+.sale-diagnosis-form-message.is-submitting { color: #695c33; background: #f8f5ec; border-color: #957c4e; }
 
-/* 05 — Puente opcional a la herramienta de vendibilidad detallada. */
-.sale-diagnosis-deeper { padding: clamp(70px, 7vw, 105px) 0; background: white; border-top: 1px solid #e5e5df; }
-.sale-diagnosis-deeper-grid { display: grid; grid-template-columns: 62px minmax(0, 1fr) auto; gap: 32px; align-items: center; }
-.sale-diagnosis-deeper-indicator { width: 57px; height: 57px; border: 1px solid #bfc1b9; border-radius: 50%; display: grid; place-items: center; font-size: 35px; font-weight: 300; color: #bc4b31; }
-.sale-diagnosis-deeper h2 { max-width: 830px; font-size: clamp(30px, 3.1vw, 47px); margin: 0 0 12px; }
-.sale-diagnosis-deeper h2 em { color: #bc4b31; }
-.sale-diagnosis-deeper p:not(.sale-diagnosis-eyebrow) { max-width: 750px; margin-bottom: 0; color: #5b5b55; font-size: 14px; }
-.sale-diagnosis-outline-link { display: inline-flex; align-items: center; justify-content: space-between; gap: 18px; min-height: 54px; padding: 15px 20px; color: #111; border: 1px solid #111; text-decoration: none; font-size: 12px; font-weight: 700; white-space: nowrap; }
-.sale-diagnosis-outline-link:hover { color: white; background: #111; }
-.sale-diagnosis-outline-link span { font-size: 18px; }
+/* Puente al reporte completo: una opción, no una distracción. */
+.sale-diagnosis-deeper { padding: 63px 0; background: #fff; }
+.sale-diagnosis-deeper-grid { display: flex; align-items: center; gap: 32px; justify-content: space-between; }
+.sale-diagnosis-deeper-grid > div { max-width: 780px; }
+.sale-diagnosis-deeper .sale-diagnosis-eyebrow { margin-bottom: 11px; }
+.sale-diagnosis-deeper h2 { font-size: clamp(28px, 2.65vw, 40px); margin: 0 0 10px; }
+.sale-diagnosis-deeper h2 span { color: var(--sd-primary); }
+.sale-diagnosis-deeper p:not(.sale-diagnosis-eyebrow) { color: var(--sd-muted); font-size: 13px; margin: 0; }
+.sale-diagnosis-deeper-link { flex-shrink: 0; display: inline-flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 52px; padding: 14px 18px; border: 1px solid #111; color: #111; font-size: 12px; font-weight: 700; text-decoration: none; }
+.sale-diagnosis-deeper-link:hover { background: #111; color: white; }
 .sale-diagnosis-mobile-cta { display: none; }
 
-@media(max-width: 1160px) {
-  .sale-diagnosis-hero { grid-template-columns: 57% 43%; }
-  .sale-diagnosis-hero-copy { padding: 65px 35px; }
-  .sale-diagnosis-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .sale-diagnosis-option:first-child { grid-column: span 2; }
-  .sale-diagnosis-summary { grid-template-columns: 62px 1fr; }
-  .sale-diagnosis-summary .sale-diagnosis-primary { grid-column: 2; justify-self: start; }
-  .sale-diagnosis-deeper-grid { grid-template-columns: 50px 1fr; }
-  .sale-diagnosis-outline-link { grid-column: 2; justify-self: start; }
+@media(max-width: 1100px) {
+  .sale-diagnosis-first-grid { grid-template-columns: minmax(0, .9fr) minmax(400px, 1.1fr); gap: 35px; }
+  .sale-diagnosis-intro h1 { font-size: clamp(43px, 4.7vw, 58px); }
+  .sale-diagnosis-intro-actions { gap: 13px; }
+  .sale-diagnosis-result-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
 }
-
-@media(max-width: 880px) {
-  .sale-diagnosis-container { width: min(100% - 44px, 1280px); }
-  .sale-diagnosis-hero { grid-template-columns: 1fr; min-height: 0; }
-  .sale-diagnosis-hero-copy { padding: 65px 26px 62px; }
-  .sale-diagnosis-hero-copy-inner { margin: 0; }
-  .sale-diagnosis-hero-photo { min-height: 400px; }
-  .sale-diagnosis-photo-statement { left: 34px; bottom: 55px; }
-  .sale-diagnosis-section-heading, .sale-diagnosis-section-heading--result { grid-template-columns: 1fr; gap: 24px; }
-  .sale-diagnosis-section-aside { max-width: 780px; }
-  .sale-diagnosis-insights { grid-template-columns: 1fr; }
-  .sale-diagnosis-insights-lead { min-height: 250px; }
-  .sale-diagnosis-summary { grid-template-columns: 1fr; }
-  .sale-diagnosis-summary .sale-diagnosis-primary { grid-column: 1; }
-  .sale-diagnosis-contact-grid { grid-template-columns: 1fr; }
-  .sale-diagnosis-deeper-grid { grid-template-columns: 50px 1fr; }
+@media(max-width: 860px) {
+  .sale-diagnosis-container { width: calc(100% - 42px); }
+  .sale-diagnosis-first { padding: 45px 0 60px; }
+  .sale-diagnosis-first-grid, .sale-diagnosis-result-grid, .sale-diagnosis-review-grid { grid-template-columns: 1fr; }
+  .sale-diagnosis-first-grid { gap: 28px; }
+  .sale-diagnosis-intro { padding: 0; }
+  .sale-diagnosis-intro h1 { font-size: clamp(46px, 8vw, 65px); }
+  .sale-diagnosis-trust-strip { margin-top: 29px; }
+  .sale-diagnosis-result-head { flex-direction: column; gap: 10px; }
+  .sale-diagnosis-result-promise { min-height: 0; }
+  .sale-diagnosis-result-promise .sale-diagnosis-promise-action { margin-top: 10px; }
+  .sale-diagnosis-result-grid { gap: 12px; }
+  .sale-diagnosis-next-step { flex-direction: column; align-items: stretch; }
+  .sale-diagnosis-next-step .sale-diagnosis-action-primary { justify-content: center; }
+  .sale-diagnosis-review-grid { gap: 35px; }
+  .sale-diagnosis-deeper-grid { flex-direction: column; align-items: flex-start; }
 }
-
-@media(max-width: 600px) {
-  .sale-diagnosis-container { width: calc(100% - 34px); }
-  .sale-diagnosis h2 { font-size: clamp(32px, 9.3vw, 44px); }
-  .sale-diagnosis-hero-copy { padding: 46px 20px 45px; }
-  .sale-diagnosis-hero h1 { font-size: clamp(44px, 11.4vw, 62px); }
-  .sale-diagnosis-lead { font-size: 15px; }
-  .sale-diagnosis-hero-pill { font-size: 9px; }
-  .sale-diagnosis-hero-actions { align-items: stretch; flex-direction: column; gap: 8px; }
-  .sale-diagnosis-hero-text-link { text-align: left; align-self: start; }
-  .sale-diagnosis-hero-points { gap: 10px 16px; margin-top: 30px; }
-  .sale-diagnosis-hero-photo { min-height: 300px; }
-  .sale-diagnosis-photo-statement strong { font-size: 39px; }
-  .sale-diagnosis-photo-statement span { font-size: 10px; }
-  .sale-diagnosis-photo-top { inset: 20px 22px auto; }
-  .sale-diagnosis-choose, .sale-diagnosis-result, .sale-diagnosis-contact, .sale-diagnosis-deeper { padding: 62px 0; }
-  .sale-diagnosis-step-count { margin-bottom: 9px; }
-  .sale-diagnosis-section-heading { margin-bottom: 29px; }
-  .sale-diagnosis-options { grid-template-columns: 1fr; gap: 11px; }
-  .sale-diagnosis-option, .sale-diagnosis-option:first-child { grid-column: span 1; min-height: 186px; padding: 21px; }
-  .sale-diagnosis-option.is-selected { padding: 20px; }
-  .sale-diagnosis-option-copy { margin-bottom: 14px; }
-  .sale-diagnosis-option-copy strong { font-size: 21px; }
-  .sale-diagnosis-option-top { margin-bottom: 16px; }
-  .sale-diagnosis-selector-note { margin-top: 22px; }
-  .sale-diagnosis-insights-lead { padding: 27px 23px; }
-  .sale-diagnosis-insights-lead h3 { font-size: 32px; }
-  .sale-diagnosis-reason summary { min-height: 91px; padding: 18px 17px; gap: 12px; }
-  .sale-diagnosis-reason-title { font-size: 17px; }
-  .sale-diagnosis-reason-body { padding: 0 16px 19px; }
-  .sale-diagnosis-summary { padding: 28px 22px; gap: 15px; }
-  .sale-diagnosis-summary-mark { width: 45px; height: 45px; font-size: 23px; }
-  .sale-diagnosis-summary .sale-diagnosis-primary { width: 100%; }
-  .sale-diagnosis-contact h2 { font-size: 43px; }
-  .sale-diagnosis-form { padding: 25px 18px; gap: 15px; }
-  .sale-diagnosis-form-row { grid-template-columns: 1fr; }
-  .sale-diagnosis-deeper-grid { grid-template-columns: 1fr; gap: 17px; }
-  .sale-diagnosis-outline-link { grid-column: 1; white-space: normal; width: 100%; }
-  .sale-diagnosis-mobile-cta { display: block; position: fixed; z-index: 150; bottom: 15px; left: 13px; right: 82px; pointer-events: none; }
-  .sale-diagnosis-mobile-cta button { display: flex; pointer-events: auto; align-items: center; justify-content: space-between; gap: 12px; width: 100%; min-height: 54px; padding: 12px 16px; border-radius: 4px; border: 1px solid #a33b25; background: #bc4b31; color: #fff; box-shadow: 0 5px 19px rgba(17,17,17,.24); font-size: 12px; font-weight: 700; text-align: left; }
-  .sale-diagnosis-mobile-cta span { font-size: 20px; }
-  .sale-diagnosis { padding-bottom: 70px; }
+@media(max-width: 560px) {
+  .sale-diagnosis-container { width: calc(100% - 32px); }
+  .sale-diagnosis-first { padding: 35px 0 48px; }
+  .sale-diagnosis-intro > .sale-diagnosis-eyebrow { margin-bottom: 18px; }
+  .sale-diagnosis-intro h1 { font-size: clamp(42px, 11vw, 55px); margin-bottom: 17px; }
+  .sale-diagnosis-intro-lead { font-size: 16px; margin-bottom: 12px; }
+  .sale-diagnosis-intro-explainer { font-size: 13px; margin-bottom: 22px; }
+  .sale-diagnosis-intro-actions { flex-direction: column; align-items: stretch; gap: 10px; }
+  .sale-diagnosis-intro-actions .sale-diagnosis-action-primary { justify-content: space-between; }
+  .sale-diagnosis-action-link { align-self: flex-start; }
+  .sale-diagnosis-trust-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); padding-top: 16px; gap: 13px; }
+  .sale-diagnosis-trust-strip span:last-child { grid-column: 1 / -1; }
+  .sale-diagnosis-selector-top { padding: 22px 18px; }
+  .sale-diagnosis-selector-top h2 { font-size: 27px; }
+  .sale-diagnosis-choice { gap: 10px; min-height: 74px; padding: 12px 14px; }
+  .sale-diagnosis-choice-number { flex-basis: 20px; }
+  .sale-diagnosis-choice-copy strong { font-size: 14px; }
+  .sale-diagnosis-choice-copy small { font-size: 10px; }
+  .sale-diagnosis-choice-arrow { width: 25px; height: 25px; flex-basis: 25px; }
+  .sale-diagnosis-selector-bottom { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .sale-diagnosis-result { padding: 53px 0 61px; }
+  .sale-diagnosis-result h2 { font-size: 34px; }
+  .sale-diagnosis-result-intro { font-size: 14px; }
+  .sale-diagnosis-result-promise { padding: 26px 22px; }
+  .sale-diagnosis-question summary { gap: 11px; padding: 16px 13px; }
+  .sale-diagnosis-question-name { font-size: 14px; }
+  .sale-diagnosis-question-body { padding: 0 13px 15px; }
+  .sale-diagnosis-next-step { padding: 20px; }
+  .sale-diagnosis-review { padding: 60px 0; }
+  .sale-diagnosis-review h2 { font-size: 37px; }
+  .sale-diagnosis-form { padding: 24px 17px; gap: 13px; }
+  .sale-diagnosis-form-row { grid-template-columns: 1fr; gap: 13px; }
+  .sale-diagnosis-deeper { padding: 55px 0; }
+  .sale-diagnosis-deeper-link { width: 100%; }
+  .sale-diagnosis { padding-bottom: 65px; }
+  .sale-diagnosis-mobile-cta { display: block; position: fixed; bottom: 14px; left: 12px; right: 79px; z-index: 160; pointer-events: none; }
+  .sale-diagnosis-mobile-cta button { pointer-events: auto; display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 53px; gap: 12px; padding: 11px 17px; color: white; background: var(--sd-primary); border: 1px solid var(--sd-primary-dark); border-radius: 4px; font-weight: 700; font-size: 12px; box-shadow: 0 8px 28px rgba(0,0,0,.22); }
 }
-
 @media(prefers-reduced-motion: reduce) {
-  .sale-diagnosis *, .sale-diagnosis *::before, .sale-diagnosis *::after { scroll-behavior: auto !important; transition: none !important; }
-  .sale-diagnosis-primary:hover, .sale-diagnosis-option:hover { transform: none; }
+  .sale-diagnosis *, .sale-diagnosis *::before, .sale-diagnosis *::after { transition: none !important; scroll-behavior: auto !important; }
+  .sale-diagnosis-action-primary:hover { transform: none; }
 }
