@@ -21,6 +21,10 @@ test('la landing comercial nueva es independiente del Reporte de Vendibilidad', 
   assert.match(component, /sale-diagnosis-selector/);
   assert.match(component, /sale-diagnosis-mobile-cta/);
   assert.match(component, /defaultOpen=\{index === 0\}/);
+  assert.match(component, /sd-journey/);
+  assert.match(component, /sd-stage/);
+  assert.match(component, /sd-method-steps/);
+  assert.match(component, /GraficoFactor/);
   assert.doesNotMatch(component, /sale-diagnosis-hero-photo/);
 });
 
@@ -54,7 +58,9 @@ test('contacto: validación, consentimiento, recepción confirmada y WhatsApp co
   assert.match(component, /'Revisión general sin selección'/);
   assert.doesNotMatch(component, /if \(!scenario \|\| !validateForm/);
   assert.match(component, /<section className="sale-diagnosis-review"/);
-  assert.match(component, /getElementById\('diagnostico-revision'\)/);
+  assert.match(component, /setPanelOpen\(true\)/);
+  assert.match(component, /aria-modal=\{panelOpen \? 'true' : undefined\}/);
+  assert.match(component, /ref=\{formRef\}/);
   assert.match(component, /Aviso de Privacidad/);
   assert.match(component, /name="privacidad" type="checkbox"/);
   assert.match(tracking, /'diagnostico_venta'/);
@@ -68,4 +74,37 @@ test('la captura es libre de selección obligatoria y la promesa de revisión es
   assert.match(beforeResults, /Desde 2018/);
   assert.match(beforeResults, /Revisión gratis de mi anuncio/);
   assert.match(component, /Es una revisión inicial y orientativa/);
+});
+
+
+test('V4 conserva cinco etapas interactivas con diagramas ilustrativos sin datos inventados', async () => {
+  const [component, css] = await Promise.all([
+    load('../components/diagnostico-venta/DiagnosticoVenta.jsx'),
+    load('../components/diagnostico-venta/diagnosticoVenta.css'),
+  ]);
+  const stages = [...component.matchAll(/\{ id: '([^']+)', titulo:/g)].map((m) => m[1]);
+  assert.deepEqual(stages, [
+    'sin-consultas', 'sin-visitas', 'sin-ofertas', 'ofertas-bajas', 'operaciones-caidas',
+  ]);
+  assert.match(component, /aria-pressed=\{selected === etapa\.id\}/);
+  assert.match(component, /scrollIntoView/);
+  assert.match(component, /Los elementos gráficos son ilustrativos/);
+  assert.match(css, /prefers-reduced-motion:reduce/);
+  assert.match(css, /sd-journey-line/);
+  assert.match(css, /sd-drawer-in/);
+});
+
+test('V4 ofrece un solo formulario, accesible también sin escenario y en panel contextual', async () => {
+  const component = await load('../components/diagnostico-venta/DiagnosticoVenta.jsx');
+  assert.equal((component.match(/<form\b/g) || []).length, 1);
+  assert.match(component, /'Revisión general sin selección'/);
+  assert.match(component, /goContact\(\) \{[\s\S]*setPanelOpen\(true\)/);
+  assert.match(component, /if \(!panelOpen\) return undefined/);
+  assert.match(component, /event\.key === 'Escape'/);
+  assert.match(component, /event\.key !== 'Tab'/);
+  assert.match(component, /aria-modal=\{panelOpen \? 'true' : undefined\}/);
+  assert.match(component, /role=\{panelOpen \? 'dialog' : undefined\}/);
+  assert.match(component, /'hidden'/);
+  assert.match(component, /sd-drawer-backdrop/);
+  assert.match(component, /setStatus\(\{ type: 'success'/); // no real network calls
 });
