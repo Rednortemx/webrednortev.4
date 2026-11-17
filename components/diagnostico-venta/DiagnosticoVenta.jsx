@@ -79,6 +79,7 @@ export default function DiagnosticoVenta() {
   const [form, setForm] = useState(initialForm);
   const [status, setStatus] = useState({ type: 'idle', message: '' });
   const resultsRef = useRef(null);
+  const journeyRef = useRef(null);
   const formRef = useRef(null);
   const startedRef = useRef(false);
   const returnFocusRef = useRef(null);
@@ -131,6 +132,18 @@ export default function DiagnosticoVenta() {
       returnFocusRef.current?.focus?.();
     };
   }, [panelOpen]);
+
+  useEffect(() => {
+    if (!selected || !journeyRef.current) return;
+    const track = journeyRef.current;
+    const active = track.querySelector('.sd-stage.is-current');
+    if (!active || track.scrollWidth <= track.clientWidth) return;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    track.scrollTo({
+      left: Math.max(0, active.offsetLeft - (track.clientWidth - active.clientWidth) / 2),
+      behavior: reduceMotion ? 'auto' : 'smooth',
+    });
+  }, [selected]);
 
   function selectScenario(id) {
     if (!startedRef.current) {
@@ -263,7 +276,7 @@ export default function DiagnosticoVenta() {
               </div>
             </div>
 
-            <div className="sd-journey" role="group" aria-label="Etapas de comercialización que puedes explorar" style={{ '--sd-progress': String((selectedIndex / 4) * 100) + '%' }}>
+            <div className="sd-journey" ref={journeyRef} role="group" aria-label="Etapas de comercialización que puedes explorar" style={{ '--sd-progress': String((selectedIndex / 4) * 100) + '%' }}>
               <div className="sd-journey-line" aria-hidden="true"><span /></div>
               {etapasVenta.map((etapa, index) => (
                 <button
