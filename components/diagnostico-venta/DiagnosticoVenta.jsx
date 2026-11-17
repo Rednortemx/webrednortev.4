@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { SITE_CONTACT } from '@/lib/siteConfig';
 import { submitTrackedLead, trackConversion } from '@/lib/conversions';
 import { escenarioPorId, escenariosVenta } from './escenarios';
@@ -30,7 +29,7 @@ function datosDeCampana() {
 function mensajeWhatsApp(escenario, form) {
   return [
     'Hola, Rednorte. Quisiera solicitar una revisión inicial gratuita y sin compromiso de contratación de mi anuncio.',
-    `Mi situación: ${escenario.opcion}.`,
+    `Mi situación: ${escenario?.opcion || 'Prefiero una revisión inicial de mi anuncio'}.`,
     `Nombre: ${form.nombre.trim()}`,
     `Teléfono: ${form.telefono.trim()}`,
     form.email.trim() ? `Correo: ${form.email.trim()}` : '',
@@ -46,10 +45,16 @@ export default function DiagnosticoVenta() {
   const resultsRef = useRef(null);
   const formRef = useRef(null);
   const startedRef = useRef(false);
+  const resultTrackedRef = useRef(false);
   const scenario = escenarioPorId(selected);
 
   useEffect(() => {
-    if (selected) resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (!selected) return;
+    if (!resultTrackedRef.current) {
+      trackConversion('herramienta_completada', 'diagnostico_venta');
+      resultTrackedRef.current = true;
+    }
+    resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, [selected]);
 
   function selectScenario(id) {
@@ -79,10 +84,10 @@ export default function DiagnosticoVenta() {
 
   async function sendForm(event) {
     event.preventDefault();
-    if (!scenario || !validateForm() || status.type === 'submitting') return;
+    if (!validateForm() || status.type === 'submitting') return;
     setStatus({ type: 'submitting', message: 'Registrando tu solicitud…' });
     const notes = [
-      `Situación: ${scenario.opcion}`,
+      `Situación: ${scenario?.opcion || 'Revisión general sin selección'}`,
       form.anuncio.trim() ? `Anuncio: ${form.anuncio.trim()}` : '',
       datosDeCampana(),
     ].filter(Boolean).join(' · ');
@@ -96,7 +101,7 @@ export default function DiagnosticoVenta() {
           nombre: form.nombre.trim(),
           telefono: form.telefono.trim(),
           email: form.email.trim(),
-          detalle: `Revisión gratuita de anuncio · ${scenario.opcion}`,
+          detalle: `Revisión gratuita de anuncio · ${scenario?.opcion || 'Revisión general'}`,
           notas: notes,
           website: String(formRef.current?.elements.website?.value || ''),
         }),
@@ -110,7 +115,7 @@ export default function DiagnosticoVenta() {
   }
 
   function goWhatsApp() {
-    if (!scenario || !validateForm()) return;
+    if (!validateForm()) return;
     const link = `https://wa.me/${SITE_CONTACT.phoneDigits}?text=${encodeURIComponent(mensajeWhatsApp(scenario, form))}`;
     trackConversion('whatsapp_clic', 'diagnostico_venta');
     // No se registra como lead recibido hasta que el propietario envíe su mensaje.
@@ -118,214 +123,174 @@ export default function DiagnosticoVenta() {
   }
 
   function goContact() {
-    document.getElementById(scenario ? 'diagnostico-revision' : 'elegir-situacion')
-      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('diagnostico-revision')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   return (
     <main className="sale-diagnosis">
-      <section className="sale-diagnosis-hero" aria-labelledby="sale-diagnosis-heading">
-        <div className="sale-diagnosis-hero-copy">
-          <div className="sale-diagnosis-hero-copy-inner">
-            <p className="sale-diagnosis-eyebrow">REDNORTE <span> / </span> ESTRATEGIA INMOBILIARIA</p>
-            <div className="sale-diagnosis-hero-pill"><span aria-hidden="true" /> REVISIÓN INICIAL GRATUITA · SIN COMPROMISO</div>
-            <h1 id="sale-diagnosis-heading">¿Por qué <em>no se vende</em> mi propiedad?</h1>
-            <p className="sale-diagnosis-lead">Publicarla fue el primer paso. Ahora descubramos qué puede estar impidiendo que lleguen compradores, visitas u ofertas.</p>
-            <div className="sale-diagnosis-hero-actions">
-              <a className="sale-diagnosis-primary" href="#elegir-situacion">Descubre qué está pasando <span aria-hidden="true">↗</span></a>
-              <button type="button" className="sale-diagnosis-hero-text-link" onClick={goContact}>Quiero una revisión gratuita <span aria-hidden="true">→</span></button>
+      <section className="sale-diagnosis-first" aria-labelledby="sale-main-title">
+        <div className="sale-diagnosis-container sale-diagnosis-first-grid">
+          <div className="sale-diagnosis-intro">
+            <p className="sale-diagnosis-eyebrow"><span className="sale-diagnosis-eyebrow-line" /> REDNORTE · ASESORÍA INMOBILIARIA EN MONTERREY</p>
+            <h1 id="sale-main-title">¿Tu propiedad <span>no se vende?</span></h1>
+            <p className="sale-diagnosis-intro-lead">Publicarla fue el primer paso. Si las consultas, visitas u ofertas no llegan, vale la pena entender qué está pasando.</p>
+            <p className="sale-diagnosis-intro-explainer">Elige tu situación para conocer posibles causas y cómo podemos ayudarte. O solicita directamente una <strong>revisión comercial inicial gratuita</strong> de tu anuncio.</p>
+            <div className="sale-diagnosis-intro-actions">
+              <a href="#elegir-situacion" className="sale-diagnosis-action-primary">Identificar mi situación <span aria-hidden="true">↗</span></a>
+              <button type="button" className="sale-diagnosis-action-link" onClick={goContact}>Quiero una revisión gratuita <span aria-hidden="true">→</span></button>
             </div>
-            <div className="sale-diagnosis-hero-points" aria-label="Ventajas de la revisión">
-              <span><b aria-hidden="true">✓</b> Sin costo</span>
-              <span><b aria-hidden="true">✓</b> Sin compromiso</span>
-              <span><b aria-hidden="true">✓</b> Con un equipo de Monterrey</span>
-            </div>
-          </div>
-        </div>
-        <div className="sale-diagnosis-hero-photo">
-          <Image
-            src="/images/rednorte-monterrey-living.webp"
-            alt="Interior residencial de referencia para la comunicación de Rednorte"
-            fill
-            priority
-            sizes="(max-width: 880px) 100vw, 46vw"
-            className="sale-diagnosis-hero-image"
-          />
-          <div className="sale-diagnosis-hero-photo-shade" aria-hidden="true" />
-          <div className="sale-diagnosis-photo-top"><span>REDNORTE</span><span>MONTERREY · N.L.</span></div>
-          <div className="sale-diagnosis-photo-statement">
-            <span>NO ES SOLO PUBLICAR.</span>
-            <strong>Es saber<br />cómo vender.</strong>
-          </div>
-          <span className="sale-diagnosis-photo-index" aria-hidden="true">01 / 05</span>
-        </div>
-      </section>
-
-      <section className="sale-diagnosis-choose" id="elegir-situacion" aria-labelledby="sale-choose-title">
-        <div className="sale-diagnosis-container">
-          <div className="sale-diagnosis-section-heading">
-            <div>
-              <p className="sale-diagnosis-eyebrow">PRIMER PASO · MENOS DE UN MINUTO</p>
-              <h2 id="sale-choose-title">¿Qué está pasando<br /><em>con tu propiedad?</em></h2>
-            </div>
-            <div className="sale-diagnosis-section-aside">
-              <span className="sale-diagnosis-step-count">01 <span>/ 03</span></span>
-              <p>Elige lo que más se parece a tu situación. Te explicaremos qué podría estar ocurriendo y cómo lo revisaríamos en Rednorte.</p>
-              <small>Sin datos personales para consultar la orientación.</small>
+            <div className="sale-diagnosis-trust-strip" aria-label="Por qué solicitar una revisión de Rednorte">
+              <span><strong>Desde 2018</strong><small>En el mercado inmobiliario</small></span>
+              <span><strong>Monterrey y N.L.</strong><small>Enfoque local</small></span>
+              <span><strong>Sin compromiso</strong><small>Revisión comercial inicial</small></span>
             </div>
           </div>
 
-          <div className="sale-diagnosis-options" role="group" aria-label="Selecciona tu situación">
-            {escenariosVenta.map((item, i) => (
-              <button
-                className={`sale-diagnosis-option ${selected === item.id ? 'is-selected' : ''}`}
-                key={item.id}
-                type="button"
-                aria-pressed={selected === item.id}
-                onClick={() => selectScenario(item.id)}
-              >
-                <span className="sale-diagnosis-option-top">
-                  <span className="sale-diagnosis-option-number">{String(i + 1).padStart(2, '0')}</span>
-                  <span className="sale-diagnosis-option-indicator" aria-hidden="true">{selected === item.id ? '✓' : '↗'}</span>
-                </span>
-                <span className="sale-diagnosis-option-copy">
-                  <strong>{item.opcion}</strong>
-                  <small>{item.breve}</small>
-                </span>
-                <span className="sale-diagnosis-option-foot">{selected === item.id ? 'TU SITUACIÓN' : 'VER POSIBLES CAUSAS'} <span aria-hidden="true">→</span></span>
-              </button>
-            ))}
+          <div className="sale-diagnosis-selector" id="elegir-situacion" aria-labelledby="sale-situations-title">
+            <div className="sale-diagnosis-selector-top">
+              <p className="sale-diagnosis-eyebrow">EMPECEMOS POR TU SITUACIÓN</p>
+              <h2 id="sale-situations-title">¿Qué está pasando <span>con tu propiedad?</span></h2>
+              <p>Selecciona la opción que mejor describa lo que estás viviendo.</p>
+            </div>
+            <div className="sale-diagnosis-choices" role="group" aria-label="Situaciones de venta">
+              {escenariosVenta.map((item, index) => (
+                <button
+                  type="button"
+                  key={item.id}
+                  aria-pressed={selected === item.id}
+                  className={'sale-diagnosis-choice' + (selected === item.id ? ' is-selected' : '')}
+                  onClick={() => selectScenario(item.id)}
+                >
+                  <span className="sale-diagnosis-choice-number">{String(index + 1).padStart(2, '0')}</span>
+                  <span className="sale-diagnosis-choice-copy"><strong>{item.opcion}</strong><small>{item.breve}</small></span>
+                  <span className="sale-diagnosis-choice-arrow" aria-hidden="true">{selected === item.id ? '✓' : '→'}</span>
+                </button>
+              ))}
+            </div>
+            <div className="sale-diagnosis-selector-bottom">
+              <span>¿Prefieres hablar directamente con nosotros?</span>
+              <button type="button" onClick={goContact}>Revisión gratis de mi anuncio <span aria-hidden="true">↗</span></button>
+            </div>
           </div>
-          <div className="sale-diagnosis-selector-note"><span className="sale-diagnosis-note-mark">R</span><p>Una propiedad puede tener varios obstáculos. Elegimos uno para empezar a entenderlos, no para darte un diagnóstico definitivo.</p></div>
         </div>
       </section>
 
       {scenario && (
-        <section className="sale-diagnosis-result" id="orientacion" ref={resultsRef} aria-labelledby="sale-result-title">
+        <section className="sale-diagnosis-result" ref={resultsRef} id="orientacion" aria-labelledby="sale-result-title">
           <div className="sale-diagnosis-container">
-            <div className="sale-diagnosis-section-heading sale-diagnosis-section-heading--result">
+            <div className="sale-diagnosis-result-head">
               <div>
-                <p className="sale-diagnosis-eyebrow">TU SITUACIÓN · QUÉ PODRÍA ESTAR PASANDO</p>
+                <p className="sale-diagnosis-eyebrow">TU SITUACIÓN · ORIENTACIÓN INICIAL</p>
                 <h2 id="sale-result-title">{scenario.titulo}</h2>
+                <p className="sale-diagnosis-result-intro">{scenario.intro}</p>
               </div>
-              <div className="sale-diagnosis-section-aside">
-                <span className="sale-diagnosis-step-count">02 <span>/ 03</span></span>
-                <p>{scenario.intro}</p>
-              </div>
+              <button type="button" className="sale-diagnosis-change" onClick={() => document.getElementById('elegir-situacion')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}>Cambiar mi situación <span aria-hidden="true">↑</span></button>
             </div>
-            <p className="sale-diagnosis-disclaimer"><span aria-hidden="true">i</span> Estas son explicaciones posibles, no conclusiones sobre tu inmueble. Una revisión individual podría revelar otras causas.</p>
 
-            <div className="sale-diagnosis-insights">
-              <div className="sale-diagnosis-insights-lead">
-                <span className="sale-diagnosis-eyebrow">NO TODO SE RESUELVE BAJANDO EL PRECIO</span>
-                <h3>Tres factores que vale la pena investigar.</h3>
-                <p>El primer paso no es cambiarlo todo. Es saber qué revisar y por qué.</p>
-                <button type="button" className="sale-diagnosis-insights-cta" onClick={goContact}>Revisar mi anuncio gratis <span aria-hidden="true">↗</span></button>
+            <div className="sale-diagnosis-result-grid">
+              <div className="sale-diagnosis-result-promise">
+                <p className="sale-diagnosis-eyebrow">EN REDNORTE PRIMERO ANALIZAMOS</p>
+                <h3>No siempre necesitas <span>bajar el precio.</span></h3>
+                <p>Estas son tres posibles causas que conviene revisar. Ninguna conclusión se puede confirmar sin conocer tu inmueble.</p>
+                <button type="button" className="sale-diagnosis-promise-action" onClick={goContact}>Que revisen mi anuncio <span aria-hidden="true">↗</span></button>
               </div>
-              <div className="sale-diagnosis-reasons" key={scenario.id}>
-                {scenario.aspectos.map((item, index) => (
-                  <details className="sale-diagnosis-reason" key={item.titulo} defaultOpen={index === 0}>
+              <div className="sale-diagnosis-questions" key={scenario.id}>
+                {scenario.aspectos.map((factor, index) => (
+                  <details key={factor.titulo} className="sale-diagnosis-question" defaultOpen={index === 0}>
                     <summary>
-                      <span className="sale-diagnosis-reason-number">{String(index + 1).padStart(2, '0')}</span>
-                      <span className="sale-diagnosis-reason-title">{item.titulo}</span>
-                      <span className="sale-diagnosis-reason-toggle" aria-hidden="true">+</span>
+                      <span className="sale-diagnosis-question-count">{String(index + 1).padStart(2, '0')}</span>
+                      <span className="sale-diagnosis-question-name">{factor.titulo}</span>
+                      <span className="sale-diagnosis-question-plus" aria-hidden="true">+</span>
                     </summary>
-                    <div className="sale-diagnosis-reason-body">
-                      <p>{item.explicacion}</p>
-                      <div className="sale-diagnosis-answer">
-                        <span className="sale-diagnosis-answer-tag">CÓMO LO ABORDARÍA REDNORTE</span>
-                        <p>{item.rednorte}</p>
+                    <div className="sale-diagnosis-question-body">
+                      <p>{factor.explicacion}</p>
+                      <div className="sale-diagnosis-rednorte-action">
+                        <strong>Así lo abordamos en Rednorte</strong>
+                        <p>{factor.rednorte}</p>
                       </div>
                     </div>
                   </details>
                 ))}
+                <p className="sale-diagnosis-result-note">Son posibilidades orientativas, no un diagnóstico técnico ni una promesa de venta.</p>
               </div>
             </div>
-
-            <div className="sale-diagnosis-summary">
-              <div className="sale-diagnosis-summary-mark" aria-hidden="true">R</div>
+            <div className="sale-diagnosis-next-step">
               <div>
-                <p className="sale-diagnosis-eyebrow">AHORA, UN SIGUIENTE PASO CONCRETO</p>
-                <h3>Antes de cambiar el precio, <em>revisemos lo que importa.</em></h3>
-                <p>{scenario.revision}</p>
+                <strong>¿Quieres saber qué aplica a tu caso?</strong>
+                <p>{scenario.revision} Podemos empezar con una revisión comercial gratuita de tu anuncio.</p>
               </div>
-              <button type="button" className="sale-diagnosis-primary" onClick={goContact}>Quiero mi revisión sin costo <span aria-hidden="true">↗</span></button>
+              <button type="button" className="sale-diagnosis-action-primary" onClick={goContact}>Solicitar revisión gratuita <span aria-hidden="true">↗</span></button>
             </div>
           </div>
         </section>
       )}
 
-      {scenario && (
-        <section className="sale-diagnosis-contact" id="diagnostico-revision" aria-labelledby="sale-contact-title">
-          <div className="sale-diagnosis-container sale-diagnosis-contact-grid">
-            <div className="sale-diagnosis-contact-copy">
-              <p className="sale-diagnosis-eyebrow">TU ANUNCIO MERECE UNA SEGUNDA MIRADA</p>
-              <h2 id="sale-contact-title">Te ayudamos a ver <em>qué podrías mejorar.</em></h2>
-              <p className="sale-diagnosis-contact-lead">Compártenos tu anuncio. Un integrante de Rednorte podrá hacer una revisión comercial inicial y ponerse en contacto contigo.</p>
-              <div className="sale-diagnosis-promise-list" aria-label="Qué incluye la revisión">
-                <div><span aria-hidden="true">01</span><strong>Posicionamiento comercial</strong><small>Precio y alternativas de mercado.</small></div>
-                <div><span aria-hidden="true">02</span><strong>Presentación del anuncio</strong><small>Fotografías y claridad del contenido.</small></div>
-                <div><span aria-hidden="true">03</span><strong>Exposición de la propiedad</strong><small>Canales y oportunidades de mejora.</small></div>
-              </div>
-              <p className="sale-diagnosis-contact-context">Elegiste: <strong>{scenario.opcion}</strong></p>
-              <p className="sale-diagnosis-contact-small">Revisión comercial inicial y orientativa. No incluye avalúo formal, estudio jurídico ni garantía de venta.</p>
+      <section className="sale-diagnosis-review" id="diagnostico-revision" aria-labelledby="sale-review-title">
+        <div className="sale-diagnosis-container sale-diagnosis-review-grid">
+          <div className="sale-diagnosis-review-copy">
+            <p className="sale-diagnosis-eyebrow">REVISIÓN COMERCIAL · GRATUITA Y SIN COMPROMISO</p>
+            <h2 id="sale-review-title">Veamos cómo <span>podríamos mejorar tu anuncio.</span></h2>
+            <p className="sale-diagnosis-review-lead">Antes de sugerirte un cambio de precio o mayor inversión publicitaria, revisamos lo que tu propiedad está comunicando al mercado.</p>
+            <div className="sale-diagnosis-review-points">
+              <div><span>01</span><div><strong>Precio y competencia</strong><small>Cómo está posicionada frente a otras opciones.</small></div></div>
+              <div><span>02</span><div><strong>Fotografías y presentación</strong><small>Si el anuncio muestra sus atributos con claridad.</small></div></div>
+              <div><span>03</span><div><strong>Exposición comercial</strong><small>Dónde se anuncia y qué canales podría aprovechar.</small></div></div>
             </div>
-            <form className="sale-diagnosis-form" ref={formRef} onSubmit={sendForm}>
-              <div className="sale-diagnosis-form-header">
-                <span className="sale-diagnosis-form-badge">SIN COSTO · SIN COMPROMISO</span>
-                <h3>Solicita tu revisión gratuita.</h3>
-                <p>Solo necesitamos saber cómo contactarte. El enlace de tu anuncio es opcional.</p>
-              </div>
-              <div className="sale-diagnosis-form-row">
-                <label>Nombre completo *
-                  <input required maxLength={120} autoComplete="name" name="nombre" placeholder="Tu nombre" value={form.nombre} onChange={updateField} />
-                </label>
-                <label>Teléfono o WhatsApp *
-                  <input required type="tel" inputMode="tel" maxLength={40} autoComplete="tel" name="telefono" placeholder="81 0000 0000" value={form.telefono} onChange={updateField} />
-                </label>
-              </div>
-              <label>Enlace de tu anuncio (opcional)
-                <input type="url" maxLength={400} name="anuncio" placeholder="https://..." value={form.anuncio} onChange={updateField} />
-              </label>
-              <label>Correo electrónico (opcional)
-                <input type="email" maxLength={254} name="email" autoComplete="email" placeholder="tucorreo@ejemplo.com" value={form.email} onChange={updateField} />
-              </label>
-              <div className="sale-diagnosis-honey" aria-hidden="true">
-                <label>No completar <input type="text" name="website" tabIndex={-1} autoComplete="off" /></label>
-              </div>
-              <label className="sale-diagnosis-privacy">
-                <input required type="checkbox" name="privacidad" checked={form.privacidad} onChange={updateField} />
-                <span>He leído el <Link href="/aviso-de-privacidad">Aviso de Privacidad</Link> y autorizo el tratamiento de mis datos para atender esta solicitud.</span>
-              </label>
-              <button disabled={status.type === 'submitting'} type="submit" className="sale-diagnosis-primary">
-                {status.type === 'submitting' ? 'Enviando…' : 'Quiero mi revisión gratuita'} <span aria-hidden="true">↗</span>
-              </button>
-              <div className="sale-diagnosis-form-alternative"><span>O SI LO PREFIERES</span></div>
-              <button disabled={status.type === 'submitting'} type="button" className="sale-diagnosis-secondary" onClick={goWhatsApp}>
-                Enviar mensaje por WhatsApp <span aria-hidden="true">↗</span>
-              </button>
-              <p className="sale-diagnosis-contact-small">WhatsApp abrirá un mensaje preparado con tu situación. Debes confirmar su envío dentro de la aplicación.</p>
-              {status.message && <p className={`sale-diagnosis-form-message is-${status.type}`} role="status" aria-live="polite">{status.message}</p>}
-            </form>
+            <p className="sale-diagnosis-review-footnote">Es una revisión inicial y orientativa. No es un avalúo, estudio jurídico ni garantía de venta.</p>
           </div>
-        </section>
-      )}
+
+          <form className="sale-diagnosis-form" ref={formRef} onSubmit={sendForm}>
+            <div className="sale-diagnosis-form-top">
+              <p className="sale-diagnosis-form-badge">SIN COSTO · SIN COMPROMISO</p>
+              <h3>Solicita tu revisión gratuita.</h3>
+              <p>Deja tus datos y te contactaremos en horario laboral. Si tienes el enlace del anuncio, puedes compartirlo.</p>
+              {scenario && <p className="sale-diagnosis-selected"><strong>Tu situación:</strong> {scenario.opcion}</p>}
+            </div>
+            <div className="sale-diagnosis-form-row">
+              <label>Nombre completo *
+                <input required name="nombre" value={form.nombre} onChange={updateField} autoComplete="name" placeholder="Tu nombre" maxLength={120}/>
+              </label>
+              <label>Teléfono o WhatsApp *
+                <input required name="telefono" type="tel" inputMode="tel" value={form.telefono} onChange={updateField} autoComplete="tel" placeholder="81 0000 0000" maxLength={40}/>
+              </label>
+            </div>
+            <label>Enlace del anuncio (opcional)
+              <input name="anuncio" type="url" value={form.anuncio} onChange={updateField} placeholder="https://..." maxLength={400}/>
+            </label>
+            <label>Correo electrónico (opcional)
+              <input name="email" type="email" value={form.email} onChange={updateField} autoComplete="email" placeholder="tucorreo@ejemplo.com" maxLength={254}/>
+            </label>
+            <div className="sale-diagnosis-honey" aria-hidden="true">
+              <label>No completar <input name="website" type="text" tabIndex={-1} autoComplete="off"/></label>
+            </div>
+            <label className="sale-diagnosis-privacy">
+              <input required name="privacidad" type="checkbox" checked={form.privacidad} onChange={updateField}/>
+              <span>He leído el <Link href="/aviso-de-privacidad">Aviso de Privacidad</Link> y autorizo el uso de mis datos para atender esta solicitud.</span>
+            </label>
+            <button className="sale-diagnosis-action-primary sale-diagnosis-submit" type="submit" disabled={status.type === 'submitting'}>
+              {status.type === 'submitting' ? 'Enviando…' : 'Quiero mi revisión gratuita'} <span aria-hidden="true">↗</span>
+            </button>
+            <div className="sale-diagnosis-or"><span>O si lo prefieres</span></div>
+            <button className="sale-diagnosis-whatsapp" type="button" onClick={goWhatsApp} disabled={status.type === 'submitting'}>Enviar mensaje por WhatsApp <span aria-hidden="true">↗</span></button>
+            <p className="sale-diagnosis-form-notice">Se abrirá WhatsApp con un mensaje preparado. Tendrás que confirmar su envío.</p>
+            {status.message && <p className={'sale-diagnosis-form-message is-' + status.type} aria-live="polite" role="status">{status.message}</p>}
+          </form>
+        </div>
+      </section>
 
       <section className="sale-diagnosis-deeper">
         <div className="sale-diagnosis-container sale-diagnosis-deeper-grid">
-          <div className="sale-diagnosis-deeper-indicator" aria-hidden="true">+</div>
           <div>
-            <p className="sale-diagnosis-eyebrow">¿QUIERES IR MÁS A FONDO?</p>
-            <h2>También puedes analizar la situación <em>por tu cuenta.</em></h2>
-            <p>Nuestro Reporte de Vendibilidad te guía con preguntas sobre precio, fotografías, exposición y respuesta de los compradores. Es gratuito y ofrece orientación adicional.</p>
+            <p className="sale-diagnosis-eyebrow">¿QUIERES PROFUNDIZAR POR TU CUENTA?</p>
+            <h2>Explora nuestro <span>Reporte de Vendibilidad.</span></h2>
+            <p>Responde preguntas sobre precio, fotografías, exposición y respuesta de los compradores para obtener orientación adicional. Gratuito y sin registro.</p>
           </div>
-          <Link className="sale-diagnosis-outline-link" href="/herramientas/reporte-de-vendibilidad">
-            Explorar mi Reporte de Vendibilidad <span aria-hidden="true">↗</span>
-          </Link>
+          <Link className="sale-diagnosis-deeper-link" href="/herramientas/reporte-de-vendibilidad">Explorar el reporte <span aria-hidden="true">↗</span></Link>
         </div>
       </section>
+
       <div className="sale-diagnosis-mobile-cta">
-        <button type="button" onClick={goContact}>{scenario ? 'Pedir revisión gratis' : 'Identificar mi situación'} <span aria-hidden="true">↗</span></button>
+        <button type="button" onClick={goContact}>Pedir revisión gratuita <span aria-hidden="true">↗</span></button>
       </div>
     </main>
   );
