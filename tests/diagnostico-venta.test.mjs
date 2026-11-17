@@ -16,7 +16,10 @@ test('la landing comercial nueva es independiente del Reporte de Vendibilidad', 
   assert.match(sitemap, /'\/herramientas\/por-que-no-se-vende'/);
   assert.match(tools, /href: '\/herramientas\/por-que-no-se-vende'/);
   assert.match(component, /href="\/herramientas\/reporte-de-vendibilidad"/);
-  assert.match(component, /Sin registro para ver las posibles causas/);
+  assert.match(component, /Sin datos personales para consultar la orientación/);
+  assert.match(component, /sale-diagnosis-hero-photo/);
+  assert.match(component, /sale-diagnosis-mobile-cta/);
+  assert.match(component, /defaultOpen=\{index === 0\}/);
 });
 
 test('los cinco escenarios incluyen causas, acciones concretas y el feedback al asesor', async () => {
