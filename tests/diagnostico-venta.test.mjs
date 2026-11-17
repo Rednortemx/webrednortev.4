@@ -56,7 +56,7 @@ test('contacto: validación, consentimiento, recepción confirmada y WhatsApp co
   assert.match(component, /<section className="sale-diagnosis-review"/);
   assert.match(component, /getElementById\('diagnostico-revision'\)/);
   assert.match(component, /Aviso de Privacidad/);
-  assert.match(component, /type="checkbox" name="privacidad"/);
+  assert.match(component, /name="privacidad" type="checkbox"/);
   assert.match(tracking, /'diagnostico_venta'/);
   assert.doesNotMatch(component, /window\.rnToolLeads/);
 });
