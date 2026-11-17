@@ -178,7 +178,7 @@ export default function DiagnosticoVenta() {
           <div className="sale-diagnosis-options" role="group" aria-label="Selecciona tu situación">
             {escenariosVenta.map((item, i) => (
               <button
-                className={\`sale-diagnosis-option \${selected === item.id ? 'is-selected' : ''}\`}
+                className={`sale-diagnosis-option ${selected === item.id ? 'is-selected' : ''}`}
                 key={item.id}
                 type="button"
                 aria-pressed={selected === item.id}
@@ -305,7 +305,7 @@ export default function DiagnosticoVenta() {
                 Enviar mensaje por WhatsApp <span aria-hidden="true">↗</span>
               </button>
               <p className="sale-diagnosis-contact-small">WhatsApp abrirá un mensaje preparado con tu situación. Debes confirmar su envío dentro de la aplicación.</p>
-              {status.message && <p className={\`sale-diagnosis-form-message is-\${status.type}\`} role="status" aria-live="polite">{status.message}</p>}
+              {status.message && <p className={`sale-diagnosis-form-message is-${status.type}`} role="status" aria-live="polite">{status.message}</p>}
             </form>
           </div>
         </section>
