@@ -108,3 +108,22 @@ test('V4 ofrece un solo formulario, accesible también sin escenario y en panel 
   assert.match(component, /sd-drawer-backdrop/);
   assert.match(component, /setStatus\(\{ type: 'success'/); // no real network calls
 });
+
+
+test('V4.1 usa olivo Rednorte y conserva terracota para las acciones sin modificar la lógica', async () => {
+  const [css, component, scenarios] = await Promise.all([
+    load('../components/diagnostico-venta/diagnosticoVenta.css'),
+    load('../components/diagnostico-venta/DiagnosticoVenta.jsx'),
+    load('../components/diagnostico-venta/escenarios.js'),
+  ]);
+  assert.match(css, /V4\.1 — Variación cromática OLIVO/);
+  assert.match(css, /--sd-olive: #7c7b67/);
+  assert.match(css, /--sd-olive-hero: #626a54/);
+  assert.match(css, /\.sale-diagnosis-first \{[\s\S]*?linear-gradient\(125deg,#737966/);
+  assert.match(css, /\.sale-diagnosis-review \{[\s\S]*?linear-gradient\(135deg,#526049/);
+  assert.match(css, /background:#bc4b31/);
+  assert.match(css, /body:has\(\.sale-diagnosis\) footer/);
+  assert.match(css, /prefers-reduced-motion:reduce/);
+  assert.equal((component.match(/<form\b/g) || []).length, 1);
+  assert.equal((scenarios.match(/\bid: '[a-z-]+',/g) || []).length, 5);
+});
