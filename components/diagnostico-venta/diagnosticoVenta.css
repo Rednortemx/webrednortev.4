@@ -509,3 +509,181 @@
   .sale-diagnosis .sd-factor, .sale-diagnosis .sd-drawer-backdrop, .sale-diagnosis .sale-diagnosis-form.sd-drawer { animation:none !important; }
   .sale-diagnosis .sd-stage, .sale-diagnosis .sd-journey-line > span, .sale-diagnosis .sd-factor-toggle { transition:none !important; }
 }
+
+
+/* V4.1 — Variación cromática OLIVO | Aprobación visual pendiente.
+   La guía Rednorte identifica #7c7b67 como olivo de marca.
+   Tonos profundos derivados para contraste de lectura: #626a54 / #454f40.
+   Terracota original #bc4b31 sigue siendo la acción principal.
+   Solo estilos: sin alterar contenido, flujo, datos, formularios o integraciones.
+*/
+.sale-diagnosis {
+  --sd-olive: #7c7b67;
+  --sd-olive-dark: #454f40;
+  --sd-olive-deep: #313d32;
+  --sd-olive-hero: #626a54;
+  --sd-olive-light: #e9ebe4;
+  --sd-olive-cream: #f7f6f0;
+  --sd-accent: #bc4b31;
+  --sd-border: #d9dcd2;
+  --sd-soft: #eff0e8;
+  --sd-soft-red: #faf0e8;
+  background:var(--sd-olive-hero);
+}
+.sale-diagnosis-first {
+  background:
+    radial-gradient(circle at 6% 0%,rgba(231,234,217,.16),transparent 36%),
+    radial-gradient(circle at 95% 96%,rgba(28,39,30,.19),transparent 42%),
+    linear-gradient(125deg,#737966 0%,#626a54 52%,#545e4a 100%);
+  border-bottom:1px solid #495440;
+  color:#fffaf2;
+}
+.sale-diagnosis-first::before { background:#d4d5b8; height:5px; }
+.sale-diagnosis-intro h1 { color:#fffdf7; }
+.sale-diagnosis-intro h1 span { color:#f4d4ba; }
+.sale-diagnosis-first .sale-diagnosis-eyebrow { color:#fff0e2; }
+.sale-diagnosis-first .sale-diagnosis-eyebrow-line { background:#e6c7ac; }
+.sale-diagnosis-intro-lead { color:#fffdf8; }
+.sale-diagnosis-intro-explainer { color:#f0efe7; }
+.sale-diagnosis-intro-explainer strong { color:#fff; }
+.sale-diagnosis-first .sale-diagnosis-action-link { color:#fffdf6; border-color:rgba(255,255,255,.7); }
+.sale-diagnosis-first .sale-diagnosis-action-link:hover { color:#ffe5d5; border-color:#ffe5d5; }
+.sale-diagnosis-trust-strip { border-color:rgba(255,255,255,.35); }
+.sale-diagnosis-trust-strip strong { color:#fff; }
+.sale-diagnosis-trust-strip small { color:#f0efe6; }
+.sale-diagnosis-first .sale-diagnosis-action-primary { border-color:#a63f2a; background:#bc4b31; }
+.sale-diagnosis-first .sale-diagnosis-action-primary:hover { background:#a13e29; }
+.sale-diagnosis-selector {
+  background:#fffef9;
+  border-color:#d8d8ca;
+  border-top:5px solid #bc4b31;
+  box-shadow:0 24px 62px rgba(23,30,20,.2);
+}
+.sale-diagnosis-selector-top { background:#414d3f; }
+.sale-diagnosis-selector-top .sale-diagnosis-eyebrow { color:#f5dfce; }
+.sale-diagnosis-selector-top h2 { color:#fff; }
+.sale-diagnosis-selector-top h2 span { color:#f7d7bd; }
+.sale-diagnosis-selector-top > p:last-child { color:#e9ebe2; }
+.sd-selector-decor i { background:#879180; }
+.sd-selector-decor i:first-child { background:#eed0b8; }
+.sale-diagnosis-choice { background:#fffefa; border-bottom-color:#e7e8e1; }
+.sale-diagnosis-choice:hover { background:#f1f2eb; }
+.sale-diagnosis-choice.is-selected { background:#e9ebe3; box-shadow:inset 4px 0 #bc4b31; }
+.sale-diagnosis-choice-number { color:#a9432b; }
+.sale-diagnosis-choice-copy small { color:#565b50; }
+.sale-diagnosis-choice-arrow { border-color:#c8cdc0; }
+.sale-diagnosis-selector-bottom { background:#f0f1e9; }
+.sale-diagnosis-selector-bottom > span { color:#41463e; }
+
+/* En el resultado, marfil como descanso visual con el olivo como base editorial. */
+.sale-diagnosis-result {
+  background:linear-gradient(180deg,#f7f7f0 0%,#ecede4 100%);
+  color:#20231e;
+}
+.sd-map-title h2 { color:#222820; }
+.sd-map-title p { color:#4c5147; }
+.sd-journey {
+  background:linear-gradient(135deg,#343f35,#465341);
+  box-shadow:0 16px 35px rgba(29,42,29,.14);
+}
+.sd-journey::after { background:radial-gradient(circle,rgba(231,236,218,.15),transparent 70%); }
+.sd-journey-line { background:#8d9785; }
+.sd-journey-line > span { background:#dce5c6; }
+.sd-stage { color:#e2e7dd; }
+.sd-stage:hover { color:#fff; }
+.sd-stage.is-current { background:rgba(233,240,221,.13); border-color:#e4eadb; color:#fff; }
+.sd-stage-index { color:#dde4d7; }
+.sd-stage.is-current .sd-stage-index { color:#fff5e7; }
+.sd-stage-dot { background:#53614c; border-color:#e0e5d7; }
+.sd-stage-dot > span { background:#f8fbf1; }
+.sd-stage.is-current .sd-stage-dot { background:#bc4b31; border-color:#fff7ed; box-shadow:0 0 0 5px rgba(246,250,234,.18); }
+.sd-stage.is-previous .sd-stage-dot { border-color:#d4e1c5; }
+.sd-stage small { color:#d5ded0; }
+.sd-stage.is-current small { color:#fff; }
+.sd-stage-caption { color:#455043; }
+.sd-stage-caption strong { color:#a53f29; }
+.sd-stage-caption-disclaimer { color:#535b4e; }
+.sd-result-header p:not(.sale-diagnosis-eyebrow) { color:#474d42; }
+.sd-explanation-lead p:not(.sale-diagnosis-eyebrow) { color:#4b5247; }
+.sd-factor { border-color:#d9ded2; background:#fffefa; }
+.sd-factor[open] { border-color:#b8c3af; box-shadow:0 8px 21px rgba(35,54,35,.09); }
+.sd-factor > summary:hover { background:#f3f5ed; }
+.sd-factor-art { background:#e8ebe1; border-color:#d5dbce; }
+.sd-factor[open] .sd-factor-art { background:#e2e8da; border-color:#bccdb5; }
+.sd-factor-content > p { color:#434c40; }
+.sd-factor-solution { background:#f0f2e9; }
+.sd-factor-solution p { color:#3d493d; }
+.sd-factor-toggle { background:#eff0e9; border-color:#d5dacf; }
+.sd-factor[open] .sd-factor-toggle { background:#dce4d6; border-color:#c0cbbd; color:#3d503a; }
+.sd-result-aside {
+  background:linear-gradient(155deg,#536048,#3b493b);
+  box-shadow:0 18px 40px rgba(34,49,32,.14);
+}
+.sd-result-aside-top { border-color:rgba(255,255,255,.3); }
+.sd-result-aside-top span { color:#fff; }
+.sd-result-aside-top small { color:#fff4e9; }
+.sd-result-aside > p { color:#f2f1e8; }
+.sd-aside-point { border-color:rgba(255,255,255,.3); }
+.sd-aside-point span { color:#f5d6be; }
+.sd-aside-disclaimer { color:#ecefe6; }
+.sd-aside-cta { background:#bc4b31; }
+.sd-method { background:#fffefa; border-color:#d7ded1; }
+.sd-method-steps > div { border-color:#d5dfd0; }
+.sd-method-steps > div:first-child { border-color:#bc4b31; }
+.sd-result-action { background:#dde4d6; border:1px solid #cad5c4; }
+.sd-result-action p { color:#3a453a; }
+
+/* Área de conversión profundamente olivo, no negro. Contraste legible. */
+.sale-diagnosis-review {
+  background:
+    radial-gradient(ellipse at 7% 10%,rgba(180,197,172,.16),transparent 40%),
+    linear-gradient(135deg,#526049 0%,#3d493b 100%);
+  color:#fffaf3;
+}
+.sale-diagnosis-review .sale-diagnosis-eyebrow { color:#f7dfcb; }
+.sale-diagnosis-review h2 { color:#fff; }
+.sale-diagnosis-review h2 span { color:#f3d3b9; }
+.sale-diagnosis-review-lead { color:#f1f2e9; }
+.sale-diagnosis-review-points > div,
+.sale-diagnosis-review-points > div:last-child { border-color:rgba(255,255,255,.28); }
+.sale-diagnosis-review-points > div > span { color:#f2d3b8; }
+.sale-diagnosis-review-points small { color:#e2e9de; }
+.sale-diagnosis-review-footnote { color:#d3decd; }
+.sale-diagnosis-form {
+  background:#fffefa;
+  box-shadow:0 22px 60px rgba(18,29,18,.25);
+}
+.sale-diagnosis-form-badge { background:#e5eadc; color:#3a5037; }
+.sale-diagnosis-form h3 { color:#1f281f; }
+.sale-diagnosis-form-top > p:not(.sale-diagnosis-form-badge, .sale-diagnosis-selected) { color:#4b5146; }
+.sale-diagnosis-selected { background:#e8ecdf; border-left-color:#7c7b67; color:#333e32; }
+.sale-diagnosis-form input:not([type="checkbox"]) { background:#fff; border-color:#cdd3c9; }
+.sale-diagnosis-whatsapp { background:#f8f9f4; border-color:#a5b19d; }
+.sale-diagnosis-whatsapp:hover { background:#e9eee3; }
+.sale-diagnosis-privacy { color:#384535; }
+.sale-diagnosis-form .sale-diagnosis-action-primary { background:#bc4b31; border-color:#bc4b31; }
+.sale-diagnosis-deeper { background:#f5f6f0; }
+.sale-diagnosis-deeper h2 span { color:#445840; }
+.sale-diagnosis-deeper p:not(.sale-diagnosis-eyebrow) { color:#464f43; }
+.sale-diagnosis-deeper-link { border-color:#596a52; color:#3b4d3b; }
+.sale-diagnosis-deeper-link:hover { background:#455640; color:#fff; }
+
+/* El footer global cambia SOLO cuando esta landing está presente. */
+body:has(.sale-diagnosis) footer { background:#303d32; color:#e1e9db; }
+body:has(.sale-diagnosis) footer .footer-bottom { border-top-color:rgba(230,240,226,.17); }
+body:has(.sale-diagnosis) footer .footer-desc,
+body:has(.sale-diagnosis) footer .footer-address { color:#e2e7dc; }
+body:has(.sale-diagnosis) footer .footer-links a,
+body:has(.sale-diagnosis) footer .footer-links button { color:#d9e4d4; }
+body:has(.sale-diagnosis) footer .footer-links a:hover,
+body:has(.sale-diagnosis) footer .footer-links button:hover { color:#f5dfcf; }
+body:has(.sale-diagnosis) footer .footer-bottom p,
+body:has(.sale-diagnosis) footer .footer-bottom-links a { color:#d2d9cc; }
+
+@media(max-width:620px) {
+  .sale-diagnosis-first { background:linear-gradient(150deg,#737b66,#535f4e); }
+  .sd-stage { background:#4b5948; border-color:#778573; }
+  .sd-stage.is-current { background:#687762; border-color:#f7f4eb; }
+  .sd-stage:hover { background:#677762; }
+  .sale-diagnosis-mobile-cta button { background:#bc4b31; border-color:#a33f2c; }
+}
