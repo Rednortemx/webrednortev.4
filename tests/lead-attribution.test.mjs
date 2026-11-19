@@ -29,7 +29,7 @@ test('sanitizes campaign labels and rejects host spoofing', () => {
     'https://www.rednorte.mx/rentar?utm_source=Meta%0A%3Cscript%3E&utm_campaign=Depas%20en%20Renta',
     'www.rednorte.mx',
   );
-  assert.equal(label, '[Rednorte Impulsa] fuente=Metascript; campana=Depas_en_Renta; pagina=/rentar');
+  assert.equal(label, '[Rednorte Impulsa] fuente=Meta_script; campana=Depas_en_Renta; pagina=/rentar');
   assert.equal(campaignReferrerLabel(
     'https://www.rednorte.mx.evil.example/rentar?utm_source=meta',
     'www.rednorte.mx',
