@@ -7,7 +7,7 @@ Aprovecha el flujo de `/api/leads` → Apps Script → hoja existente.
 Usar parámetros UTM fijos, sin datos personales ni identificadores del visitante.
 
 - Google Search: `https://www.rednorte.mx/servicios/comprar-propiedad?utm_source=google&utm_medium=cpc&utm_campaign=impulsa_busqueda_compra_2026`
-- Google renta: `https://www.rednorte.mx/servicios/rentar-propiedad?utm_source=google&utm_medium=cpc&utm_campaign=impulsa_renta_2026`
+- Google renta (interesados en encontrar renta; solución provisional): `https://www.rednorte.mx/contacto?motivo=rentar&utm_source=google&utm_medium=cpc&utm_campaign=impulsa_renta_2026`
 - Meta: `https://www.rednorte.mx/contacto?utm_source=meta&utm_medium=paid_social&utm_campaign=impulsa_propiedades_2026`
 
 Cuando una persona envía un formulario desde **esa misma página** con parámetros UTM, el servidor antepone a las notas una leyenda como:
@@ -16,6 +16,8 @@ Cuando una persona envía un formulario desde **esa misma página** con parámet
 
 No cambia el esquema de Google Sheets: la leyenda viaja dentro de las notas existentes
 (actualmente visibles en la columna `Herramienta`, junto al contenido del formulario).
+
+**Nota:** `/servicios/rentar-propiedad` está dirigida a propietarios que quieren rentar **su inmueble**; no debe utilizarse como destino de campañas para buscar inquilinos. Hasta tener una landing específica de arrendatarios, usar `/contacto?motivo=rentar`.
 
 ## Limitaciones y protección de datos
 - Si el visitante navega a otra página antes de enviar la solicitud, la atribución
