@@ -6,13 +6,13 @@ Aprovecha el flujo de `/api/leads` → Apps Script → hoja existente.
 ## Formato de enlaces de anuncios
 Usar parámetros UTM fijos, sin datos personales ni identificadores del visitante.
 
-- Google Search: `https://www.rednorte.mx/comprar?utm_source=google&utm_medium=cpc&utm_campaign=impulsa_busqueda_compra_2026`
-- Google renta: `https://www.rednorte.mx/rentar?utm_source=google&utm_medium=cpc&utm_campaign=impulsa_renta_2026`
-- Meta: `https://www.rednorte.mx/propiedades?utm_source=meta&utm_medium=paid_social&utm_campaign=impulsa_propiedades_2026`
+- Google Search: `https://www.rednorte.mx/servicios/comprar-propiedad?utm_source=google&utm_medium=cpc&utm_campaign=impulsa_busqueda_compra_2026`
+- Google renta: `https://www.rednorte.mx/servicios/rentar-propiedad?utm_source=google&utm_medium=cpc&utm_campaign=impulsa_renta_2026`
+- Meta: `https://www.rednorte.mx/contacto?utm_source=meta&utm_medium=paid_social&utm_campaign=impulsa_propiedades_2026`
 
 Cuando una persona envía un formulario desde **esa misma página** con parámetros UTM, el servidor antepone a las notas una leyenda como:
 
-`[Rednorte Impulsa] fuente=google; medio=cpc; campana=impulsa_busqueda_compra_2026; pagina=/comprar`
+`[Rednorte Impulsa] fuente=google; medio=cpc; campana=impulsa_busqueda_compra_2026; pagina=/servicios/comprar-propiedad`
 
 No cambia el esquema de Google Sheets: la leyenda viaja dentro de las notas existentes
 (actualmente visibles en la columna `Herramienta`, junto al contenido del formulario).
@@ -31,7 +31,7 @@ No cambia el esquema de Google Sheets: la leyenda viaja dentro de las notas exis
   sin crear contactos ficticios en producción.
 
 ## Operación inicial
-1. Preparar campañas con enlaces UTM y páginas reales que tengan el formulario.
+1. Preparar campañas con enlaces UTM a las rutas reales con formulario. No usar el catálogo general como destino si después hay navegación: se perdería esta atribución de emergencia.
 2. Registrar diariamente campañas, leads calificados, visitas y gastos en un
    control interno de solo lectura hasta contar con integración CRM.
 3. Verificar el seguimiento antes de escalar la inversión.
