@@ -6,6 +6,11 @@ import { PROPERTIES_PER_PAGE } from '@/lib/propertyPagination';
 import { notFound } from 'next/navigation';
 import { socialPreviewImage } from '@/lib/socialPreviews';
 
+// Cifra de "Mis propiedades" > "Publicada" confirmada en el portal de NocNok
+// el 18/nov/2026. El endpoint del sitio devuelve un universo más amplio; este
+// dato editorial no debe emplearse para truncar, filtrar o paginar fichas.
+const portalPublishedSnapshot = '649 propiedades publicadas en NocNok · corte 18 nov 2026';
+
 // Canonical is self-referencing per page (page 1 -> /propiedades, page N ->
 // /propiedades?page=N) instead of always pointing back at page 1. A fixed
 // canonical across every page would tell Google every paginated URL is a
@@ -102,14 +107,14 @@ export default async function PropiedadesPage({ searchParams }) {
             <h1>Propiedades en venta y renta en Monterrey y Nuevo León</h1>
             <div className="catalog-heading-aside">
               <p>Encuentra el espacio correcto para vivir, invertir o hacer crecer tu negocio.</p>
-              <span>{source === 'live' ? `${properties.length} propiedades disponibles` : 'Consulta temporalmente no disponible'}</span>
+              <span>{source === 'live' ? portalPublishedSnapshot : 'Consulta temporalmente no disponible'}</span>
             </div>
           </div>
         </div>
       </header>
       <PropertyLandingDirectory />
       {source === 'live' ? (
-        <PropertyFilters properties={propertyCards} initialFilters={initialFilters} />
+        <PropertyFilters properties={propertyCards} initialFilters={initialFilters} showResultTotals={false} />
       ) : (
         <section className="container" aria-live="polite" style={{ padding: '4rem 0 6rem' }}>
           <h2>Inventario temporalmente no disponible</h2>
