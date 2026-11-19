@@ -11,6 +11,19 @@ test('propiedades omite la etiqueta positiva y conserva el aviso de contingencia
   assert.match(page, /Inventario no disponible en este momento/);
 });
 
+test('el catálogo distingue el corte publicado de NocNok del universo más amplio de la API', async () => {
+  const page = await readFile(new URL('../app/propiedades/page.jsx', import.meta.url), 'utf8');
+  const filters = await readFile(new URL('../components/PropertyFilters.jsx', import.meta.url), 'utf8');
+
+  assert.match(page, /649 propiedades publicadas en NocNok · corte 18 nov 2026/);
+  assert.doesNotMatch(page, /\$\{properties\.length\} propiedades disponibles/);
+  assert.match(page, /showResultTotals=\{false\}/);
+  assert.match(filters, /showResultTotals = true/);
+  assert.match(filters, /showResultTotals \? <><strong>\{filtered\.length\} propiedades/);
+  assert.match(filters, /showResultTotals \? <> de <strong>\{filtered\.length\}<\/strong> propiedades/);
+  assert.match(page, /Math\.ceil\(properties\.length \/ PROPERTIES_PER_PAGE\)/);
+});
+
 test('el H1 de propiedades usa el contenedor centrado de la página', async () => {
   const page = await readFile(new URL('../app/propiedades/page.jsx', import.meta.url), 'utf8');
   const styles = await readFile(new URL('../app/globals.css', import.meta.url), 'utf8');
@@ -55,7 +68,7 @@ test('muestra 18 propiedades y permite cargar bloques adicionales sin perder enl
   assert.match(filters, /Ver \{nextBatchSize\}/);
   assert.match(filters, /href=\{buildPageHref\(nextPage\)\}/);
   assert.match(filters, /event\.preventDefault\(\)/);
-  assert.match(filters, /Mostrando <strong>\{start \+ 1\}–\{start \+ pageItems\.length\}<\/strong> de/);
+  assert.match(filters, /Mostrando <strong>\{start \+ 1\}–\{start \+ pageItems\.length\}<\/strong>/);
   assert.match(filters, /aria-current=\{item === currentPage \? 'page' : undefined\}/);
   assert.match(styles, /\.btn-load-more-properties/);
 });

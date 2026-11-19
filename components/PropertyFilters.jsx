@@ -37,6 +37,7 @@ export default function PropertyFilters({
   basePath = '/propiedades',
   baseFilters = {},
   fixedLocationLabel = '',
+  showResultTotals = true,
 }) {
   const [operacion, setOperacion] = useState(initialFilters.operacion || '');
   const [tipo, setTipo] = useState(initialFilters.tipo || '');
@@ -350,7 +351,9 @@ export default function PropertyFilters({
 
       <div className="props-results" style={{ minWidth: 0 }}>
         <div className="props-header">
-          <div className="props-count"><strong>{filtered.length} propiedades</strong> encontradas</div>
+          <div className="props-count">
+            {showResultTotals ? <><strong>{filtered.length} propiedades</strong> encontradas</> : <strong>Explora las propiedades disponibles</strong>}
+          </div>
           <div className="props-sort">
             <label htmlFor="orden-propiedades">Ordenar:</label>
             <select id="orden-propiedades" value={sort} onChange={(e) => { setSort(e.target.value); setPage(1); setVisiblePageCount(1); }}>
@@ -373,7 +376,8 @@ export default function PropertyFilters({
         {pageItems.length > 0 && (
           <div className="load-more-properties">
             <p className="load-more-count" aria-live="polite">
-              Mostrando <strong>{start + 1}–{start + pageItems.length}</strong> de <strong>{filtered.length}</strong> propiedades
+              Mostrando <strong>{start + 1}–{start + pageItems.length}</strong>
+              {showResultTotals ? <> de <strong>{filtered.length}</strong> propiedades</> : ' propiedades'}
             </p>
             {remainingProperties > 0 && (
               <Link
