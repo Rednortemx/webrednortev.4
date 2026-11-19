@@ -687,3 +687,55 @@ body:has(.sale-diagnosis) footer .footer-bottom-links a { color:#d2d9cc; }
   .sd-stage:hover { background:#677762; }
   .sale-diagnosis-mobile-cta button { background:#bc4b31; border-color:#a33f2c; }
 }
+
+
+/* V4.2 — Header y breadcrumb olivo, exclusivamente en esta landing.
+   El Header global permanece sin cambios para todas las demás rutas.
+   :has(.sale-diagnosis) también funciona con Header fijo, que está fuera del main.
+*/
+body:has(.sale-diagnosis) .site-header {
+  background: #454f40;
+  border-bottom: 1px solid rgba(245,248,239,.22);
+  color: #fffdf7;
+  backdrop-filter: blur(14px);
+}
+body:has(.sale-diagnosis) .site-header .logo-name { color: #fffdf7; }
+body:has(.sale-diagnosis) .site-header .logo-sub { color: #e0e7d8; }
+body:has(.sale-diagnosis) .site-header nav a {
+  color: #f5f7ef;
+}
+body:has(.sale-diagnosis) .site-header nav a:hover,
+body:has(.sale-diagnosis) .site-header nav a:focus-visible {
+  color: #fff;
+  background: rgba(246,248,238,.17);
+}
+body:has(.sale-diagnosis) .site-header nav a.active {
+  color: #fff5df;
+  background: rgba(246,248,238,.12);
+}
+body:has(.sale-diagnosis) .site-header .hamburger span {
+  background: #fffdf7;
+}
+body:has(.sale-diagnosis) .mobile-menu {
+  background: #454f40;
+  border-bottom: 1px solid rgba(245,248,239,.26);
+}
+body:has(.sale-diagnosis) .mobile-menu a {
+  color: #fffdf7;
+  border-bottom-color: rgba(245,248,239,.22);
+}
+body:has(.sale-diagnosis) .mobile-menu a:hover,
+body:has(.sale-diagnosis) .mobile-menu a:focus-visible {
+  color: #fff5df;
+}
+body:has(.sale-diagnosis) .breadcrumb {
+  background: #3d493b;
+  border-bottom: 1px solid rgba(245,248,239,.2);
+}
+body:has(.sale-diagnosis) .breadcrumb-inner,
+body:has(.sale-diagnosis) .breadcrumb-current { color: #f0f3e9; }
+body:has(.sale-diagnosis) .breadcrumb-inner a {
+  color: #f5d1b7;
+}
+body:has(.sale-diagnosis) .breadcrumb-inner a:hover { color: #fff; }
+body:has(.sale-diagnosis) .breadcrumb-sep { color: #cbd5c4; }
