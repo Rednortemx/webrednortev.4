@@ -127,3 +127,19 @@ test('V4.1 usa olivo Rednorte y conserva terracota para las acciones sin modific
   assert.equal((component.match(/<form\b/g) || []).length, 1);
   assert.equal((scenarios.match(/\bid: '[a-z-]+',/g) || []).length, 5);
 });
+
+
+test('V4.2 aplica olivo al encabezado y navegación sólo donde existe la landing', async () => {
+  const [css, header] = await Promise.all([
+    load('../components/diagnostico-venta/diagnosticoVenta.css'),
+    load('../components/Header.jsx'),
+  ]);
+  assert.match(css, /V4\.2 — Header y breadcrumb olivo/);
+  assert.match(css, /body:has\(\.sale-diagnosis\) \.site-header \{/);
+  assert.match(css, /body:has\(\.sale-diagnosis\) \.site-header nav a/);
+  assert.match(css, /body:has\(\.sale-diagnosis\) \.site-header \.hamburger span/);
+  assert.match(css, /body:has\(\.sale-diagnosis\) \.mobile-menu/);
+  assert.match(css, /body:has\(\.sale-diagnosis\) \.breadcrumb \{/);
+  assert.match(css, /background: #454f40/);
+  assert.doesNotMatch(header, /sale-diagnosis|diagnostico-comercializacion/);
+});
