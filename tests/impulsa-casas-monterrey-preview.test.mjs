@@ -7,24 +7,28 @@ test('preview es exclusivo de casas en venta en Monterrey', async () => {
   const s = await file('app/propiedades/[slug]/[categoria]/page.jsx');
   assert.match(s, /pilot = landing\.path === '\/propiedades\/monterrey\/casas-en-venta'/);
   assert.match(s, /<PilotLandingHero/);
-  assert.match(s, /searchAssistant=\{pilot\}/);
+  assert.match(s, /<PilotPropertyCatalog/);
+  assert.match(s, /pilot \? matchingProperties : inventoryProperties/);
+  assert.match(s, /filterPilotProperties\(matchingProperties, pilotFilters\)/);
   assert.match(s, /fetchAllProperties\(\)/);
   assert.match(s, /source === 'live'/);
 });
 
 test('la búsqueda asistida también está después de anuncios y en filtros vacíos', async () => {
-  const s = await file('components/PropertyFilters.jsx');
-  assert.match(s, /<PropertyCard property=\{p\}/);
+  const s = await file('components/impulsa/PilotPropertyCatalog.jsx');
+  assert.match(s, /<PropertyCard property=\{property\}/);
   assert.match(s, /variant="inline"/);
   assert.match(s, /variant="empty"/);
   assert.match(s, /variant="footer"/);
-  assert.match(s, /searchAssistant = false/);
+  assert.match(s, /previewOnly=\{previewOnly\}/);
 });
 
 test('el formulario reutiliza el endpoint y evita escrituras en previews', async () => {
   const s = await file('components/impulsa/PropertySearchAssistant.jsx');
   assert.match(s, /createLeadSubmitter\('comprar'\)/);
-  assert.match(s, /hostname\.endsWith\('\.vercel\.app'\)/);
+  assert.match(s, /isAssistedSearchPreview\(previewOnly, window\.location\.hostname\)/);
+  const page = await file('app/propiedades/[slug]/[categoria]/page.jsx');
+  assert.match(page, /previewOnly = process\.env\.VERCEL_ENV !== 'production'/);
   assert.match(s, /tipo: 'Comprar propiedad'/);
   assert.match(s, /\/api\/leads/);
   assert.match(s, /aria-modal="true"/);

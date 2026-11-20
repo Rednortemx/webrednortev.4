@@ -1,10 +1,8 @@
 'use client';
 
-import { Fragment } from 'react';
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import PropertyCard from './PropertyCard';
-import PropertySearchAssistant from './impulsa/PropertySearchAssistant';
 import { trackConversion } from '@/lib/conversions';
 import { PROPERTIES_PER_PAGE } from '@/lib/propertyPagination';
 
@@ -40,7 +38,6 @@ export default function PropertyFilters({
   baseFilters = {},
   fixedLocationLabel = '',
   showResultTotals = true,
-  searchAssistant = false,
 }) {
   const [operacion, setOperacion] = useState(initialFilters.operacion || '');
   const [tipo, setTipo] = useState(initialFilters.tipo || '');
@@ -368,21 +365,11 @@ export default function PropertyFilters({
         </div>
         <div className="props-grid">
           {pageItems.length > 0 ? (
-            pageItems.map((p, index) => (
-              <Fragment key={p.id}>
-                <PropertyCard property={p} />
-                {searchAssistant && index === Math.min(5, pageItems.length - 1) && (
-                  <div style={{ gridColumn: '1 / -1' }}>
-                    <PropertySearchAssistant variant="inline" filters={appliedFilters} />
-                  </div>
-                )}
-              </Fragment>
-            ))
+            pageItems.map((p) => <PropertyCard key={p.id} property={p} />)
           ) : (
             <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '3rem 1rem', color: 'var(--gris-medio)' }}>
               No encontramos propiedades con esos filtros. <br />
               <button className="btn-clear-filters" style={{ marginTop: '1rem' }} type="button" onClick={clearFilters}>Limpiar filtros</button>
-              {searchAssistant && <div style={{ marginTop: '1.75rem', textAlign: 'left' }}><PropertySearchAssistant variant="empty" filters={appliedFilters} /></div>}
             </div>
           )}
         </div>
@@ -406,7 +393,6 @@ export default function PropertyFilters({
             )}
           </div>
         )}
-        {searchAssistant && pageItems.length > 0 && <div style={{ marginTop: '2.5rem' }}><PropertySearchAssistant variant="footer" filters={appliedFilters} /></div>}
         {totalPages > 1 && (
           <nav className="pagination pagination-secondary" aria-label="Navegación por páginas de propiedades">
             {currentPage <= 1 ? (
