@@ -65,4 +65,8 @@
   .page :global(.property-related-links) { flex-direction: column; }
 }
 @media (prefers-reduced-motion: reduce) { .cta { transition: none; } }
+@media (max-width: 720px) {
+  :global(body):has(.page) :global(.wa-float),
+  :global(body):has(.page) :global(.translate-float) { display: none; }
+}
 @media (max-width: 600px) { .availability { display: none; } }
