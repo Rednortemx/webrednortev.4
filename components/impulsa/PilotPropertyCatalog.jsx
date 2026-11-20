@@ -131,7 +131,7 @@ export default function PilotPropertyCatalog({
         <div className={styles.filterHeading}>
           <div>
             <p className={styles.context}>Casas <span aria-hidden="true">/</span> Venta <span aria-hidden="true">/</span> Monterrey</p>
-            <h2>Afina tu búsqueda</h2>
+            <h2>Filtrar casas</h2>
           </div>
           <Link className={styles.changeSearch} href="/propiedades">Cambiar búsqueda <ArrowIcon /></Link>
         </div>

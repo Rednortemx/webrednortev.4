@@ -165,6 +165,22 @@ export default function PropertySearchAssistant({ variant = 'inline', filters = 
 
   const fieldError = (name) => errors[name] ? <span id={`${id}-${name}-error`} className={styles.fieldError}>{errors[name]}</span> : null;
 
+  const keepKeyboardInDialog = (event) => {
+    if (event.key !== 'Tab' || event.ctrlKey || event.metaKey || event.altKey) return;
+    const controls = Array.from(dialogRef.current.querySelectorAll(
+      'button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), a[href], summary',
+    )).filter((element) => element.getClientRects().length > 0);
+    const first = controls[0];
+    const last = controls.at(-1);
+    if (event.shiftKey && (document.activeElement === first || document.activeElement === titleRef.current)) {
+      event.preventDefault();
+      last?.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first?.focus();
+    }
+  };
+
   return (
     <>
       {variant === 'hero' ? (
@@ -191,6 +207,7 @@ export default function PropertySearchAssistant({ variant = 'inline', filters = 
         aria-modal="true"
         aria-labelledby={titleId}
         aria-describedby={introId}
+        onKeyDown={keepKeyboardInDialog}
         onCancel={(event) => { event.preventDefault(); setOpen(false); }}
         onClose={() => setOpen(false)}
       >

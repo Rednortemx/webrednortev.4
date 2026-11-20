@@ -3,7 +3,7 @@
   color: #17130f;
   font-family: var(--font-poppins), sans-serif;
 }
-.page :global(.breadcrumb) { background: #17130f; border-bottom: 1px solid rgba(255,255,255,.13); }
+.page :global(.breadcrumb) { padding: 0; background: #17130f; border-bottom: 1px solid rgba(255,255,255,.13); }
 .page :global(.breadcrumb-inner) { max-width: 1320px; padding: .8rem clamp(1.1rem,4vw,3.5rem); gap: .65rem; font-size: .75rem; }
 .page :global(.breadcrumb-inner a) { color: #f09a74; }
 .page :global(.breadcrumb-current) { color: #f3f0eb; }
@@ -44,6 +44,8 @@
 :global(body):has(.page) :global(.wa-float), :global(body):has(.page) :global(.translate-float) { right: 1rem; width: 44px; height: 44px; border-radius: 2px; box-shadow: 0 4px 18px rgba(0,0,0,.18); animation: none; }
 :global(body):has(.page) :global(.wa-float) { bottom: 1rem; background: #17130f; }
 :global(body):has(.page) :global(.translate-float) { bottom: 4.25rem; background: #bf542f; }
+:global(body):has(.page):has(:global(.cookie-banner)) :global(.wa-float),
+:global(body):has(.page):has(:global(.cookie-banner)) :global(.translate-float) { visibility: hidden; pointer-events: none; }
 
 @media (max-width: 1320px) {
   .page :global(.property-landing-editorial), .page :global(.property-landing-support) { margin-inline: clamp(1.1rem,4vw,3.5rem); }
@@ -63,3 +65,4 @@
   .page :global(.property-related-links) { flex-direction: column; }
 }
 @media (prefers-reduced-motion: reduce) { .cta { transition: none; } }
+@media (max-width: 600px) { .availability { display: none; } }
