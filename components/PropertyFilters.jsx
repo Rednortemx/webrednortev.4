@@ -1,6 +1,7 @@
 'use client';
 
-import { Fragment, useEffect, useMemo, useState } from 'react';
+import { Fragment } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import PropertyCard from './PropertyCard';
 import PropertySearchAssistant from './impulsa/PropertySearchAssistant';
