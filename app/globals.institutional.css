@@ -2740,8 +2740,7 @@
 
 
 /* ==========================================
-   /equipo — versión institucional interina
-   Sin fotografías ni directorio visual.
+   /equipo — presentación institucional y directorio
    ========================================== */
 .team-interim-page {
   background: #fff;
@@ -2799,6 +2798,75 @@
   color: rgba(255,255,255,.67);
   line-height: 1.75;
 }
+
+.team-people { padding: 5rem 0 5.5rem; background: #fff; }
+.team-people .team-section-heading { margin-bottom: 2.8rem; }
+.team-people-group + .team-people-group { margin-top: 4.5rem; }
+.team-people-group-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.15rem;
+  padding-bottom: .9rem;
+  border-bottom: 1px solid var(--gris-claro);
+}
+.team-people-group-heading h3 { margin: 0; color: var(--negro); font-size: 1.3rem; }
+.team-people-group-heading span { color: var(--gris-medio); font-size: .82rem; }
+.team-people-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.1rem; }
+.team-person-card {
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--gris-claro);
+  border-radius: 15px;
+  background: #fff;
+  transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+.team-person-card:hover {
+  transform: translateY(-3px);
+  border-color: #d0b29f;
+  box-shadow: 0 14px 32px rgba(26, 18, 8, .07);
+}
+.team-person-portrait {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  aspect-ratio: 1 / .9;
+  background:
+    radial-gradient(circle at 48% 42%, rgba(255,255,255,.45), transparent 42%),
+    linear-gradient(145deg, #eae3d9, #d6c5b5);
+}
+.team-person-portrait::after {
+  content: '';
+  position: absolute;
+  inset: 10px;
+  border: 1px solid rgba(255,255,255,.42);
+  border-radius: 9px;
+  pointer-events: none;
+}
+.team-person-portrait > span {
+  color: #695442;
+  font-size: clamp(2.8rem, 5vw, 4.3rem);
+  font-weight: 600;
+  letter-spacing: -.07em;
+}
+.team-person-portrait.has-photo { background: var(--crema-dark); }
+.team-person-portrait img { object-fit: cover; object-position: center 24%; }
+.team-person-content { display: flex; flex: 1; flex-direction: column; padding: 1.25rem; }
+.team-person-content h3 { margin: 0; color: var(--negro); font-size: 1rem; line-height: 1.3; }
+.team-person-role { margin: .35rem 0 .8rem; color: var(--terracota-dark); font-size: .77rem; font-weight: 700; }
+.team-person-phone { width: fit-content; color: var(--cafe); font-size: .9rem; font-weight: 600; text-decoration: none; }
+.team-person-phone:hover { text-decoration: underline; text-underline-offset: 3px; }
+.team-person-actions { display: flex; flex-wrap: wrap; gap: .8rem; align-items: center; margin-top: auto; padding-top: 1.15rem; }
+.team-person-whatsapp,
+.team-person-profile { color: var(--terracota-dark); font-size: .79rem; font-weight: 800; text-decoration: none; }
+.team-person-whatsapp:hover,
+.team-person-profile:hover { text-decoration: underline; text-underline-offset: 3px; }
+.team-person-actions :focus-visible,
+.team-person-phone:focus-visible { outline: 2px solid var(--terracota); outline-offset: 4px; }
 
 .team-interim-principles,
 .team-interim-specialties,
@@ -3046,6 +3114,7 @@
 }
 
 @media (max-width: 980px) {
+  .team-people-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .team-interim-hero-grid,
   .team-interim-training-grid {
     grid-template-columns: 1fr;
@@ -3069,6 +3138,11 @@
 }
 
 @media (max-width: 700px) {
+  .team-people { padding: 3.5rem 0; }
+  .team-people-group + .team-people-group { margin-top: 3.5rem; }
+  .team-people-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; }
+  .team-person-content { padding: 1rem .85rem; }
+  .team-person-portrait { aspect-ratio: 1 / 1; }
   .team-interim-hero {
     padding: 3.8rem 0;
   }
@@ -3109,6 +3183,16 @@
     padding-left: 0;
     padding-right: 0;
   }
+}
+
+@media (max-width: 390px) {
+  .team-people-grid { grid-template-columns: 1fr; }
+  .team-person-portrait { aspect-ratio: 1.6 / 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .team-person-card { transition: none; }
+  .team-person-card:hover { transform: none; }
 }
 
 
