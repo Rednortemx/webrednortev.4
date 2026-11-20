@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Breadcrumb from '@/components/Breadcrumb';
 import PropertyFilters from '@/components/PropertyFilters';
+import PilotLandingHero from '@/components/impulsa/PilotLandingHero';
 import { fetchAllProperties, toPropertyCardData } from '@/lib/properties';
 import { buildPropertySlug } from '@/lib/slug';
 import { buildPropertySeoTitle } from '@/lib/propertySeo';
@@ -122,6 +123,7 @@ export default async function PropertyLandingPage({ params, searchParams }) {
   const propertyCards = inventoryProperties.map((property) => toPropertyCardData(property));
   const neighborhoods = landing.kind === 'area' ? [] : getLandingNeighborhoods(properties, landing);
   const related = getRelatedPropertyLandings(landing);
+  const pilot = landing.path === '/propiedades/monterrey/casas-en-venta';
   const servicePath = landing.servicePath || (landing.operation === 'Venta'
     ? '/servicios/comprar-propiedad'
     : '/servicios/rentar-propiedad');
@@ -164,6 +166,9 @@ export default async function PropertyLandingPage({ params, searchParams }) {
         />
       )}
       <Breadcrumb items={breadcrumbItems} />
+      {pilot ? (
+        <PilotLandingHero live={source === "live"} propertyCount={matchingProperties.length} />
+      ) : (
       <header className="property-landing-hero">
         {source !== 'live' && (
           <div className="crm-indicator">
@@ -189,15 +194,19 @@ export default async function PropertyLandingPage({ params, searchParams }) {
           </div>
         )}
       </header>
+      )}
 
       {source === 'live' ? (
+        <div id={pilot ? 'impulsa-catalogo' : undefined}>
         <PropertyFilters
           properties={propertyCards}
           initialFilters={initialFilters}
           basePath={landing.path}
           baseFilters={baseFilters}
           fixedLocationLabel={landing.fixedLocationLabel}
+          searchAssistant={pilot}
         />
+        </div>
       ) : (
         <section className="container" aria-live="polite" style={{ padding: '4rem 0 6rem' }}>
           <h2>Inventario temporalmente no disponible</h2>
@@ -225,13 +234,13 @@ export default async function PropertyLandingPage({ params, searchParams }) {
         </section>
       )}
 
-      <section className="property-landing-support">
-        <div>
+      <section className="property-landing-support" style={pilot ? { gridTemplateColumns: "1fr" } : undefined}>
+        {!pilot && <div>
           <span className="section-label">Asesoría inmobiliaria</span>
           <h2>¿Necesitas apoyo para encontrar la propiedad adecuada?</h2>
           <p>Te ayudamos a revisar opciones, validar información y avanzar con claridad durante el proceso.</p>
           <Link className="btn-secondary" href={servicePath}>{landing.serviceCta || 'Conoce nuestro servicio'}</Link>
-        </div>
+        </div>}
         <nav aria-label="Búsquedas de propiedades relacionadas">
           <h2>Búsquedas relacionadas</h2>
           <div className="property-related-links">
