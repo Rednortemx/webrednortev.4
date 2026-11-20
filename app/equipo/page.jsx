@@ -1,6 +1,9 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import Breadcrumb from '@/components/Breadcrumb';
 import WhatsAppGateButton from '@/components/WhatsAppGateButton';
+import { advisors, coordinator } from '@/lib/teamDirectory';
+import { getTeamMember } from '@/lib/teamMembers';
 
 export const metadata = {
   title: 'Equipo | Rednorte Inmobiliaria',
@@ -143,7 +146,60 @@ const assignmentSteps = [
   },
 ];
 
+function displayPhone(phone) {
+  if (phone.startsWith('81')) return `${phone.slice(0, 2)} ${phone.slice(2, 6)} ${phone.slice(6)}`;
+  return `${phone.slice(0, 3)} ${phone.slice(3, 6)} ${phone.slice(6)}`;
+}
+
+function initials(name) {
+  const parts = name.trim().split(/\s+/);
+  return `${parts[0][0]}${parts.length > 1 ? parts[parts.length - 1][0] : ''}`.toUpperCase();
+}
+
+function TeamPersonCard({ person }) {
+  const profile = person.profileSlug ? getTeamMember(person.profileSlug) : null;
+  const photo = profile?.photo;
+  const profileHref = profile ? `/equipo/${profile.slug}` : null;
+
+  return (
+    <article className="team-person-card">
+      <div className={`team-person-portrait${photo ? ' has-photo' : ''}`}>
+        {photo ? (
+          <Image src={photo} alt={`Retrato de ${person.name}`} fill sizes="(max-width: 700px) 44vw, (max-width: 980px) 30vw, 23vw" />
+        ) : (
+          <span aria-hidden="true">{initials(person.name)}</span>
+        )}
+      </div>
+      <div className="team-person-content">
+        <h3>{person.name}</h3>
+        <p className="team-person-role">{person.role}</p>
+        {person.phone && (
+          <a className="team-person-phone" href={`tel:+52${person.phone}`} aria-label={`Llamar a ${person.name} al ${displayPhone(person.phone)}`}>
+            {displayPhone(person.phone)}
+          </a>
+        )}
+        <div className="team-person-actions">
+          {person.phone && (
+            <WhatsAppGateButton
+              className="team-person-whatsapp"
+              phone={`52${person.phone}`}
+              source={`Equipo: ${person.name}`}
+              message="Hola, vi tu contacto en Rednorte y me gustaría recibir asesoría."
+              title={`Contactar a ${person.name} por WhatsApp`}
+            >
+              WhatsApp <span aria-hidden="true">↗</span>
+            </WhatsAppGateButton>
+          )}
+          {profileHref && <Link className="team-person-profile" href={profileHref}>Ver perfil <span aria-hidden="true">→</span></Link>}
+        </div>
+      </div>
+    </article>
+  );
+}
+
 export default function EquipoPage() {
+  const founder = getTeamMember('roque-avila');
+
   return (
     <div className="page-content team-interim-page">
       <Breadcrumb items={[{ label: 'Equipo' }]} />
@@ -177,6 +233,36 @@ export default function EquipoPage() {
               conectar cada necesidad con el perfil adecuado y respaldarlo con la estructura de
               Rednorte.
             </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="team-people" id="directorio" aria-labelledby="team-people-title">
+        <div className="team-shell">
+          <div className="team-section-heading">
+            <p className="section-label">LAS PERSONAS DE REDNORTE</p>
+            <h2 id="team-people-title">Conoce a nuestro equipo</h2>
+            <p>Encuentra el contacto de nuestros asesores y conoce a quienes coordinan el trabajo del equipo.</p>
+          </div>
+
+          <div className="team-people-group">
+            <div className="team-people-group-heading">
+              <h3>Dirección y coordinación</h3>
+            </div>
+            <div className="team-people-grid">
+              <TeamPersonCard person={{ name: founder.name, role: founder.role, profileSlug: founder.slug }} />
+              <TeamPersonCard person={coordinator} />
+            </div>
+          </div>
+
+          <div className="team-people-group">
+            <div className="team-people-group-heading">
+              <h3>Asesores inmobiliarios</h3>
+              <span>{advisors.length} integrantes</span>
+            </div>
+            <div className="team-people-grid">
+              {advisors.map((advisor) => <TeamPersonCard key={advisor.name} person={advisor} />)}
+            </div>
           </div>
         </div>
       </section>
