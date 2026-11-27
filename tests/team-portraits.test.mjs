@@ -85,6 +85,16 @@ test('asocia el retrato de Alex a la única tarjeta de Alejandro Rodriguez', asy
   assert.deepEqual(jpegDimensions(data), { width: 1000, height: 1000 });
 });
 
+test('asocia el retrato de Mariel a su única tarjeta sin crear perfil', async () => {
+  const matches = advisors.filter((advisor) => advisor.name === 'Mariel Vazquez');
+  assert.equal(matches.length, 1);
+  assert.equal(matches[0].photo, '/equipo/mariel-vazquez.jpg');
+  assert.equal(matches[0].phone, '2222777768');
+  assert.equal(matches[0].profileSlug, undefined);
+  const data = await readFile(new URL('../public/equipo/mariel-vazquez.jpg', import.meta.url));
+  assert.deepEqual(jpegDimensions(data), { width: 1000, height: 1000 });
+});
+
 test('sustituye el retrato de Thadeo en la tarjeta y en su perfil sin recortarlo', async () => {
   const thadeo = advisors.filter((advisor) => advisor.name === 'Thadeo Gómez');
   assert.equal(thadeo.length, 1);
