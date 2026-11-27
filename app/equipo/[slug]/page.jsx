@@ -128,7 +128,7 @@ export default async function TeamMemberPage({ params }) {
 
       <section className="advisor-hero">
         <div className="advisor-shell advisor-hero-grid">
-          <div className={`advisor-portrait team-tone-${member.portraitTone || 'terracota'}`}>
+          <div className={`advisor-portrait team-tone-${member.portraitTone || 'terracota'}${member.slug === 'thadeo-gomez' ? ' has-square-photo' : ''}`}>
             <Image
               src={member.photo}
               alt={`Retrato profesional de ${member.name}, ${member.role} en Rednorte Inmobiliaria`}
