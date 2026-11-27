@@ -4,6 +4,7 @@
 import { createHash, randomBytes, randomUUID } from 'node:crypto';
 import { NextResponse } from 'next/server';
 import { validLeadWebhookUrl } from '../../../lib/leadWebhook.mjs';
+import { campaignReferrerLabel } from '../../../lib/leadAttribution.mjs';
 
 export const runtime = 'nodejs';
 
@@ -162,6 +163,17 @@ export async function POST(req) {
     detalle: clean(payload.detalle, 500),
     notas: clean(payload.notas, 2_000),
   };
+
+  // UTM de la página que originó este POST. Se guarda en el campo existente
+  // de notas del webhook, sin nuevas columnas, cookies ni identificadores
+  // publicitarios. Ausencia de Referer o parámetros: comportamiento idéntico.
+  const campaign = campaignReferrerLabel(
+    req.headers.get('referer'),
+    req.headers.get('x-forwarded-host') || req.headers.get('host'),
+  );
+  if (campaign) {
+    lead.notas = [campaign, lead.notas].filter(Boolean).join('\n').slice(0, 2_000);
+  }
 
   if (!TIPOS_PERMITIDOS.has(lead.tipo)) {
     return reply({ success: false, message: 'Tipo de solicitud inválido' }, 400);
