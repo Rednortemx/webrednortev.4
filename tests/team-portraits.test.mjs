@@ -27,7 +27,7 @@ function jpegDimensions(data) {
 
 test('asocia los seis retratos a una sola tarjeta cada uno sin crear perfiles', async () => {
   assert.equal(advisors.length, 30);
-  assert.equal(advisors.filter((advisor) => advisor.photo && !advisor.profileSlug && advisor.name !== 'Christian de la Fuente').length, portraits.size);
+  assert.equal(advisors.filter((advisor) => portraits.has(advisor.name) && advisor.photo).length, portraits.size);
   for (const [name, photo] of portraits) {
     const matches = advisors.filter((advisor) => advisor.name === name);
     assert.equal(matches.length, 1, `Coincidencia única para ${name}`);
@@ -44,6 +44,15 @@ test('asocia el retrato de Chris a la única tarjeta Christian de la Fuente', as
   assert.equal(matches[0].photo, '/equipo/christian-de-la-fuente.jpg');
   assert.equal(matches[0].profileSlug, undefined);
   const data = await readFile(new URL('../public/equipo/christian-de-la-fuente.jpg', import.meta.url));
+  assert.deepEqual(jpegDimensions(data), { width: 1000, height: 1000 });
+});
+
+test('asocia el retrato de Maru a la única tarjeta de María Eugenia Santoyo', async () => {
+  const matches = advisors.filter((advisor) => advisor.name === 'Maria Eugenia Santoyo');
+  assert.equal(matches.length, 1);
+  assert.equal(matches[0].photo, '/equipo/maria-eugenia-santoyo.jpg');
+  assert.equal(matches[0].profileSlug, undefined);
+  const data = await readFile(new URL('../public/equipo/maria-eugenia-santoyo.jpg', import.meta.url));
   assert.deepEqual(jpegDimensions(data), { width: 1000, height: 1000 });
 });
 
