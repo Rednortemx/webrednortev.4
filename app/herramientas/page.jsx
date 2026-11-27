@@ -4,12 +4,12 @@ import Breadcrumb from '@/components/Breadcrumb';
 export const metadata = {
   title: 'Herramientas inmobiliarias gratuitas | Rednorte',
   description:
-    'Herramientas gratuitas de Rednorte para estimar el valor de venta de una propiedad y evaluar qué tan vendible es en Monterrey y Nuevo León.',
+    'Herramientas gratuitas de Rednorte para entender por qué no se vende una propiedad, estimar su valor y evaluar su vendibilidad en Monterrey y Nuevo León.',
   alternates: { canonical: '/herramientas' },
   openGraph: {
     title: 'Herramientas inmobiliarias gratuitas | Rednorte',
     description:
-      'Obtén una primera referencia sobre el valor y la vendibilidad de una propiedad.',
+      'Identifica posibles obstáculos de comercialización, estima el valor y explora la vendibilidad de tu propiedad.',
     url: '/herramientas',
     type: 'website',
   },
@@ -18,6 +18,15 @@ export const metadata = {
 const tools = [
   {
     number: '01',
+    eyebrow: 'DIAGNÓSTICO DE COMERCIALIZACIÓN',
+    title: 'Mi propiedad no se está vendiendo',
+    text: 'Identifica tu situación, descubre posibles causas y solicita una revisión inicial gratuita de tu anuncio, sin compromiso.',
+    href: '/herramientas/por-que-no-se-vende',
+    cta: 'Descubrir qué puede estar pasando',
+    meta: ['5 situaciones', 'Sin registro inicial', 'Revisión gratuita'],
+  },
+  {
+    number: '02',
     eyebrow: 'ESTIMACIÓN DE VALOR',
     title: 'Quiero saber cuánto puede valer',
     text:
@@ -27,7 +36,7 @@ const tools = [
     meta: ['3 pasos', 'Resultado inmediato', 'Sin costo'],
   },
   {
-    number: '02',
+    number: '03',
     eyebrow: 'REPORTE DE VENDIBILIDAD',
     title: 'Quiero saber qué frena la venta',
     text:
@@ -47,10 +56,16 @@ const schema = {
       url: 'https://www.rednorte.mx/herramientas',
       name: 'Herramientas inmobiliarias gratuitas | Rednorte',
       description:
-        'Herramientas gratuitas para estimar valor de venta y analizar vendibilidad de propiedades.',
+        'Herramientas gratuitas de diagnóstico de comercialización, estimación de valor y vendibilidad de inmuebles.',
       isPartOf: { '@id': 'https://www.rednorte.mx/#website' },
       about: { '@id': 'https://www.rednorte.mx/#organization' },
       hasPart: [
+        {
+          '@type': 'WebApplication',
+          name: 'Diagnóstico de comercialización',
+          url: 'https://www.rednorte.mx/herramientas/por-que-no-se-vende',
+          applicationCategory: 'BusinessApplication',
+        },
         {
           '@type': 'WebApplication',
           name: 'Estimación de valor',
@@ -86,17 +101,18 @@ export default function HerramientasPage() {
             <p className="quick-eyebrow">HERRAMIENTAS DE DECISIÓN</p>
             <h1>Decisiones inmobiliarias con más claridad.</h1>
             <p>
-              Antes de vender, conviene responder dos preguntas: cuánto puede valer la propiedad
-              y qué tan preparada está para competir en el mercado.
+              Cuando una propiedad no se vende, conviene entender qué está pasando,
+              revisar su posición en el mercado y decidir qué hacer después.
             </p>
           </div>
           <aside className="tools-hub-guide" aria-label="Guía para elegir una herramienta">
             <p>EMPIEZA POR TU PREGUNTA</p>
             <ol>
-              <li><span>01</span><strong>¿Cuánto puede valer?</strong></li>
-              <li><span>02</span><strong>¿Qué está frenando la venta?</strong></li>
+              <li><span>01</span><strong>¿Por qué no se vende?</strong></li>
+              <li><span>02</span><strong>¿Cuánto puede valer?</strong></li>
+              <li><span>03</span><strong>¿Qué tan vendible es?</strong></li>
             </ol>
-            <small>Ambas herramientas son gratuitas y entregan un resultado inmediato.</small>
+            <small>Estas herramientas son gratuitas y ofrecen orientación inicial.</small>
           </aside>
         </div>
       </section>
