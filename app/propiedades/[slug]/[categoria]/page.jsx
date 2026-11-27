@@ -1,7 +1,13 @@
 import Link from 'next/link';
+import { Fragment } from 'react';
 import { notFound } from 'next/navigation';
 import Breadcrumb from '@/components/Breadcrumb';
 import PropertyFilters from '@/components/PropertyFilters';
+import PilotLandingHero from '@/components/impulsa/PilotLandingHero';
+import PilotPropertyCatalog from '@/components/impulsa/PilotPropertyCatalog';
+import PropertySearchAssistant, { PropertySearchAssistantProvider } from '@/components/impulsa/PropertySearchAssistant';
+import pilotStyles from '@/components/impulsa/PilotLanding.module.css';
+import { normalizePilotFilters, filterPilotProperties } from '@/lib/pilotPropertySearch.mjs';
 import { fetchAllProperties, toPropertyCardData } from '@/lib/properties';
 import { buildPropertySlug } from '@/lib/slug';
 import { buildPropertySeoTitle } from '@/lib/propertySeo';
@@ -37,13 +43,15 @@ export async function generateMetadata({ params, searchParams }) {
   }
 
   const sp = await searchParams;
-  const parsedPage = Number.parseInt(String(sp?.page || '1'), 10);
+  const parsedPage = landing.path === '/propiedades/monterrey/casas-en-venta'
+    ? normalizePilotFilters(sp).page
+    : Number.parseInt(String(sp?.page || '1'), 10);
   const page = Number.isFinite(parsedPage) && parsedPage > 1 ? parsedPage : 1;
   const suffix = page > 1 ? ` — página ${page}` : '';
   const canonical = page > 1 ? `${landing.path}?page=${page}` : landing.path;
   const filterKeys = [
     'operacion', 'tipo', 'categoria', 'zona', 'precioMin', 'precioMax',
-    'recamaras', 'banos', 'm2Min', 'm2Max',
+    'recamaras', 'banos', 'm2Min', 'm2Max', 'colonia', 'sort',
   ];
   const hasActiveFilters = filterKeys.some((key) => {
     const value = sp?.[key];
@@ -113,13 +121,21 @@ export default async function PropertyLandingPage({ params, searchParams }) {
   if (!landing) notFound();
 
   const sp = await searchParams;
-  const page = Math.max(1, Number(sp?.page) || 1);
+  const pilot = landing.path === '/propiedades/monterrey/casas-en-venta';
+  const pilotFilters = pilot ? normalizePilotFilters(sp) : null;
+  const page = pilot ? pilotFilters.page : Math.max(1, Number(sp?.page) || 1);
+  const previewOnly = process.env.VERCEL_ENV !== 'production';
   const { properties, source } = await fetchAllProperties();
   const matchingProperties = properties.filter((property) => propertyMatchesLanding(property, landing));
-  const totalPages = Math.max(1, Math.ceil(matchingProperties.length / PROPERTIES_PER_PAGE));
+  const resultProperties = pilot ? filterPilotProperties(matchingProperties, pilotFilters) : matchingProperties;
+  const totalPages = pilot
+    ? Math.max(1, Math.ceil(resultProperties.length / PROPERTIES_PER_PAGE))
+    : Math.max(1, Math.ceil(matchingProperties.length / PROPERTIES_PER_PAGE));
   if (source === 'live' && page > totalPages) notFound();
   const inventoryProperties = landing.kind === 'area' ? matchingProperties : properties;
-  const propertyCards = inventoryProperties.map((property) => toPropertyCardData(property));
+  const propertyCards = (pilot ? matchingProperties : inventoryProperties).map((property) => pilot
+    ? { ...toPropertyCardData(property), currency: property.currency || 'MXN' }
+    : toPropertyCardData(property));
   const neighborhoods = landing.kind === 'area' ? [] : getLandingNeighborhoods(properties, landing);
   const related = getRelatedPropertyLandings(landing);
   const servicePath = landing.servicePath || (landing.operation === 'Venta'
@@ -133,7 +149,7 @@ export default async function PropertyLandingPage({ params, searchParams }) {
         tipo: landing.type,
         zona: landing.municipality,
       };
-  const initialFilters = {
+  const initialFilters = pilot ? pilotFilters : {
     operacion: readFilter(sp, 'operacion', baseFilters.operacion),
     tipo: readFilter(sp, 'tipo', baseFilters.tipo),
     categoria: readFilter(sp, 'categoria', ''),
@@ -150,9 +166,12 @@ export default async function PropertyLandingPage({ params, searchParams }) {
     { label: 'Propiedades', href: '/propiedades' },
     { label: landing.heading },
   ];
+  const PageScope = pilot ? PropertySearchAssistantProvider : Fragment;
 
   return (
-    <div className="page-content property-landing-page">
+    <PageScope>
+    <div className={`page-content property-landing-page${pilot ? ` ${pilotStyles.page}` : ''}`} role={pilot ? 'main' : undefined}>
+      {pilot && <a className={pilotStyles.skipLink} href="#impulsa-catalogo">Ir a las casas</a>}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbSchema(breadcrumbItems)) }}
@@ -160,10 +179,15 @@ export default async function PropertyLandingPage({ params, searchParams }) {
       {source === 'live' && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: serializeJsonLd(buildItemList(matchingProperties, page)) }}
+          dangerouslySetInnerHTML={{ __html: pilot
+            ? serializeJsonLd(buildItemList(resultProperties, page))
+            : serializeJsonLd(buildItemList(matchingProperties, page)) }}
         />
       )}
       <Breadcrumb items={breadcrumbItems} />
+      {pilot ? (
+        <PilotLandingHero live={source === 'live'} propertyCount={matchingProperties.length} filters={initialFilters} previewOnly={previewOnly} />
+      ) : (
       <header className="property-landing-hero">
         {source !== 'live' && (
           <div className="crm-indicator">
@@ -189,8 +213,14 @@ export default async function PropertyLandingPage({ params, searchParams }) {
           </div>
         )}
       </header>
+      )}
 
       {source === 'live' ? (
+        pilot ? (
+          <div id="impulsa-catalogo" className={pilotStyles.catalogAnchor}>
+            <PilotPropertyCatalog properties={propertyCards} initialFilters={initialFilters} basePath={landing.path} previewOnly={previewOnly} />
+          </div>
+        ) : (
         <PropertyFilters
           properties={propertyCards}
           initialFilters={initialFilters}
@@ -198,10 +228,12 @@ export default async function PropertyLandingPage({ params, searchParams }) {
           baseFilters={baseFilters}
           fixedLocationLabel={landing.fixedLocationLabel}
         />
+        )
       ) : (
-        <section className="container" aria-live="polite" style={{ padding: '4rem 0 6rem' }}>
+        <section id={pilot ? 'impulsa-catalogo' : undefined} className={pilot ? pilotStyles.unavailable : 'container'} aria-live="polite" style={pilot ? undefined : { padding: '4rem 0 6rem' }}>
           <h2>Inventario temporalmente no disponible</h2>
           <p>No mostraremos anuncios ni precios hasta que podamos confirmar su vigencia en NocNok.</p>
+          {pilot && <PropertySearchAssistant variant="empty" filters={initialFilters} previewOnly={previewOnly} />}
         </section>
       )}
 
@@ -225,13 +257,13 @@ export default async function PropertyLandingPage({ params, searchParams }) {
         </section>
       )}
 
-      <section className="property-landing-support">
-        <div>
+      <section className="property-landing-support" style={pilot ? { gridTemplateColumns: "1fr" } : undefined}>
+        {!pilot && <div>
           <span className="section-label">Asesoría inmobiliaria</span>
           <h2>¿Necesitas apoyo para encontrar la propiedad adecuada?</h2>
           <p>Te ayudamos a revisar opciones, validar información y avanzar con claridad durante el proceso.</p>
           <Link className="btn-secondary" href={servicePath}>{landing.serviceCta || 'Conoce nuestro servicio'}</Link>
-        </div>
+        </div>}
         <nav aria-label="Búsquedas de propiedades relacionadas">
           <h2>Búsquedas relacionadas</h2>
           <div className="property-related-links">
@@ -240,5 +272,6 @@ export default async function PropertyLandingPage({ params, searchParams }) {
         </nav>
       </section>
     </div>
+    </PageScope>
   );
 }
