@@ -38,9 +38,11 @@ test('asocia los seis retratos a una sola tarjeta cada uno sin crear perfiles', 
   }
 });
 
-test('asocia el retrato de Chris a la única tarjeta Christian de la Fuente', async () => {
-  const matches = advisors.filter((advisor) => advisor.name === 'Christian de la Fuente');
+test('asocia el retrato de Chris a su única tarjeta con el nombre público correcto', async () => {
+  const matches = advisors.filter((advisor) => advisor.name === 'Chris de la Fuente');
   assert.equal(matches.length, 1);
+  assert.equal(advisors.some((advisor) => advisor.name === 'Christian de la Fuente'), false);
+  assert.equal(matches[0].phone, '8661094961');
   assert.equal(matches[0].photo, '/equipo/christian-de-la-fuente.jpg');
   assert.equal(matches[0].profileSlug, undefined);
   const data = await readFile(new URL('../public/equipo/christian-de-la-fuente.jpg', import.meta.url));
