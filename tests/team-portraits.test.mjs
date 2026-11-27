@@ -27,7 +27,7 @@ function jpegDimensions(data) {
 
 test('asocia los seis retratos a una sola tarjeta cada uno sin crear perfiles', async () => {
   assert.equal(advisors.length, 30);
-  assert.equal(advisors.filter((advisor) => advisor.photo).length, portraits.size);
+  assert.equal(advisors.filter((advisor) => advisor.photo && !advisor.profileSlug).length, portraits.size);
   for (const [name, photo] of portraits) {
     const matches = advisors.filter((advisor) => advisor.name === name);
     assert.equal(matches.length, 1, `Coincidencia única para ${name}`);
@@ -36,6 +36,20 @@ test('asocia los seis retratos a una sola tarjeta cada uno sin crear perfiles', 
     const data = await readFile(new URL(`../public${photo}`, import.meta.url));
     assert.deepEqual(jpegDimensions(data), { width: 1000, height: 1000 });
   }
+});
+
+test('sustituye el retrato de Thadeo en la tarjeta y en su perfil sin recortarlo', async () => {
+  const thadeo = advisors.filter((advisor) => advisor.name === 'Thadeo Gómez');
+  assert.equal(thadeo.length, 1);
+  assert.equal(thadeo[0].photo, '/equipo/thadeo-gomez.jpg');
+  assert.equal(thadeo[0].profileSlug, 'thadeo-gomez');
+  const data = await readFile(new URL('../public/equipo/thadeo-gomez.jpg', import.meta.url));
+  assert.deepEqual(jpegDimensions(data), { width: 1000, height: 1000 });
+  const page = await readFile(new URL('../app/equipo/[slug]/page.jsx', import.meta.url), 'utf8');
+  const css = await readFile(new URL('../app/globals.institutional.css', import.meta.url), 'utf8');
+  assert.match(page, /member\.slug === 'thadeo-gomez' \? ' has-square-photo'/);
+  assert.match(css, /\.advisor-portrait\.has-square-photo \{ aspect-ratio:1\/1; \}/);
+  assert.match(css, /\.advisor-portrait\.has-square-photo img \{ object-fit:contain; object-position:center; \}/);
 });
 
 test('preserva el cuadrado completo en escritorio y móvil sin recorte', async () => {
