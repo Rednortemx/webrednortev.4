@@ -158,12 +158,12 @@ function initials(name) {
 
 function TeamPersonCard({ person }) {
   const profile = person.profileSlug ? getTeamMember(person.profileSlug) : null;
-  const photo = profile?.photo;
+  const photo = person.photo || profile?.photo;
   const profileHref = profile ? `/equipo/${profile.slug}` : null;
 
   return (
     <article className="team-person-card">
-      <div className={`team-person-portrait${photo ? ' has-photo' : ''}`}>
+      <div className={`team-person-portrait${photo ? ' has-photo' : ''}${person.photo ? ' has-square-photo' : ''}`}>
         {photo ? (
           <Image src={photo} alt={`Retrato de ${person.name}`} fill sizes="(max-width: 700px) 44vw, (max-width: 980px) 30vw, 23vw" />
         ) : (
